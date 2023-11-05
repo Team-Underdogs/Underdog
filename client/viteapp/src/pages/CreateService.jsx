@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const CreateProduct = () => {
+const CreateService = () => {
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
@@ -13,9 +13,9 @@ const CreateProduct = () => {
     
     return (
         <div>
-            <h1>Create Product</h1>
+            <h1>Create Service</h1>
         </div>
     );
 }
 
-export default CreateProduct;
+export default CreateService;
