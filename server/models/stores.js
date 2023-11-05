@@ -6,15 +6,59 @@ const StoreSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        Address: {
+            type: String,
+            required: true,
+        },
+        Suburb: {
+            type: String,
+            required: true,
+        },
+        City: {
+            type: String,
+            required: true,
+        },
+        Email: {
+            type: String,
+            required: true,
+        },
+        Phone: {
+            type: String,
+            required: true,
+        },
         BusinessDescription: {
             type: String,
             required: true,
         },
         BusinessTags: {
             type: Array,
+            required: true,
+        },
+        BusinessCategories: {
+            type: Array,
+            required: true,
+        },
+        LinkWebsite: {
+            type: String,
             required: false,
         },
-        ProductList: {
+        LinkFB: {
+            type: String,
+            required: false,
+        },
+        LinkTwitter: {
+            type: String,
+            required: false,
+        },
+        LinkInstagram: {
+            type: String,
+            required: false,
+        },
+        ProductsList: {
+            type: Array,
+            required: false,
+        },
+        ServicesList: {
             type: Array,
             required: false,
         }
