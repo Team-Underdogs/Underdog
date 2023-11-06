@@ -5,16 +5,18 @@ import BrowseProducts from "./pages/BrowseProducts.jsx";
 import BusinessDetail from "./pages/BusinessDetail.jsx";
 import ProductDetail from "./pages/ProductDetail.jsx";
 import CreateBusiness from "./pages/CreateBusiness.jsx";
+import UpdateBusiness from "./pages/UpdateBusiness.jsx";
+import UpdateProduct from "./pages/UpdateProduct.jsx";
 
 const app = () => {
   return (
     <Routes>
       <Route path="/" element={<Home/>} />
-      <Route path="/business/browseBusiness" element={<BrowseBusiness/>}/>
-      <Route path="/business/businessDetail" element={<BusinessDetail/>}/>
-      <Route path="/business/createBusiness" element={<CreateBusiness/>}/>
-      <Route path="/products/browseProducts" element={<BrowseProducts/>}/>
-      <Route path="/products/productDetails" element={<ProductDetail/>}/>
+      <Route path="/business/browse" element={<BrowseBusiness/>}/>
+      <Route path="/business/:id" element={<BusinessDetail/>}/>
+      <Route path="/business/create" element={<CreateBusiness/>}/>
+      <Route path="/products/browse" element={<BrowseProducts/>}/>
+      <Route path="/products/:id" element={<ProductDetail/>}/>
     </Routes>
   );
 };
