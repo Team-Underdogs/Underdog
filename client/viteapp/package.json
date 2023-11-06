@@ -10,10 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.3",
+    "axios": "^1.6.0",
+    "jsonwebtoken": "^9.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "axios": "^1.5.0",
-    "jsonwebtoken": "^9.0.2",
     "react-icons": "^4.10.1",
     "react-router-dom": "^6.15.0"
   },

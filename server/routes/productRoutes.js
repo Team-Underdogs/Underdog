@@ -52,7 +52,8 @@ router.post("/createProduct", async (req, res) => {
             ProductDescription,
             ProductPrice,
             ProductTags,
-            StoreId
+            StoreId,
+            UserId
         } = req.body;
         const AssociatedStore = await StoreModel.findById(StoreId);
 
@@ -65,7 +66,8 @@ router.post("/createProduct", async (req, res) => {
             ProductDescription,
             ProductPrice,
             ProductTags,
-            Store: AssociatedStore
+            Store: AssociatedStore,
+            UserId
         })
         await product.save();
 
