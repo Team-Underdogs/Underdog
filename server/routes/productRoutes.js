@@ -3,14 +3,20 @@ const router = express.Router();
 const checkJwt = require("../utils/auth");
 const ProductModel = require("../models/products");
 const StoreModel = require("../models/stores");
+const ServiceModel = require("../models/services");
 
-// Get all products
+// Get all products & services
 router.get("/getAllProducts",checkJwt, async (req, res) => {
     try {
         const products = await ProductModel.find();
         res.json({
             count: products.length,
             data: products
+        });
+        const services = await ServiceModel.find();
+        res.json({
+            count: services.length,
+            data: services
         });
     } catch (error) {
         console.error(error);
@@ -38,6 +44,7 @@ router.get("/getProduct/:id", async (req, res) => {
         if (!product) {
             return res.status(404).json({message: "Product not found"});
         }
+        res.status(200).json(product)
     } catch (error) {
         console.error(error);
         res.status(500).json({message: error.message});

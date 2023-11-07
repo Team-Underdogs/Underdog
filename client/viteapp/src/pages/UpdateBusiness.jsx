@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const CreateBusiness = () => {
+const UpdateBusiness = () => {
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [suburb, setSuburb] = useState('');
@@ -18,12 +18,12 @@ const CreateBusiness = () => {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-
+    const { id } = useParams();
     return (
         <div>
-            <h1>CreateBusiness</h1>
+            <h1>Update Business</h1>
         </div>
     );
 }
 
-export default CreateBusiness;
+export default UpdateBusiness;

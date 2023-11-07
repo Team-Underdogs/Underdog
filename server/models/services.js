@@ -1,24 +1,24 @@
 const mongoose = require("mongoose");
 
-const ProductSchema = new mongoose.Schema(
+const ServiceSchema = new mongoose.Schema(
     {
-        ProductName: {
+        ServiceName: {
             type: String,
             required: true,
         },
-        ProductDescription: {
+        ServiceDescription: {
             type: String,
             required: true,
         },
-        ProductPrice: {
+        ServicePrice: {
             type: Number,
             required: true,
         },
-        ProductTags: {
+        ServiceTags: {
             type: Array,
             required: true,
         },
-        ProductCategories: {
+        ServiceCategories: {
             type: Array,
             required: true,
         },
@@ -30,5 +30,5 @@ const ProductSchema = new mongoose.Schema(
     }
 );
 
-const ProductModel = mongoose.model("products", ProductSchema);
-module.exports = ProductModel;
+const ServiceModel = mongoose.model("services", ServiceSchema);
+module.exports = ServiceModel;
