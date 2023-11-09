@@ -1,3 +1,5 @@
+/* 'Control + F' -> Background, Header, Search Bar, Categories Banner, Browse Business */
+
 @font-face{
   font-family: "newfont";
   src: url("./assets/Heebo-Regular.ttf")
@@ -10,13 +12,11 @@
   font-family: newfont;
 }
 
-
 /* Background */
 
 .background-container {
   position: relative;
   min-height: 70vh;
-  z-index: -1;
 }
 
 .gradient-background {
@@ -36,6 +36,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  height: 13vh;
 } 
 
 .logo{
@@ -109,4 +110,45 @@
 
 .dropbtn{
   height: 100%;
+}
+
+/* Categories Banner */
+
+.category-container{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background-color: #ffffff;
+}
+
+.category-container h3{
+  padding:2%;
+  font-size: 1.3vw;
+  text-align: center;
+}
+
+.category-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  height: 13vh;
+}
+
+.category-list li {
+  padding: 2%;
+  font-size: 1.3vw;
+  text-align: center;
+}
+
+.category-list li:hover  {
+  background-color: rgb(231, 229, 229);
+  cursor: pointer;
+  height: 99.5%;
+}
+
+/* Browse Business */
+
+.browse-text{
+  padding:4%;
+  line-height: 250%;
 }
