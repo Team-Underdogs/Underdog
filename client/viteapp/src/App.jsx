@@ -13,6 +13,7 @@ import CreateServive from "./pages/CreateService.jsx";
 import UpdateService from "./pages/UpdateService.jsx";
 import ShoppingCart from "./pages/ShoppingCart.jsx";
 import UserAccount from "./pages/UserAccount.jsx";
+import SearchResults from "./pages/SearchResults.jsx";
 
 const app = () => {
   return (
@@ -31,6 +32,7 @@ const app = () => {
       <Route path="/service/:id" element={<ServiceDetail/>} />
       <Route path="/service/create" element={<CreateServive/>} />
       <Route path="/service/update/:id" element={<UpdateService/>} />
+      <Route path="/search" element={<SearchResults />} />
     </Routes>
   );
 };

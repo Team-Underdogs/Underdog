@@ -17,14 +17,16 @@ const Header = ({ enterSearch, pickOption }) => {
 
     return (
         <div className="header">
-            <img src={underdogLogo} alt="Underdog Logo" />
+            <Link to="/" className="logo">
+                <img src={underdogLogo} alt="Underdog Logo" />
+            </Link>
             <div className="searchbar">
-            <div className="search-dropdown">
+                <div className="search-dropdown">
                     <select 
                         className="dropbtn"
                         value={selectedOption}
-                        onChange={handleSearchOptionChange}
-                    >
+                        onChange={(e)=>setSelectedOption(e.target.value)}
+                        >
                         <option value="all">All</option>
                         <option value="businesses">Businesses</option>
                         <option value="products">Products</option>
@@ -39,16 +41,18 @@ const Header = ({ enterSearch, pickOption }) => {
                     placeholder="Search businesses, products, services..."
                 />
                 <button onClick={handleSearch} className="search-button">
-                    <FaSearch size={20} />
+                    <Link to="/search">
+                        <FaSearch size={18} color='black' />
+                    </Link>
                 </button>
             </div>
             <div className="header-buttons">
                 <a href="/">Sign in</a>
                 <Link to='/cart/:id'>
-                    <FaShoppingCart className="icon" size={30} />
+                    <FaShoppingCart className="icon" />
                 </Link>
                 <Link to='/account/:id'> 
-                    <FaUser className="icon" size={30} />
+                    <FaUser className="icon" />
                 </Link>
             </div>
         </div>
