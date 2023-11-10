@@ -33,22 +33,55 @@ router.get("/getStore/:id", async (req, res) => {
 
 // Create new store
 router.post("/createStore", async (req, res) => {
-    const {
-        BusinessName,
-        BusinessDescription,
-        BusinessTags
-    } = req.body;
-    const store = new StoreModel({
-        BusinessName,
-        BusinessDescription,
-        BusinessTags
-    });
     try {
-        const newStore = await store.save();
-        res.status(201).json(newStore);
+        const {
+            BusinessName,
+            Address,
+            Suburb,
+            City,
+            Phone,
+            BusinessDescription,
+            BusinessTags,
+            BusinessCategories,
+            LinkWebsite = "Not found",
+            LinkFB = "Not found",
+            LinkTwitter = "Not found",
+            LinkInstagram = "Not found"
+        } = req.body;
+        const UserId = req.query.UserId;
+        const Email = req.query.Email
+
+
+        if (!BusinessName || !Address || !Suburb || !City || !Phone || !BusinessDescription || !BusinessTags || !BusinessCategories) {
+            return res.status(400).json({ message: "Please provide all neccessary fields"})
+        }
+
+        if (!UserId) {
+            return res.status(401).json({ message: "Unauthorized, user id not provided"})
+        }
+
+        const store = new StoreModel({
+            BusinessName,
+            Address,
+            Suburb,
+            City,
+            Email,
+            Phone,
+            BusinessDescription,
+            BusinessTags,
+            BusinessCategories,
+            LinkWebsite,
+            LinkFB,
+            LinkTwitter,
+            LinkInstagram,
+            UserId
+        });
+        await store.save();
+        return res.status(201).json({ message: "Business created successfully", store})
+
     } catch (error) {
         console.error(error);
-        res.status(400).json({ message: error.message});
+        res.status(500).json({ message: "Error creating business"})
     }
 });
 

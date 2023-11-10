@@ -54,13 +54,9 @@ const StoreSchema = new mongoose.Schema(
             type: String,
             required: false,
         },
-        ProductsList: {
-            type: Array,
-            required: false,
-        },
-        ServicesList: {
-            type: Array,
-            required: false,
+        UserId: {
+            type: String,
+            required: true
         }
     }
 );

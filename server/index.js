@@ -58,7 +58,7 @@ const productsRouter = require("./routes/productRoutes");
 app.use("/products", productsRouter);
 
 const servicesRouter = require("./routes/servicesRoutes");
-app.use("./service", servicesRouter);
+app.use("/services", servicesRouter);
 
 // Start server
 app.listen(PORT, () => {
