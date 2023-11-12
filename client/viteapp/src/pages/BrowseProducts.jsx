@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import CategoriesBanner from "../components/categoriesMenu";
+import TagsBanner from "../components/tagsMenu";
 
 const BrowseProducts = () => {
     const [loading, setLoading] = useState(false);
@@ -15,6 +16,7 @@ const BrowseProducts = () => {
                 <h4>Explore unique products sourced by our diverse communities within New Zealand!</h4>
             </div>
             <CategoriesBanner />
+            <TagsBanner />
         </div>
     );
 }

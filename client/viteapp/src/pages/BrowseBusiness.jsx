@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import CategoriesBanner from "../components/categoriesMenu";
+import TagsBanner from "../components/tagsMenu";
 
 const BrowseBusiness = () => {
     const [loading, setLoading] = useState(false);
@@ -15,6 +16,7 @@ const BrowseBusiness = () => {
                 <h4>Explore our diverse marketplace of locally owned businesses!</h4>
             </div>
             <CategoriesBanner />
+            <TagsBanner />
         </div>
     );
 }

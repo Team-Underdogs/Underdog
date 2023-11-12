@@ -21,11 +21,11 @@ const app = () => {
       <Route path="/" element={<Home/>} />
       <Route path="/account/:id" element={<UserAccount/>} />
       <Route path="/cart/:id" element={<ShoppingCart/>} />
-      <Route path="/business/browse" element={<BrowseBusiness/>} />
+      <Route path="/browse/business" element={<BrowseBusiness/>} />
       <Route path="/business/:id" element={<BusinessDetail/>} />
       <Route path="/business/create" element={<CreateBusiness/>} />
       <Route path="/business/update/:id" element={<UpdateBusiness/>} />
-      <Route path="/product/browse" element={<BrowseProducts/>} />
+      <Route path="/browse/product" element={<BrowseProducts/>} />
       <Route path="/product/:id" element={<ProductDetail/>} />
       <Route path="/product/create" element={<CreateProduct/>} />
       <Route path="/product/update/:id" element={<UpdateProduct/>} />
