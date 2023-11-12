@@ -126,8 +126,8 @@
 }
 
 .category-list {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
   justify-content: space-around;
   align-items: center;
   list-style: none;
@@ -137,13 +137,19 @@
 .category-list li {
   padding: 2%;
   font-size: 1.3vw;
-  text-align: center;
+  height: 13vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .category-list li:hover  {
-  background-color: rgb(231, 229, 229);
+  background-color: rgb(237, 237, 237);
   cursor: pointer;
-  height: 99.5%;
+}
+
+.category-list li:not(:first-child) {
+  border-left: 1px solid #ccc;
 }
 
 /* Browse Business */
@@ -162,6 +168,7 @@
   justify-content: space-between;
   background-color: #ffffff;
   width: 15vw;
+  font-size: 1.3vw;
 }
 
 .dropdown-menu{
