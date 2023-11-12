@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import CategoriesBanner from "../components/categoriesMenu";
-import TagsBanner from "../components/tagsMenu";
+import CategoriesBanner from "../components/CategoriesMenu";
+import TagsBanner from "../components/TagsMenu";
 
 const BrowseProducts = () => {
     const [loading, setLoading] = useState(false);

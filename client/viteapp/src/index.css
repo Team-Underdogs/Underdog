@@ -1,9 +1,9 @@
-/* 'Control + F' -> Background, Header, Search Bar, Categories Banner, Browse Business */
-
 @font-face{
   font-family: "newfont";
   src: url("./assets/Heebo-Regular.ttf")
 }
+
+/* 'Control + F' -> Background, Header, Search Bar, Categories Banner, Tags Banner, Browse Business */
 
 *{
   margin: 0;
@@ -131,12 +131,10 @@
   justify-content: space-around;
   align-items: center;
   list-style: none;
-  height: 13vh;
 }
 
 .category-list li {
   padding: 2%;
-  font-size: 1.3vw;
   height: 13vh;
   display: flex;
   align-items: center;
@@ -167,7 +165,7 @@
   flex-direction: column;
   justify-content: space-between;
   background-color: #ffffff;
-  width: 15vw;
+  width: 11vw;
   font-size: 1.3vw;
 }
 
@@ -190,4 +188,6 @@
 
 .tagOption input{
   margin-right: 5%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
