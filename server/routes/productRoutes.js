@@ -6,7 +6,7 @@ const StoreModel = require("../models/stores");
 const ServiceModel = require("../models/services");
 
 // Get all products & services
-router.get("/getAllProducts",checkJwt, async (req, res) => {
+router.get("/getAllProducts", async (req, res) => {
     try {
         const products = await ProductModel.find();
         res.json({
@@ -84,7 +84,8 @@ router.post("/createProduct", async (req, res) => {
             ProductPrice,
             ProductTags,
             ProductCategories,
-            Store: AssociatedStore
+            Store: AssociatedStore,
+            UserId
         });
         await product.save();
         return res.status(201).json({message: "Product created successfully", product});
@@ -98,17 +99,35 @@ router.post("/createProduct", async (req, res) => {
 // Update product by id
 router.put("/updateProduct/:id", async (req, res) => {
     try {
-        const {id} = req.params;
-        const product = await ProductModel.findByIdAndUpdate(id, req.body, {
+        const {...updatedFields} = req.body;
+        const UserId = req.query.UserId;
+        const { id } = req.params;
+
+        const product = await ProductModel.findById(id);
+
+        if (!product) {
+            return res.status(404).json({ message: "Product not found"})
+        }
+
+        if (!UserId) {
+            return res.status(401).json({ message: "Unauthorized, user id not provided"})
+        }
+
+        if(UserId !== product.UserId) {
+            return res.status(403).json({ message: "Unauthorized. UserId does not match"})
+        }
+
+        const updatedProduct = await ProductModel.findByIdAndUpdate(id, updatedFields, {
             new: true
         });
-        if (!product) {
-            return res.status(404).json({message: "Product not found"});
+
+        if(!updatedProduct) {
+            return res.status(404).json({ message: "Product not found"})
         }
-        res.status(200).json(product);
+        res.json(updatedProduct);
     } catch (error) {
         console.error(error);
-        res.status(500).json({message: error.message});
+        res.status(500).json({message: error})
     }
 });
 
