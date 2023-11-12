@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import CategoriesBanner from "../components/CategoriesMenu";
 import TagsBanner from "../components/TagsMenu";
+import ProductCard from "../components/ProductCard";
+import ServiceCard from "../components/ServiceCard";
 
 const BrowseProducts = () => {
     const [loading, setLoading] = useState(false);
@@ -17,6 +19,12 @@ const BrowseProducts = () => {
             </div>
             <CategoriesBanner />
             <TagsBanner />
+            <ProductCard 
+            
+            />
+            <ServiceCard 
+            
+            />
         </div>
     );
 }

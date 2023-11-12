@@ -1,4 +1,4 @@
-import BrowseCards from "../components/BrowseCards";
+import BrowseCard from "../components/BrowseCard";
 
 const Home = () => {
     return (
@@ -8,12 +8,12 @@ const Home = () => {
                 <h4>Start browsing for products or businesses that embody the values you want to support.</h4>
             </div>
             <div className="browse-options">
-                <BrowseCards
+                <BrowseCard
                     image='../src/assets/business.jpeg'
                     title='Businesses'
                     link='/browse/business'
                 />
-                <BrowseCards
+                <BrowseCard
                      image='../src/assets/products.jpg'
                     title='Products & Services'
                     link='/browse/product'
