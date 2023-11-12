@@ -3,7 +3,7 @@
   src: url("./assets/Heebo-Regular.ttf")
 }
 
-/* 'Control + F' -> Background, Header, Search Bar, Categories Banner, Tags Banner, Browse Business */
+/* 'Control + F' -> Background, Header, Search Bar, Categories Banner, Tags Banner, Browse Business, Footer */
 
 *{
   margin: 0;
@@ -121,7 +121,7 @@
 
 .category-container h3{
   padding:2%;
-  font-size: 1.2vw;
+  font-size: 1vw;
   text-align: center;
 }
 
@@ -166,7 +166,7 @@
   justify-content: space-between;
   background-color: #ffffff;
   width: 11vw;
-  font-size: 1.3vw;
+  font-size: 1vw;
 }
 
 .dropdown-menu{
