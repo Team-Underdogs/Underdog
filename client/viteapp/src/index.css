@@ -3,7 +3,7 @@
   src: url("./assets/Heebo-Regular.ttf")
 }
 
-/* 'Control + F' -> Background, Header, Search Bar, Categories Banner, Tags Banner, Browse Business, Footer */
+/* 'Control + F' -> Background, Header, Search Bar, Categories Banner, Tags Banner, Browse Business/Product, Browse Card, */
 
 *{
   margin: 0;
@@ -150,7 +150,7 @@
   border-left: 1px solid #ccc;
 }
 
-/* Browse Business */
+/* Browse Business/Product */
 
 .browse-text{
   padding:4%;
@@ -190,4 +190,44 @@
   margin-right: 5%;
   margin-top: 5%;
   margin-bottom: 5%;
+}
+
+/* Browse Card */
+
+.browsecard-container a{
+  text-decoration: none;
+  color: black;
+}
+
+.browseCard {
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 20%;
+}
+
+.browseCard img{
+  width: 30vw;
+  height: 50vh;
+  object-fit: cover;
+}
+
+.bc-title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5%;
+  font-size: 1.2vw;
+}
+
+/* Home */
+
+.browse-options{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  margin-left: 10%;
+  margin-right: 10%;
+  border-bottom: 1px grey solid;
+  margin-bottom: 20%;
 }
