@@ -33,41 +33,92 @@ router.get("/getStore/:id", async (req, res) => {
 
 // Create new store
 router.post("/createStore", async (req, res) => {
-    const {
-        BusinessName,
-        BusinessDescription,
-        BusinessTags
-    } = req.body;
-    const store = new StoreModel({
-        BusinessName,
-        BusinessDescription,
-        BusinessTags
-    });
     try {
-        const newStore = await store.save();
-        res.status(201).json(newStore);
+        const {
+            BusinessName,
+            Address,
+            Suburb,
+            City,
+            Phone,
+            BusinessDescription,
+            BusinessTags,
+            BusinessCategories,
+            LinkWebsite = "Not found",
+            LinkFB = "Not found",
+            LinkTwitter = "Not found",
+            LinkInstagram = "Not found"
+        } = req.body;
+        const UserId = req.query.UserId;
+        const Email = req.query.Email
+
+
+        if (!BusinessName || !Address || !Suburb || !City || !Phone || !BusinessDescription || !BusinessTags || !BusinessCategories) {
+            return res.status(400).json({ message: "Please provide all neccessary fields"})
+        }
+
+        if (!UserId) {
+            return res.status(401).json({ message: "Unauthorized, user id not provided"})
+        }
+
+        const store = new StoreModel({
+            BusinessName,
+            Address,
+            Suburb,
+            City,
+            Email,
+            Phone,
+            BusinessDescription,
+            BusinessTags,
+            BusinessCategories,
+            LinkWebsite,
+            LinkFB,
+            LinkTwitter,
+            LinkInstagram,
+            UserId
+        });
+        await store.save();
+        return res.status(201).json({ message: "Business created successfully", store})
+
     } catch (error) {
         console.error(error);
-        res.status(400).json({ message: error.message});
+        res.status(500).json({ message: "Error creating business"})
     }
 });
 
 // Update a store
 router.put("/updateStore/:id", async (req, res) => {
     try {
-        const {id} = req.params;
-        const store = await StoreModel.findByIdAndUpdate(id, req.body, {
+        const {...updatedFields} = req.body;
+        const UserId = req.query.UserId;
+        const { id } = req.params;
+
+        const store = await StoreModel.findById(id);
+
+        if (!store) {
+            return res.status(404).json({ message: "Store not found"})
+        }
+
+        if (!UserId) {
+            return res.status(401).json({ message: "Unauthorized, user id not provided"})
+        }
+
+        if (UserId !== store.UserId) {
+            return res.status(403).json({ message: "Unauthorized. UserId does not match"})
+        }
+
+        const updatedStore = await StoreModel.findByIdAndUpdate(id, updatedFields, {
             new: true
         });
-        if (!store) {
-            return res.status(404).json({message: "Store not found"});
+
+        if(!updatedStore) {
+            return res.status(404).json({ message: "Store not found"})
         }
-        res.status(200).json(store);
+        res.json(updatedStore);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: error.message});
+        res.status(500).json({message: error})
     }
-})
+});
 
 // Delete a store
 router.delete("/deleteStore/:id", async (req, res) => {

@@ -41,13 +41,23 @@ router.post("/createService", async (req, res) => {
             ServiceDescription,
             ServicePrice,
             ServiceTags,
-            ServiceCategories,
-            StoreId
+            ServiceCategories
         } = req.body;
-        const AssociatedStore = await StoreModel.findById(StoreId);
+
+        const UserId = req.query.UserId;
+
+        const AssociatedStore = await StoreModel.findOne({UserId});
 
         if (!AssociatedStore) {
             return res.status(404).json({message: "Store not found"});
+        }
+
+        if (!ServiceName || !ServiceDescription || !ServicePrice || !ServiceTags || !ServiceCategories) {
+            return res.status(400).json({message: "Please provide all neccessary fields"})
+        }
+
+        if (!UserId) {
+            return res.status(401).json({message: "Unauthorized, user id is not provided"})
         }
 
         const service = new ServiceModel({
@@ -59,8 +69,8 @@ router.post("/createService", async (req, res) => {
             Store: AssociatedStore
         })
         await service.save();
+        return res.status(201).json({message: "Service created successfully", service});
 
-        return res.status(201).json(service);
     } catch (error) {
         console.error(error);
         return res.status(500).json({message: error.message})
@@ -70,17 +80,35 @@ router.post("/createService", async (req, res) => {
 // Update service by id
 router.put("/updateService/:id", async (req, res) => {
     try {
-        const {id} = req.params;
-        const service = await ServiceModel.findByIdAndUpdate(id, req.body, {
+        const {...updatedFields} = req.body;
+        const UserId = req.query.UserId;
+        const { id } = req.params;
+
+        const service = await ServiceModel.findById(id);
+
+        if (!service) {
+            return res.status(404).json({ message: "Service not found"})
+        }
+
+        if (!UserId) {
+            return res.status(401).json({ message: "Unauthorized, user id not provided"})
+        }
+
+        if(UserId !== service.UserId) {
+            return res.status(403).json({ message: "Unauthorized. UserId does not match"})
+        }
+
+        const updatedService = await ServiceModel.findByIdAndUpdate(id, updatedFields, {
             new: true
         });
-        if (!service) {
-            return res.status(404).json({message: "Service not found"});
+
+        if(!updatedService) {
+            return res.status(404).json({ message: "Service not found"})
         }
-        res.status(200).json(service);
+        res.json(updatedService);
     } catch (error) {
         console.error(error);
-        res.status(500).json({message: error.message});
+        res.status(500).json({message: error})
     }
 });
 
