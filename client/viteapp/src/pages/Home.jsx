@@ -26,10 +26,10 @@ const Home = () => {
               <LoginButton/>
               <LogoutButton/>
               <Link to={"/business/create"}>Create Business</Link>
-              <Link to={"/products/create"}>Create Product</Link>
-              <Link to={"/services/create"}>Create Service</Link>
+              <Link to={"/product/create"}>Create Product</Link>
+              <Link to={"/service/create"}>Create Service</Link>
               <Link to={"/business/update/654c3b948c52fbaf13e2be3b"}>test update</Link>
-            </div
+            </div>
         </div>
     );
 }
