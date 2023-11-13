@@ -13,6 +13,7 @@ import CreateServive from "./pages/CreateService.jsx";
 import UpdateService from "./pages/UpdateService.jsx";
 import ShoppingCart from "./pages/ShoppingCart.jsx";
 import UserAccount from "./pages/UserAccount.jsx";
+import SearchResults from "./pages/SearchResults.jsx";
 
 const app = () => {
   return (
@@ -20,17 +21,18 @@ const app = () => {
       <Route path="/" element={<Home/>} />
       <Route path="/account/:id" element={<UserAccount/>} />
       <Route path="/cart/:id" element={<ShoppingCart/>} />
-      <Route path="/business/browse" element={<BrowseBusiness/>} />
+      <Route path="/browse/business" element={<BrowseBusiness/>} />
       <Route path="/business/:id" element={<BusinessDetail/>} />
       <Route path="/business/create" element={<CreateBusiness/>} />
       <Route path="/business/update/:id" element={<UpdateBusiness/>} />
-      <Route path="/products/browse" element={<BrowseProducts/>} />
-      <Route path="/products/:id" element={<ProductDetail/>} />
-      <Route path="/products/create" element={<CreateProduct/>} />
-      <Route path="/products/update/:id" element={<UpdateProduct/>} />
+      <Route path="/browse/product" element={<BrowseProducts/>} />
+      <Route path="/product/:id" element={<ProductDetail/>} />
+      <Route path="/product/create" element={<CreateProduct/>} />
+      <Route path="/product/update/:id" element={<UpdateProduct/>} />
       <Route path="/service/:id" element={<ServiceDetail/>} />
       <Route path="/service/create" element={<CreateServive/>} />
       <Route path="/service/update/:id" element={<UpdateService/>} />
+      <Route path="/search" element={<SearchResults />} />
     </Routes>
   );
 };
