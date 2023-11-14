@@ -17,10 +17,109 @@ const BrowseBusiness = () => {
                 <h4>Explore our diverse marketplace of locally owned businesses!</h4>
             </div>
             <CategoriesBanner />
-            <TagsBanner />
-            <BusinessCard 
-            
-            />
+            <div className="browse-body">
+                <TagsBanner />
+                <div className="browse-bps-cards">
+                    <BusinessCard 
+                        businessName='Test Business'
+                        city='City'
+                        suburb='Suburb'
+                        image='../src/assets/business.jpeg'
+                        className='card'
+                    />
+                    <BusinessCard 
+                        businessName='Test Business'
+                        city='City'
+                        suburb='Suburb'
+                        image='../src/assets/business.jpeg'
+                        className='card'
+                    />
+                    <BusinessCard 
+                        businessName='Test Business'
+                        city='City'
+                        suburb='Suburb'
+                        image='../src/assets/business.jpeg'
+                        className='card'
+                    />
+                    <BusinessCard 
+                        businessName='Test Business'
+                        city='City'
+                        suburb='Suburb'
+                        image='../src/assets/business.jpeg'
+                        className='card'
+                    />
+                    <BusinessCard 
+                        businessName='Test Business'
+                        city='City'
+                        suburb='Suburb'
+                        image='../src/assets/business.jpeg'
+                        className='card'
+                    />
+                    <BusinessCard 
+                        businessName='Test Business'
+                        city='City'
+                        suburb='Suburb'
+                        image='../src/assets/business.jpeg'
+                        className='card'
+                    />
+                    <BusinessCard 
+                        businessName='Test Business'
+                        city='City'
+                        suburb='Suburb'
+                        image='../src/assets/business.jpeg'
+                        className='card'
+                    />
+                    <BusinessCard 
+                        businessName='Test Business'
+                        city='City'
+                        suburb='Suburb'
+                        image='../src/assets/business.jpeg'
+                        className='card'
+                    />
+                    <BusinessCard 
+                        businessName='Test Business'
+                        city='City'
+                        suburb='Suburb'
+                        image='../src/assets/business.jpeg'
+                        className='card'
+                    />
+                    <BusinessCard 
+                        businessName='Test Business'
+                        city='City'
+                        suburb='Suburb'
+                        image='../src/assets/business.jpeg'
+                        className='card'
+                    />
+                    <BusinessCard 
+                        businessName='Test Business'
+                        city='City'
+                        suburb='Suburb'
+                        image='../src/assets/business.jpeg'
+                        className='card'
+                    />
+                    <BusinessCard 
+                        businessName='Test Business'
+                        city='City'
+                        suburb='Suburb'
+                        image='../src/assets/business.jpeg'
+                        className='card'
+                    />
+                    <BusinessCard 
+                        businessName='Test Business'
+                        city='City'
+                        suburb='Suburb'
+                        image='../src/assets/business.jpeg'
+                        className='card'
+                    />
+                    <BusinessCard 
+                        businessName='Test Business'
+                        city='City'
+                        suburb='Suburb'
+                        image='../src/assets/business.jpeg'
+                        className='card'
+                    />
+                </div>
+            </div>
         </div>
     );
 }

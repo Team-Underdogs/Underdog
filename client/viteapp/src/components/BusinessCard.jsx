@@ -8,7 +8,7 @@ const BusinessCard = ({ businessID, businessName, city, suburb, image }) => {
                 <div className="businesscard-textbanner">
                     <p className="businesscard-title">{businessName}</p>
                     <p className="businesscard-location">{suburb}, {city}</p>
-                </div>
+                </div> 
             </Link>
         </div>
     )

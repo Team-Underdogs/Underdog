@@ -18,13 +18,25 @@ const BrowseProducts = () => {
                 <h4>Explore unique products sourced by our diverse communities within New Zealand!</h4>
             </div>
             <CategoriesBanner />
-            <TagsBanner />
-            <ProductCard 
-            
-            />
-            <ServiceCard 
-            
-            />
+            <div className="browse-body">
+                <TagsBanner />
+                <div className="browse-bps-cards">
+                    <ProductCard 
+                        productName='Test Product'
+                        businessName='Test Business'
+                        image='../src/assets/products.jpg'
+                        price='$0.00'
+                        className='card'
+                    />
+                    <ServiceCard 
+                        serviceName='Test Service'
+                        businessName='Test Business'
+                        image='../src/assets/products.jpg'
+                        price='$0.00'
+                        className='card'
+                    />
+                </div>
+            </div>
         </div>
     );
 }
