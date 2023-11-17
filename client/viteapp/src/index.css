@@ -3,7 +3,7 @@
   src: url("./assets/Heebo-Regular.ttf")
 }
 
-/* 'Control + F' -> Background, Header, Search Bar, Categories Banner, Tags Banner, Browse Business/Product, Browse Card, */
+/* 'Control + F' -> Background, Header, Search Bar, Categories Banner, Tags Banner, Browse Business/Product, Browse Card, Home, Business/Product/Service Card,*/
 
 *{
   margin: 0;
@@ -157,15 +157,29 @@
   line-height: 250%;
 }
 
+.browse-body{
+  display: flex;
+  flex-direction: row;
+}
+
+.browse-bps-cards{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14vw, 1fr));
+  grid-gap: 3vw;
+  width: 100%;
+  height: 35vh;
+  margin: 2%;
+}
+
 /* Tags Banner */
 
 .tags-container{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   background-color: #ffffff;
-  width: 11vw;
+  min-width: 11vw;
+  height: 100vh;
   font-size: 1vw;
 }
 
@@ -175,6 +189,7 @@
   justify-content: space-between;
   padding: 7%;
   box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom: 10%;
 }
 
 .chevrons:hover{
@@ -189,7 +204,7 @@
 .tagOption input{
   margin-right: 5%;
   margin-top: 5%;
-  margin-bottom: 5%;
+  margin-bottom: 10%;
 }
 
 /* Browse Card */
@@ -230,6 +245,60 @@
   margin-right: 10%;
   border-bottom: 1px grey solid;
   margin-bottom: 20%;
+}
+
+/* Business/Product/Service Card */
+
+.businesscard-container, .servicecard-container, .productcard-container{
+  width: 15vw;
+  height: 35vh;
+  background-color: white;
+  position: relative;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.businesscard-container:hover, .servicecard-container:hover, .productcard-container:hover{
+  opacity: 90%;
+}
+
+.businesscard-container img, .servicecard-container img, .productcard-container img{
+  object-fit: cover;
+  position: absolute;
+  width: 100%;
+  height: 70%;
+}
+
+.businesscard-textbanner, .servicecard-textbanner, .productcard-textbanner{
+  text-decoration: none;
+  color: black;
+  bottom: 0;
+  position: absolute;
+  padding-left: 5%;
+  padding-bottom: 10%;
+}
+
+.businesscard-title, .servicecard-title, .productcard-title{
+  font-weight: bold;
+  font-size: 1.1vw;
+}
+
+.businesscard-location, .productcard-business, .servicecard-business{
+  font-style: italic;
+  font-size: 0.9vw;
+}
+
+.productcard-price, .servicecard-price{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #A7524C;
+  color: white;
+  bottom: 0;
+  position: absolute;
+  width: 100%;
+  font-size: 1vw;
 }
 
 /* Business detail */
@@ -325,4 +394,3 @@
 .test-buttons-home{
   display: flex;
   flex-direction: column;
-}

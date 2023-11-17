@@ -4,7 +4,19 @@ const checkJwt = require("../utils/auth");
 const ServiceModel = require("../models/services");
 const StoreModel = require("../models/stores");
 
-// Get all services = will be called in /getAllProducts
+// Get all services
+router.get("/getAllServices", async (req, res) => {
+    try {
+        const services = await ServiceModel.find().populate('Store').exec();
+        res.json({
+            count: services.length,
+            data: services
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({message: error.message});
+    }
+});
 
 // Get all services by store
 router.get("/getServicesByStore/:storeId", async (req, res) => {
