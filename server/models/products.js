@@ -24,7 +24,7 @@ const ProductSchema = new mongoose.Schema(
         },
         Store: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "StoreModel",
+            ref: "stores",
             required: true
         },
         UserId: {

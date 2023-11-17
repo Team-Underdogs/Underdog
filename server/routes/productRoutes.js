@@ -3,20 +3,14 @@ const router = express.Router();
 const checkJwt = require("../utils/auth");
 const ProductModel = require("../models/products");
 const StoreModel = require("../models/stores");
-const ServiceModel = require("../models/services");
 
-// Get all products & services
+// Get all products
 router.get("/getAllProducts", async (req, res) => {
     try {
-        const products = await ProductModel.find();
+        const products = await ProductModel.find().populate('Store').exec();
         res.json({
             count: products.length,
             data: products
-        });
-        const services = await ServiceModel.find();
-        res.json({
-            count: services.length,
-            data: services
         });
     } catch (error) {
         console.error(error);
