@@ -231,3 +231,98 @@
   border-bottom: 1px grey solid;
   margin-bottom: 20%;
 }
+
+/* Business detail */
+
+.business-detail{
+  display: flex;
+  flex-direction: column;
+  font-size: 150%;
+}
+
+.business-detail-business-section{
+  display: flex;
+  flex-direction: column;
+  max-width: 80%;
+  align-self: center;
+}
+
+.business-detail-info{
+  display: flex;
+  flex-direction: column;
+  margin-top: 2%;
+}
+
+.business-detail-info-desc{
+  margin-top: 1%;
+}
+
+.business-detail-contact{
+  display: flex;
+  flex-direction: column;
+  margin-top: 2%;
+}
+
+.business-detail-links{
+  display: flex;
+  margin-top: 2%;
+}
+
+/* Product detail */
+
+.product-detail{
+  display: flex;
+  flex-direction: column;
+  font-size: 150%;
+}
+
+.product-detail-product-section{
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
+  margin-top: 2%;
+}
+
+/* Service detail */
+
+.service-detail{
+  display: flex;
+  flex-direction: column;
+  font-size: 150%;
+}
+
+.service-detail-service-section{
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin: auto;
+  margin-top: 2%;
+}
+
+/* Create business */
+
+
+
+/* Create product */
+
+
+
+/* Create service */
+
+
+
+/* Update business */
+
+
+
+/* Update product */
+
+
+
+/* Update service */
+
+.test-buttons-home{
+  display: flex;
+  flex-direction: column;
+}

@@ -41,16 +41,15 @@ const ServiceDetail = () => {
     }, [id]);
 
     return (
-        <div>
+        <div className="service-detail">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
-                <div>
+                <div className="service-detail-service-section">
                     <h1>{service.ServicePrice}</h1>
                     <h2>{service.ServiceName}</h2>
                     <h2>{store.BusinessName}</h2>
                     <p>{service.ServiceDescription}</p>
-
                 </div>
             )}
         </div>

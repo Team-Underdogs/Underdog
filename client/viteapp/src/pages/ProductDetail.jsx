@@ -41,16 +41,15 @@ const ProductDetail = () => {
     }, [id]);
 
     return (
-        <div>
+        <div className="product-detail">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
-                <div>
-                    <h1>{product.ProductPrice}</h1>
-                    <h2>{product.ProductName}</h2>
-                    <h2>{store.BusinessName}</h2>
+                <div className="product-detail-product-section">
+                    <h1>Price: ${product.ProductPrice}</h1>
+                    <h3>{product.ProductName}</h3>
+                    <h3>{store.BusinessName}</h3>
                     <p>{product.ProductDescription}</p>
-
                 </div>
             )}
         </div>

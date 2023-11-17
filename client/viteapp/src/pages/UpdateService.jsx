@@ -109,7 +109,7 @@ const UpdateService = () => {
             ) : (
                 <div>
                     {Object.entries(service).map(([field, value]) => {
-                        if (["_id", "UserId", "__v"].includes(field)) {
+                        if (["_id", "UserId", "__v", "ServiceTags", "ServiceCategories"].includes(field)) {
                             return null;
                         }
                     return (

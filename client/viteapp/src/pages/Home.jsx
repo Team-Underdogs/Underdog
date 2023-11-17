@@ -22,7 +22,7 @@ const Home = () => {
                     link='/browse/product'
                 />
             </div> 
-            <div>
+            <div className="test-buttons-home">
               <LoginButton/>
               <LogoutButton/>
               <Link to={"/business/create"}>Create Business </Link>

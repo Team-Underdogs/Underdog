@@ -27,23 +27,25 @@ const BusinessDetail = () => {
     }, [id]);
 
     return (
-        <div>
+        <div className="business-detail">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
-                <div>
-                    <div>
+                <div className="business-detail-business-section">
+                    <div className="business-detail-info">
                         <h1>{business.BusinessName}</h1>
-                        <p>{business.BusinessTags}</p>
-                        <p>{business.BusinessDescription}</p>
+                        {business.BusinessTags && business.BusinessTags.length > 0 && (
+                            <p>Tags: {business.BusinessTags.join(" • ")}</p>
+                        )}
+                        <p className="business-detail-info-desc">{business.BusinessDescription}</p>
                     </div>
-                    <div>
+                    <div className="business-detail-contact">
                         <p>Address: {business.Address}, {business.Suburb}, {business.City}</p>
                         <p>{business.Email}</p>
                         <p>{business.Phone}</p>
                         <p>{business.LinkWebsite}</p>
                     </div>
-                    <div>
+                    <div className="business-detail-links">
                         <a href={business.LinkFB}>fb icon</a>
                         <a href={business.LinkTwitter}>insta icon</a>
                         <a href={business.LinkInstagram}>twitter icon</a>

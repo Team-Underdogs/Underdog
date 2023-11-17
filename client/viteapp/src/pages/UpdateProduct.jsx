@@ -110,7 +110,7 @@ const UpdateProduct = () => {
             ) : (
                 <div>
                     {Object.entries(product).map(([field, value]) => {
-                        if (["_id", "UserId", "__v"].includes(field)) {
+                        if (["_id", "UserId", "__v", "ProductTags", "ProductCategories"].includes(field)) {
                             return null;
                         }
                     return (
