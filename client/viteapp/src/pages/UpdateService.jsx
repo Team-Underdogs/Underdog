@@ -18,6 +18,17 @@ const UpdateService = () => {
     const navigate = useNavigate();
     const { id } = useParams();
 
+    const availableTags = {
+        Regions: ['Northland', 'Auckland', 'Waikato', 'Bay of Plenty', 'Gisborne', 'Hawkes Bay', 'Taranaki', 'Whanganui', 'Wellington', 'Tasman', 'Nelson', 'Marlborough', 'West Coast', 'Canterbury', 'Otago', 'Southland'],
+        Ethnicity: ['Maori', 'Pacific Islander', 'European', 'Asia', 'Africa', 'MENA'],
+        Identity: ['Women', 'LGBTQIA+'],
+        Religion: ['Muslim', 'Jewish', 'Sikh', 'Buddhist', 'Hindu', 'Other'],
+        Sustainability: ['Eco-Friendly', 'Vegan', 'Halal', 'Organic'],
+        Health: ['Mental Health', 'Disabilities', 'Aged']
+    };
+
+    const availableCategories = ['Clothing', 'Accessories', 'Homeware', 'Technology', 'Cosmetic', 'Food', 'Sport', 'Pet', 'Other'];
+
     useEffect(() => {
         axios
             .get(`http://localhost:3001/services/getService/${id}`)
@@ -39,6 +50,28 @@ const UpdateService = () => {
             [name]: value
         }));
     };
+
+    const handleTagChange = (tag) => {
+        setService((prevService) => {
+            const updatedTags = [...prevService.ServiceTags];
+            if (updatedTags.includes(tag)) {
+                return {...prevService, ServiceTags: updatedTags.filter((selectedTag) => selectedTag !== tag)};
+            } else {
+                return { ...prevService, ServiceTags: [...updatedTags, tag]}
+            }
+        });
+    };
+
+    const handleCategoryChange = (category) => {
+        setService((prevService) => {
+          const updatedCategories = [...prevService.ServiceCategories];
+          if (updatedCategories.includes(category)) {
+            return { ...prevService, ServiceCategories: updatedCategories.filter((selectedCategory) => selectedCategory !== category) };
+          } else {
+            return { ...prevService, ServiceCategories: [...updatedCategories, category] };
+          }
+        });
+      };
 
     const handleUpdateService = () => {
 
@@ -76,7 +109,7 @@ const UpdateService = () => {
             ) : (
                 <div>
                     {Object.entries(service).map(([field, value]) => {
-                        if (["_id", "UserId", "__v"].includes(field)) {
+                        if (["_id", "UserId", "__v", "ServiceTags", "ServiceCategories"].includes(field)) {
                             return null;
                         }
                     return (
@@ -91,6 +124,41 @@ const UpdateService = () => {
                         </div>
                     );
                     })}
+                    <div>
+                        <h1>Service Tags</h1>
+                        {Object.entries(availableTags).map(([group, tags]) => (
+                            <div key={group}>
+                                <label>Service Tags: {group}</label>
+                                {tags.map((tag) => (
+                                <div key={tag}>
+                                    <input
+                                    type="checkbox"
+                                    id={tag}
+                                    value={tag}
+                                    checked={service.ServiceTags.includes(tag)}
+                                    onChange={() => handleTagChange(tag)}
+                                    />
+                                    <label htmlFor={tag}>{tag}</label>
+                                </div>
+                            ))}
+                            </div>
+                    ))}
+                    </div>
+                    <div>
+                        <h1>Service Categories</h1>
+                        {availableCategories.map((category) => (
+                        <div key={category}>
+                            <input
+                            type="checkbox"
+                            id={category}
+                            value={category}
+                            checked={service.ServiceCategories.includes(category)}
+                            onChange={() => handleCategoryChange(category)}
+                            />
+                            <label htmlFor={category}>{category}</label>
+                        </div>
+                    ))}
+                    </div>
                     <button onClick={handleUpdateService}>Save</button>
                 </div>
             )}

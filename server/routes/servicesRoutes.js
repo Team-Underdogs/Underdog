@@ -78,7 +78,8 @@ router.post("/createService", async (req, res) => {
             ServicePrice,
             ServiceTags,
             ServiceCategories,
-            Store: AssociatedStore
+            Store: AssociatedStore,
+            UserId
         })
         await service.save();
         return res.status(201).json({message: "Service created successfully", service});

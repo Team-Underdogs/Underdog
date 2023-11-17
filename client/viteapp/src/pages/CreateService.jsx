@@ -7,15 +7,47 @@ const CreateService = () => {
     const [name, setName] = useState('');
     const [price, setPrice] = useState('');
     const [description, setDescription] = useState('');
-    const [tags, setTags] = useState('');
-    const [categories, setCategories] = useState('');
+    const [selectedTags, setTags] = useState([]);
+    const [categories, setCategories] = useState([]);
+
+    const {user, isAuthenticated} = useAuth0();
+
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const {user, isAuthenticated} = useAuth0();
+    const availableTags = {
+        Regions: ['Northland', 'Auckland', 'Waikato', 'Bay of Plenty', 'Gisborne', 'Hawkes Bay', 'Taranaki', 'Whanganui', 'Wellington', 'Tasman', 'Nelson', 'Marlborough', 'West Coast', 'Canterbury', 'Otago', 'Southland'],
+        Ethnicity: ['Maori', 'Pacific Islander', 'European', 'Asia', 'Africa', 'MENA'],
+        Identity: ['Women', 'LGBTQIA+'],
+        Religion: ['Muslim', 'Jewish', 'Sikh', 'Buddhist', 'Hindu', 'Other'],
+        Sustainability: ['Eco-Friendly', 'Vegan', 'Halal', 'Organic'],
+        Health: ['Mental Health', 'Disabilities', 'Aged']
+    };
+
+    const availableCategories = ['Clothing', 'Accessories', 'Homeware', 'Technology', 'Cosmetic', 'Food', 'Sport', 'Pet', 'Other'];
     
+    const handleTagChange = (tag) => {
+        setTags((prevTags) => {
+            if (prevTags.includes(tag)) {
+                return prevTags.filter((selectedTag) => selectedTag !== tag);
+            } else {
+                return [...prevTags, tag]
+            }
+        })
+    };
+
+    const handleCategoryChange = (category) => {
+        setCategories((prevCategories) => {
+            if (prevCategories.includes(category)) {
+                return prevCategories.filter((selectedCategory) => selectedCategory !== category)
+            } else {
+                return [...prevCategories, category]
+            }
+        });
+    };
+
     const handleCreateService = () => {
-        if (!name || !price || !description || !tags || !categories) {
+        if (!name || !price || !description || !selectedTags || !categories) {
             alert("Please fill in all fields");
             return;
         }
@@ -29,7 +61,7 @@ const CreateService = () => {
             ServiceName: name,
             ServiceDescription: description,
             ServicePrice: price,
-            ServiceTags: tags,
+            ServiceTags: selectedTags,
             ServiceCategories: categories
         }
 
@@ -72,21 +104,37 @@ const CreateService = () => {
                     onChange={(e) => (setDescription(e.target.value))}
                 />
             </div>
-            <div>
-                <label>Service Tags</label>
-                <input
-                    type="text"
-                    value={tags}
-                    onChange={(e) => (setTags(e.target.value))}
-                />
-            </div>
+            {Object.entries(availableTags).map(([group, tags]) => (
+                <div key={group}>
+                    <label>Service Tags: {group}</label>
+                    {tags.map((tag) => (
+                        <div key={tag}>
+                            <input
+                            type="checkbox"
+                            id={tag}
+                            value={tag}
+                            checked={selectedTags.includes(tag)}
+                            onChange={() => handleTagChange(tag)}
+                            />
+                            <label htmlFor={tag}>{tag}</label>
+                        </div>
+                    ))}
+                </div>
+            ))}
             <div>
                 <label>Service Categories</label>
-                <input
-                    type="text"
-                    value={categories}
-                    onChange={(e) => (setCategories(e.target.value))}
-                />
+                {availableCategories.map((category) => (
+                    <div key={category}>
+                        <input
+                        type="checkbox"
+                        id={category}
+                        value={category}
+                        checked={categories.includes(category)}
+                        onChange={() => handleCategoryChange(category)}
+                        />
+                        <label htmlFor={category}>{category}</label>
+                    </div>
+                ))}
             </div>
             <div>
                 <button onClick={handleCreateService}>Create Service</button>

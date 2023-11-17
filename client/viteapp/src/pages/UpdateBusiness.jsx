@@ -26,6 +26,17 @@ const UpdateBusiness = () => {
     const navigate = useNavigate();
     const { id } = useParams();
 
+    const availableTags = {
+        Regions: ['Northland', 'Auckland', 'Waikato', 'Bay of Plenty', 'Gisborne', 'Hawkes Bay', 'Taranaki', 'Whanganui', 'Wellington', 'Tasman', 'Nelson', 'Marlborough', 'West Coast', 'Canterbury', 'Otago', 'Southland'],
+        Ethnicity: ['Maori', 'Pacific Islander', 'European', 'Asia', 'Africa', 'MENA'],
+        Identity: ['Women', 'LGBTQIA+'],
+        Religion: ['Muslim', 'Jewish', 'Sikh', 'Buddhist', 'Hindu', 'Other'],
+        Sustainability: ['Eco-Friendly', 'Vegan', 'Halal', 'Organic'],
+        Health: ['Mental Health', 'Disabilities', 'Aged']
+    };
+
+    const availableCategories = ['Clothing', 'Accessories', 'Homeware', 'Technology', 'Cosmetic', 'Food', 'Sport', 'Pet', 'Other'];
+
     useEffect(() => {
         axios
             .get(`http://localhost:3001/stores/getStore/${id}`)
@@ -47,6 +58,29 @@ const UpdateBusiness = () => {
             [name]: value
         }));
     };
+
+    const handleTagChange = (tag) => {
+        setBusiness((prevBusiness) => {
+            const updatedTags = [...prevBusiness.BusinessTags];
+            if (updatedTags.includes(tag)) {
+                return {...prevBusiness, BusinessTags: updatedTags.filter((selectedTag) => selectedTag !== tag)};
+            } else {
+                return { ...prevBusiness, BusinessTags: [...updatedTags, tag]}
+            }
+        });
+    };
+
+    const handleCategoryChange = (category) => {
+        setBusiness((prevBusiness) => {
+          const updatedCategories = [...prevBusiness.BusinessCategories];
+          if (updatedCategories.includes(category)) {
+            return { ...prevBusiness, BusinessCategories: updatedCategories.filter((selectedCategory) => selectedCategory !== category) };
+          } else {
+            return { ...prevBusiness, BusinessCategories: [...updatedCategories, category] };
+          }
+        });
+      };
+    
 
     const handleUpdateBusiness = () => {
 
@@ -85,7 +119,7 @@ const UpdateBusiness = () => {
             ) : (
                 <div>
                     {Object.entries(business).map(([field, value]) => {
-                        if (["_id", "UserId", "__v"].includes(field)) {
+                        if (["_id", "UserId", "__v", "BusinessTags", "BusinessCategories"].includes(field)) {
                             return null;
                         }
                     return (
@@ -100,6 +134,41 @@ const UpdateBusiness = () => {
                         </div>
                     );
                     })}
+                    <div>
+                        <h1>Business Tags</h1>
+                        {Object.entries(availableTags).map(([group, tags]) => (
+                            <div key={group}>
+                                <label>Business Tags: {group}</label>
+                                {tags.map((tag) => (
+                                <div key={tag}>
+                                    <input
+                                    type="checkbox"
+                                    id={tag}
+                                    value={tag}
+                                    checked={business.BusinessTags.includes(tag)}
+                                    onChange={() => handleTagChange(tag)}
+                                    />
+                                    <label htmlFor={tag}>{tag}</label>
+                                </div>
+                            ))}
+                            </div>
+                    ))}
+                    </div>
+                    <div>
+                        <h1>Business Categories</h1>
+                        {availableCategories.map((category) => (
+                        <div key={category}>
+                            <input
+                            type="checkbox"
+                            id={category}
+                            value={category}
+                            checked={business.BusinessCategories.includes(category)}
+                            onChange={() => handleCategoryChange(category)}
+                            />
+                            <label htmlFor={category}>{category}</label>
+                        </div>
+                    ))}
+                    </div>
                     <button onClick={handleUpdateBusiness}>Save</button>
                 </div>
             )}
