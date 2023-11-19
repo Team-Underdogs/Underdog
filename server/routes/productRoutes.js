@@ -139,5 +139,24 @@ router.delete("/deleteProduct/:id", async (req, res) => {
     }
 })
 
+// Filter products by category and/or tags
+router.get('/filterProducts', async (req, res) => {
+    try {
+        const { category, tags } = req.query;
+        let query = {};
+        if (category) {
+            query.ProductCategories = category;
+        }
+        if (tags) {
+            const tagsArray = tags.split(','); 
+            query.ProductTags = { $in: tagsArray };
+        }
+        const filteredProducts = await ProductModel.find(query);
+        res.json(filteredProducts);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // Export
 module.exports = router;

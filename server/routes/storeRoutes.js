@@ -135,5 +135,24 @@ router.delete("/deleteStore/:id", async (req, res) => {
     }
 });
 
+// Filter businesses by category and/or tags
+router.get('/filterBusinesses', async (req, res) => {
+    try {
+        const { category, tags } = req.query;
+        let query = {};
+        if (category) {
+            query.BusinessCategories = category;
+        }
+        if (tags) {
+            const tagsArray = tags.split(','); 
+            query.BusinessTags = { $in: tagsArray };
+        }
+        const filteredBusinesses = await StoreModel.find(query);
+        res.json(filteredBusinesses);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // Export
 module.exports = router;

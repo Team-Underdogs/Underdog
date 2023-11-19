@@ -139,5 +139,24 @@ router.delete("/deleteService/:id", async (req, res) => {
     }
 })
 
+// Filter services by category and/or tags
+router.get('/filterServices', async (req, res) => {
+    try {
+        const { category, tags } = req.query;
+        let query = {};
+        if (category) {
+            query.ServiceCategories = category;
+        }
+        if (tags) {
+            const tagsArray = tags.split(','); 
+            query.ServiceTags = { $in: tagsArray };
+        }
+        const filteredServices = await ServiceModel.find(query);
+        res.json(filteredServices);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 // Export
 module.exports = router;
