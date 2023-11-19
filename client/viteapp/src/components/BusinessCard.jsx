@@ -1,4 +1,4 @@
-const BusinessCard = ({ businessID, businessName, city, suburb, image }) => {
+const BusinessCard = ({ businessName, city, suburb, image }) => {
     return (
         <div className="businesscard-container">
             <img src={image} />

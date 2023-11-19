@@ -10,8 +10,9 @@ const BrowseProducts = () => {
     const [loading, setLoading] = useState(false);
     const [products, setProducts] = useState([]);
     const [services, setServices] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [filteredServices, setFilteredServices] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
-    const [selectedTags, setSelectedTags] = useState([]);
 
     useEffect(() => {
         setLoading(true);
@@ -23,13 +24,25 @@ const BrowseProducts = () => {
           })
           .then((res2) => {
             setServices(res2.data.data);
+            return axios.get(`http://localhost:3001/products/filterProducts?category=${selectedCategory}`);
+          })
+          .then((res3) => {
+            setFilteredProducts(res3.data);
+            return axios.get(`http://localhost:3001/services/filterServices?category=${selectedCategory}`);
+          })
+          .then((res4) => {
+            setFilteredServices(res4.data);
             setLoading(false);
           })
           .catch((err) => {
             console.log("Axios Error:", err.response ? err.response.data : err.message);
             setLoading(false);
           });
-      }, []);
+      }, [selectedCategory]);
+
+    const selectCategoryFilter = (category) => {
+        setSelectedCategory(category)
+    }
       
     return (
         <div className="browse-container">
@@ -37,11 +50,11 @@ const BrowseProducts = () => {
                 <h1>Browse By Products & Services</h1>
                 <h4>Explore unique products sourced by our diverse communities within New Zealand!</h4>
             </div>
-            <CategoriesBanner />
+            <CategoriesBanner onCategorySelect={selectCategoryFilter} />
             <div className="browse-body">
                 <TagsBanner />
                 <div className="browse-bps-cards">
-                    {products.map((product, index)=>(
+                    {filteredProducts.map((product, index)=>(
                         <Link to={`/products/${product._id}`} key={index}>
                             <ProductCard 
                             productName={product.ProductName}
@@ -52,7 +65,7 @@ const BrowseProducts = () => {
                         />
                         </Link>
                     ))}
-                    {services.map((service, index)=>(
+                    {filteredServices.map((service, index)=>(
                         <Link to={`/services/${service._id}`} key={index}>
                             <ServiceCard 
                             serviceName={service.ServiceName}

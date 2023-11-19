@@ -15,7 +15,8 @@ const TagsBanner = () => {
     const [openTagGroups, setOpenTagGroups] = useState({});
     const [selectedTags, setSelectedTags] = useState({});
 
-    // Toggles the tag grouping (e.g., Religion) being open or closed, and updates an array to say which groups are currently open
+    // Toggles the tag grouping (e.g., Religion)
+
     const toggleTagGroup = (tagGroup) => {
         setOpenTagGroups((prevOpenTagGroups) => {
             const updatedOpenTagGroups = {
@@ -27,6 +28,7 @@ const TagsBanner = () => {
         });
     }; 
 
+    // Toggles multiple tags in various tag groups
     const handleTagCheck = (tagGroup, tag) => {
         setSelectedTags((prevSelectedTags) => {
             const isSelected = prevSelectedTags[tagGroup] ? prevSelectedTags[tagGroup].includes(tag) : false;
@@ -36,7 +38,7 @@ const TagsBanner = () => {
                     ...prevSelectedTags,
                     [tagGroup]: prevSelectedTags[tagGroup].filter((selectedTag) => selectedTag !== tag),
                 };
-                console.log('Updated selectedTags:', newSelectedTags);
+                console.log('Updated selected tags:', newSelectedTags);
                 return newSelectedTags;
             } else {
                 const newSelectedTags = {

@@ -7,11 +7,10 @@ const SearchResults = () => {
     const params = new URLSearchParams(location.search);
     const category = params.get('category');
     const keyword = params.get('keyword');
-    console.log("Category:", category);
-    console.log("Keyword:", keyword);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+      if(category && keyword){
         setLoading(true);
         axios
           .get(`http://localhost:3001?category=${category}&keyword=${keyword}`)
@@ -22,7 +21,9 @@ const SearchResults = () => {
             console.log("Axios Error:", err.response ? err.response.data : err.message);
             setLoading(false);
           });
-      }, [category, keyword]);
+      } else {
+        console.log('No params')
+      }}, [category, keyword]);
     
     return(
         <div className='searchResults-container'>
@@ -31,7 +32,7 @@ const SearchResults = () => {
                 {category === 'all' ? (
                   <h4>All items associated with '{keyword}'</h4>
                 ) : (
-                  <h4>{category} associated with '{keyword}'</h4>
+                  <h4>All {category} associated with '{keyword}'</h4>
                 )}
             </div>
         </div>
