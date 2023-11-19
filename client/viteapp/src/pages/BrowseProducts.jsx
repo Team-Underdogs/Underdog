@@ -13,9 +13,11 @@ const BrowseProducts = () => {
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [filteredServices, setFilteredServices] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedTags, setSelectedTags] = useState([]);
 
     useEffect(() => {
         setLoading(true);
+        const tagsParam = Object.values(selectedTags).flat().join(',');
         axios
           .get("http://localhost:3001/products/getAllProducts")
           .then((res1) => {
@@ -24,11 +26,11 @@ const BrowseProducts = () => {
           })
           .then((res2) => {
             setServices(res2.data.data);
-            return axios.get(`http://localhost:3001/products/filterProducts?category=${selectedCategory}`);
+            return axios.get(`http://localhost:3001/products/filterProducts?category=${selectedCategory}&tags=${tagsParam}`);
           })
           .then((res3) => {
             setFilteredProducts(res3.data);
-            return axios.get(`http://localhost:3001/services/filterServices?category=${selectedCategory}`);
+            return axios.get(`http://localhost:3001/services/filterServices?category=${selectedCategory}&tags=${tagsParam}`);
           })
           .then((res4) => {
             setFilteredServices(res4.data);
@@ -38,10 +40,14 @@ const BrowseProducts = () => {
             console.log("Axios Error:", err.response ? err.response.data : err.message);
             setLoading(false);
           });
-      }, [selectedCategory]);
+      }, [selectedCategory, selectedTags]);
 
     const selectCategoryFilter = (category) => {
         setSelectedCategory(category)
+    }
+
+    const selectTagFilters = (tags) => {
+      setSelectedTags(tags)
     }
       
     return (
@@ -52,7 +58,7 @@ const BrowseProducts = () => {
             </div>
             <CategoriesBanner onCategorySelect={selectCategoryFilter} />
             <div className="browse-body">
-                <TagsBanner />
+                <TagsBanner onTagsSelect={selectTagFilters} />
                 <div className="browse-bps-cards">
                     {filteredProducts.map((product, index)=>(
                         <Link to={`/products/${product._id}`} key={index}>

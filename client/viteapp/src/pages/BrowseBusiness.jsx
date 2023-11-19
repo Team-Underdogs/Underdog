@@ -10,13 +10,15 @@ const BrowseBusiness = () => {
     const [businesses, setBusinesses] = useState([]);
     const [filteredBusinesses, setFilteredBusinesses] = useState([]);
     const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedTags, setSelectedTags] = useState([]);
 
     useEffect(() => {
         setLoading(true);
+        const tagsParam = Object.values(selectedTags).flat().join(',');
         axios.get("http://localhost:3001/stores/getAllStores")
             .then((res) => {
                 setBusinesses(res.data.data);
-                return axios.get(`http://localhost:3001/stores/filterBusinesses?category=${selectedCategory}`);
+                return axios.get(`http://localhost:3001/stores/filterBusinesses?category=${selectedCategory}&tags=${tagsParam}`);
             })
             .then((res2) => {
                 setFilteredBusinesses(res2.data);
@@ -26,10 +28,14 @@ const BrowseBusiness = () => {
                 console.log("Axios Error:", err.response ? err.response.data : err.message);
                 setLoading(false);
             });
-    }, [selectedCategory]);  
+    }, [selectedCategory, selectedTags]);  
     
     const selectCategoryFilter = (category) => {
         setSelectedCategory(category)
+    }
+
+    const selectTagFilters = (tags) => {
+        setSelectedTags(tags)
     }
 
     return (
@@ -40,7 +46,7 @@ const BrowseBusiness = () => {
             </div>
             <CategoriesBanner onCategorySelect={selectCategoryFilter} />
             <div className="browse-body">
-                <TagsBanner />
+                <TagsBanner onTagsSelect={selectTagFilters} />
                 <div className="browse-bps-cards">
                 {filteredBusinesses.map((business, index) => ( 
                     <Link to={`/business/${business._id}`} key={index}>
