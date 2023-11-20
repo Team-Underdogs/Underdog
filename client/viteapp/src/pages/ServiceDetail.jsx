@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import GeneralButton from "../components/GeneralButton";
 
 const ServiceDetail = () => {
     const [service, setService] = useState({});
@@ -41,12 +42,21 @@ const ServiceDetail = () => {
     }, [id]);
 
     return (
-        <div className="service-detail">
+        <div className="content-container">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
                 <div className="service-detail-service-section">
                     <h1>{service.ServicePrice}</h1>
+                    {user?.sub == service.UserId ? (
+                        <div className="button section">
+                            <GeneralButton 
+                            text={"Update service"} 
+                            link={`/service/update/${service._id}`}
+                            />
+                        </div>
+                        ) : (null)
+                        }
                     <h2>{service.ServiceName}</h2>
                     <h2>{store.BusinessName}</h2>
                     <p>{service.ServiceDescription}</p>

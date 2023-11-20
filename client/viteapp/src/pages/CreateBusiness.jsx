@@ -93,9 +93,9 @@ const CreateBusiness = () => {
     };
 
     return (
-        <div>
+        <div className="content-container">
             <h1>Create Business</h1>
-            <div>
+            <div className="label-input-combo">
                 <label>Business Name *</label>
                 <input
                     type="text"
@@ -103,7 +103,7 @@ const CreateBusiness = () => {
                     onChange={(e) => setName(e.target.value)}
                 />
             </div>
-            <div>
+            <div className="label-input-combo">
                 <label>Address *</label>
                 <input
                     type="text"
@@ -111,7 +111,7 @@ const CreateBusiness = () => {
                     onChange={(e) => setAddress(e.target.value)}
                 />
             </div>
-            <div>
+            <div className="label-input-combo">
                 <label>City *</label>
                 <input
                     type="text"
@@ -119,7 +119,7 @@ const CreateBusiness = () => {
                     onChange={(e) => setCity(e.target.value)}
                 />
             </div>
-            <div>
+            <div className="label-input-combo">
                 <label>Suburb *</label>
                 <input
                     type="text"
@@ -127,15 +127,15 @@ const CreateBusiness = () => {
                     onChange={(e) => setSuburb(e.target.value)}
                 />
             </div>
-            <div>
+            <div className="label-input-combo">
                 <label>Business Description *</label>
-                <input
+                <textarea
                     type="text"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 />
             </div>
-            <div>
+            <div className="label-input-combo">
                 <label>Phone *</label>
                 <input
                     type="text"
@@ -143,7 +143,7 @@ const CreateBusiness = () => {
                     onChange={(e) => setPhone(e.target.value)}
                 />
             </div>
-            <div>
+            <div className="label-input-combo">
                 <label>Website</label>
                 <input
                     type="text"
@@ -151,7 +151,7 @@ const CreateBusiness = () => {
                     onChange={(e) => setWebsite(e.target.value)}
                 />
             </div>
-            <div>
+            <div className="label-input-combo">
                 <label>Facebook</label>
                 <input
                     type="text"
@@ -159,7 +159,7 @@ const CreateBusiness = () => {
                     onChange={(e) => setFb(e.target.value)}
                 />
             </div>
-            <div>
+            <div className="label-input-combo">
                 <label>Twitter</label>
                 <input
                     type="text"
@@ -167,7 +167,7 @@ const CreateBusiness = () => {
                     onChange={(e) => setTwitter(e.target.value)}
                 />
             </div>
-            <div>
+            <div className="label-input-combo">
                 <label>Instagram</label>
                 <input
                     type="text"
@@ -175,12 +175,15 @@ const CreateBusiness = () => {
                     onChange={(e) => setInsta(e.target.value)}
                 />
             </div>
+            <h2>Business Tags</h2>
             {Object.entries(availableTags).map(([group, tags]) => (
-                <div key={group}>
-                    <label>Business Tags: {group}</label>
+                <div className="tag-groups" key={group}>
+                    <h3 className="group-label">Business Tags: {group}</h3>
+                    <div className="tag-rows">
                     {tags.map((tag) => (
-                        <div key={tag}>
+                        <div className="tag-select-container" key={tag}>
                             <input
+                            className="tag-checkbox"
                             type="checkbox"
                             id={tag}
                             value={tag}
@@ -190,13 +193,16 @@ const CreateBusiness = () => {
                             <label htmlFor={tag}>{tag}</label>
                         </div>
                     ))}
+                    </div>
                 </div>
             ))}
             <div>
-                <label>Business Categories</label>
+                <h2>Business Categories</h2>
+                <div className="tag-rows">
                 {availableCategories.map((category) => (
-                    <div key={category}>
+                    <div className="tag-select-container" key={category}>
                         <input
+                        className="tag-checkbox"
                         type="checkbox"
                         id={category}
                         value={category}
@@ -206,6 +212,7 @@ const CreateBusiness = () => {
                         <label htmlFor={category}>{category}</label>
                     </div>
                 ))}
+                </div>
             </div>
             <div>
                 <button onClick={handleCreateStore}>Create Store</button>

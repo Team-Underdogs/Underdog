@@ -23,8 +23,6 @@ const Home = () => {
                 />
             </div> 
             <div className="test-buttons-home">
-              <LoginButton/>
-              <LogoutButton/>
               <Link to={"/business/create"}>Create Business </Link>
               <Link to={"/product/create"}>Create Product </Link>
               <Link to={"/service/create"}>Create Service </Link>

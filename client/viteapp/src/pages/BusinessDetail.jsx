@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import GeneralButton from "../components/GeneralButton";
 
 const BusinessDetail = () => {
     const [business, setBusiness] = useState({});
@@ -27,13 +28,30 @@ const BusinessDetail = () => {
     }, [id]);
 
     return (
-        <div className="business-detail">
+        <div className="content-container">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
                 <div className="business-detail-business-section">
                     <div className="business-detail-info">
                         <h1>{business.BusinessName}</h1>
+                        {user?.sub == business.UserId ? (
+                            <div className="button section">
+                            <GeneralButton 
+                            text={"Update business"} 
+                            link={`/business/update/${business._id}`}
+                            />
+                            <GeneralButton 
+                            text={"Add new product"} 
+                            link={`/product/create`}
+                            />
+                            <GeneralButton 
+                            text={"Add new service"} 
+                            link={`/service/create`}
+                            />
+                        </div>
+                        ) : (null)
+                        }
                         {business.BusinessTags && business.BusinessTags.length > 0 && (
                             <p>Tags: {business.BusinessTags.join(" • ")}</p>
                         )}
