@@ -3,16 +3,18 @@ import { Link } from "react-router-dom";
 import underdogLogo from '../assets/underdog.png';
 import { useState } from 'react';
 
-const Header = ({ enterSearch, pickOption }) => {
+const Header = () => {
     const [searchField, setSearchField] = useState('');
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState('all');
 
-    const handleSearch = () => {
-        enterSearch(searchField, selectedOption);
-    };
-
-    const handleSearchOptionChange = () => {
-        pickOption(selectedOption);
+    const handleSearch = (e) => {
+        e.preventDefault();
+        if(searchField.trim() === ''){
+            alert('Search field cannot be empty!');
+            return
+        }
+        const queryParams = `?category=${selectedOption}&keyword=${encodeURIComponent(searchField)}`
+        window.location.href = `/search${queryParams}`;
     }
 
     return (
@@ -41,10 +43,8 @@ const Header = ({ enterSearch, pickOption }) => {
                     placeholder="Search businesses, products, services..."
                 />
                 <button onClick={handleSearch} className="search-button">
-                    <Link to="/search">
-                        <FaSearch size={18} color='black' />
-                    </Link>
-                </button>
+                    <FaSearch size={18} color='black' />
+                </button> 
             </div>
             <div className="header-buttons">
                 <a href="/">Sign in</a>
