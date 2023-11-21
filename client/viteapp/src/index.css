@@ -301,13 +301,75 @@
   font-size: 1vw;
 }
 
-/* Business detail */
+/* Content container */
 
-.business-detail{
+.content-container{
   display: flex;
   flex-direction: column;
   font-size: 150%;
+  width: 80%;
+  margin: auto;
+  padding-top: 2%;
 }
+
+.label-input-combo{
+  display: flex;
+  flex-direction: column;
+  max-width: 30%;
+}
+
+/* Tags and categories */
+
+.tag-select-container{
+  align-items: center;
+  display: flex;
+  padding: 5px;
+}
+
+.tag-checkbox{
+  appearance: none;
+  background-color: #fff;
+  margin: 0;
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid currentColor;
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+.tag-checkbox::before{
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em green;
+}
+
+.tag-checkbox:checked::before{
+  transform: scale(1);
+}
+
+.tag-groups{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.tag-rows{
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+
+
+/* Business detail */
 
 .business-detail-business-section{
   display: flex;
@@ -339,12 +401,6 @@
 
 /* Product detail */
 
-.product-detail{
-  display: flex;
-  flex-direction: column;
-  font-size: 150%;
-}
-
 .product-detail-product-section{
   display: flex;
   flex-direction: column;
@@ -355,12 +411,6 @@
 
 /* Service detail */
 
-.service-detail{
-  display: flex;
-  flex-direction: column;
-  font-size: 150%;
-}
-
 .service-detail-service-section{
   display: flex;
   flex-direction: column;
@@ -369,27 +419,46 @@
   margin-top: 2%;
 }
 
-/* Create business */
+/* Login/Lgout buttons */
 
+.login-logout-button{
+  border: 1px solid rgb(63, 151, 63);
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  background: rgb(63, 151, 63);
+  box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 4px;
+}
 
+.login-logout-button:hover{
+  background: white;
+}
 
-/* Create product */
+.login-logout-button:active{
+  opacity: 0.8;
+}
 
+/* General Button */
 
+.general-button{
+  border: 1px solid rgb(63, 151, 63);
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  background: rgb(63, 151, 63);
+  box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 4px;
+  margin: 1em;
+}
 
-/* Create service */
+.general-button:hover{
+  background: white;
+}
 
+.general-button:active{
+  opacity: 0.8;
+}
 
-
-/* Update business */
-
-
-
-/* Update product */
-
-
-
-/* Update service */
+/* temp */
 
 .test-buttons-home{
   display: flex;

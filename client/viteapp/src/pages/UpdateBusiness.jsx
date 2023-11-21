@@ -112,7 +112,7 @@ const UpdateBusiness = () => {
     };
 
     return (
-        <div>
+        <div className="content-container">
             <h1>Update Business</h1>
             {loading ? (
                 <h1>Loading, please wait</h1>
@@ -123,7 +123,7 @@ const UpdateBusiness = () => {
                             return null;
                         }
                     return (
-                        <div key={field}>
+                        <div className="label-input-combo" key={field}>
                             <label>{field}</label>
                             <input
                                 type="text"
@@ -137,11 +137,13 @@ const UpdateBusiness = () => {
                     <div>
                         <h1>Business Tags</h1>
                         {Object.entries(availableTags).map(([group, tags]) => (
-                            <div key={group}>
-                                <label>Business Tags: {group}</label>
+                            <div className="tag-groups" key={group}>
+                                <h3 className="group-label">Business Tags: {group}</h3>
+                                <div className="tag-rows">
                                 {tags.map((tag) => (
-                                <div key={tag}>
+                                <div className="tag-select-container" key={tag}>
                                     <input
+                                    className="tag-checkbox"
                                     type="checkbox"
                                     id={tag}
                                     value={tag}
@@ -152,13 +154,16 @@ const UpdateBusiness = () => {
                                 </div>
                             ))}
                             </div>
+                            </div>
                     ))}
                     </div>
                     <div>
                         <h1>Business Categories</h1>
+                        <div className="tag-rows">
                         {availableCategories.map((category) => (
-                        <div key={category}>
+                        <div className="tag-select-container" key={category}>
                             <input
+                            className="tag-checkbox"
                             type="checkbox"
                             id={category}
                             value={category}
@@ -168,6 +173,7 @@ const UpdateBusiness = () => {
                             <label htmlFor={category}>{category}</label>
                         </div>
                     ))}
+                    </div>
                     </div>
                     <button onClick={handleUpdateBusiness}>Save</button>
                 </div>

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import GeneralButton from "../components/GeneralButton";
 
 const ProductDetail = () => {
     const [product, setProduct] = useState({});
@@ -41,12 +42,21 @@ const ProductDetail = () => {
     }, [id]);
 
     return (
-        <div className="product-detail">
+        <div className="content-container">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
                 <div className="product-detail-product-section">
                     <h1>Price: ${product.ProductPrice}</h1>
+                    {user?.sub == product.UserId ? (
+                        <div className="button section">
+                            <GeneralButton 
+                            text={"Update product"} 
+                            link={`/product/update/${product._id}`}
+                            />
+                        </div>
+                        ) : (null)
+                        }
                     <h3>{product.ProductName}</h3>
                     <h3>{store.BusinessName}</h3>
                     <p>{product.ProductDescription}</p>

@@ -2,10 +2,15 @@ import { FaShoppingCart, FaUser, FaSearch } from 'react-icons/fa';
 import { Link } from "react-router-dom";
 import underdogLogo from '../assets/underdog.png';
 import { useState } from 'react';
+import LoginButton from './LoginButton';
+import LogoutButton from './LogoutButton';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Header = () => {
     const [searchField, setSearchField] = useState('');
     const [selectedOption, setSelectedOption] = useState('all');
+
+    const { user, isAuthenticated } = useAuth0();
 
     const handleSearch = (e) => {
         e.preventDefault();
@@ -47,7 +52,11 @@ const Header = () => {
                 </button> 
             </div>
             <div className="header-buttons">
-                <a href="/">Sign in</a>
+                {isAuthenticated ? (
+                    <LogoutButton/>
+                ) : (
+                    <LoginButton/>
+                )}
                 <Link to='/cart/:id'>
                     <FaShoppingCart className="icon" />
                 </Link>

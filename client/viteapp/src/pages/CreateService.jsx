@@ -78,9 +78,9 @@ const CreateService = () => {
     };
     
     return (
-        <div>
+        <div className="content-container">
             <h1>Create Service</h1>
-            <div>
+            <div className="label-input-combo">
                 <label>Service Name</label>
                 <input
                     type="text"
@@ -88,7 +88,7 @@ const CreateService = () => {
                     onChange={(e) => (setName(e.target.value))}
                 />
             </div>
-            <div>
+            <div className="label-input-combo">
                 <label>Service Price</label>
                 <input
                     type="number"
@@ -96,7 +96,7 @@ const CreateService = () => {
                     onChange={(e) => (setPrice(e.target.value))}
                 />
             </div>
-            <div>
+            <div className="label-input-combo">
                 <label>Service Description</label>
                 <input
                     type="text"
@@ -104,12 +104,15 @@ const CreateService = () => {
                     onChange={(e) => (setDescription(e.target.value))}
                 />
             </div>
+            <h2>Service Tags</h2>
             {Object.entries(availableTags).map(([group, tags]) => (
-                <div key={group}>
-                    <label>Service Tags: {group}</label>
+                <div className="tag-groups" key={group}>
+                    <h3 className="group-label">Business Tags: {group}</h3>
+                    <div className="tag-rows">
                     {tags.map((tag) => (
-                        <div key={tag}>
+                        <div className="tag-select-container" key={tag}>
                             <input
+                            className="tag-checkbox"
                             type="checkbox"
                             id={tag}
                             value={tag}
@@ -119,13 +122,16 @@ const CreateService = () => {
                             <label htmlFor={tag}>{tag}</label>
                         </div>
                     ))}
+                    </div>
                 </div>
             ))}
             <div>
-                <label>Service Categories</label>
+            <h2>Service Categories</h2>
+                <div className="tag-rows">
                 {availableCategories.map((category) => (
-                    <div key={category}>
+                    <div className="tag-select-container" key={category}>
                         <input
+                        className="tag-checkbox"
                         type="checkbox"
                         id={category}
                         value={category}
@@ -135,6 +141,7 @@ const CreateService = () => {
                         <label htmlFor={category}>{category}</label>
                     </div>
                 ))}
+                </div>
             </div>
             <div>
                 <button onClick={handleCreateService}>Create Service</button>
