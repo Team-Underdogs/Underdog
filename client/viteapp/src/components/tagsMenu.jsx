@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
-const TagsBanner = () => {
+const TagsBanner = ({ onTagsSelect }) => {
     const tagGroups = {
         'Regions': ['Northland', 'Auckland', 'Waikato', 'Bay of Plenty', 'Gisborne', 'Hawkes Bay', 'Taranaki', 'Whanganui', 'Wellington', 'Tasman', 'Nelson', 'Marlborough', 'West Coast', 'Canterbury', 'Otago', 'Southland'],
         'Ethnicity': ['Maori', 'Pacific Islander', 'European', 'Asia', 'Africa', 'MENA'],
@@ -15,7 +15,7 @@ const TagsBanner = () => {
     const [openTagGroups, setOpenTagGroups] = useState({});
     const [selectedTags, setSelectedTags] = useState({});
 
-    // Toggles the tag grouping (e.g., Religion) being open or closed, and updates an array to say which groups are currently open
+    // Toggles the tag grouping (e.g., Religion)
     const toggleTagGroup = (tagGroup) => {
         setOpenTagGroups((prevOpenTagGroups) => {
             const updatedOpenTagGroups = {
@@ -27,16 +27,19 @@ const TagsBanner = () => {
         });
     }; 
 
+    // Toggles multiple tags in various tag groups
     const handleTagCheck = (tagGroup, tag) => {
         setSelectedTags((prevSelectedTags) => {
             const isSelected = prevSelectedTags[tagGroup] ? prevSelectedTags[tagGroup].includes(tag) : false;
     
             if (isSelected) {
+                const updatedTags = prevSelectedTags[tagGroup].filter((selectedTag) => selectedTag !== tag)
                 const newSelectedTags = {
                     ...prevSelectedTags,
-                    [tagGroup]: prevSelectedTags[tagGroup].filter((selectedTag) => selectedTag !== tag),
+                    [tagGroup]: updatedTags.length > 0 ? updatedTags : null
                 };
-                console.log('Updated selectedTags:', newSelectedTags);
+                console.log('Updated selected tags:', newSelectedTags);
+                onTagsSelect(newSelectedTags);
                 return newSelectedTags;
             } else {
                 const newSelectedTags = {
@@ -44,6 +47,7 @@ const TagsBanner = () => {
                     [tagGroup]: prevSelectedTags[tagGroup] ? [...prevSelectedTags[tagGroup], tag] : [tag],
                 };
                 console.log('Currently selected tags:', newSelectedTags);
+                onTagsSelect(newSelectedTags);
                 return newSelectedTags;
             }
         });

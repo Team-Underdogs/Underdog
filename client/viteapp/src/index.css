@@ -142,7 +142,7 @@
 }
 
 .category-list li:hover  {
-  background-color: rgb(237, 237, 237);
+  background-color: #ededed;
   cursor: pointer;
 }
 
