@@ -16,10 +16,8 @@ const Home = () => {
         axios
         .get("http://localhost:3001/stores/getAllStores")
         .then((res) => {
-            const sortedStores = res.data.data.sort((a, b) => {
-            return new Date(b.dateAdded) - new Date(a.dateAdded);
-            });
-            setStores(sortedStores.slice(0, 4));
+            const sortedStores = res.data.data.slice(-5);
+            setStores(sortedStores);
             setLoading(false);
         })
         .catch((err) => console.error(err));
@@ -47,11 +45,11 @@ const Home = () => {
                 <h4>What sets you and your business apart? Is it your unique cultural identity, your LGBTQ+ pride, your gender, or your commitment to sustainability and charity? Join our marketplace of businesses, and let us help you connect with the audience you've been searching for.</h4>
             </div>
             <div className="suggested-businesses">
-                {stores.slice(0, 4).map((store, index) => (
+                {stores.map((store, index) => (
                     <BusinessExhibit
                         image="../src/assets/business.jpeg"
                         businessName={store.BusinessName}
-                        tags={store.BusinessTags.slice(0, 2)}
+                        tags={store.BusinessTags.slice(-2)}
                         key={index}
                     />
                 ))}

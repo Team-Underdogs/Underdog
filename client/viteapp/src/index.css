@@ -244,7 +244,6 @@
   margin-left: 10%;
   margin-right: 10%;
   border-bottom: 1px grey solid;
-  margin-bottom: 20%;
 }
 
 .purpose{
@@ -252,6 +251,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  padding: 10%;
 }
 
 .purpose h4{
@@ -263,6 +263,10 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  background-color: rgba(255, 255, 255, 0.548);
+  padding-top: 5%;
+  padding-bottom: 5%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 /* Business Exhibit */
@@ -270,9 +274,7 @@
 .store-card{
   width: 15vw;
   height: 30vh;
-  background-color: white;
   position: relative;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   cursor: pointer;
   text-decoration: none;
   display: flex;
@@ -295,8 +297,23 @@
   font-size: 1vw;
 }
 
-.store-card-text p{
+.storeTitle{
   font-weight: bold;
+}
+
+.singular-tag-exhibit{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.singular-tag-exhibit p{
+  font-size: 50%;
+  background-color: rgba(235, 150, 142, 0.276);
+  border-radius: 15%;
+  width: 100%;
+  margin: 2%;
 }
 
 /* Business/Product/Service Card */
