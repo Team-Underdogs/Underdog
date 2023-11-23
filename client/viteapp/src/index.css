@@ -16,7 +16,7 @@
 
 .background-container {
   position: relative;
-  min-height: 70vh;
+  min-height: 30vh;
 }
 
 .gradient-background {
@@ -24,7 +24,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 30%;
   background: linear-gradient(to bottom, #C1D7AE, #ffffff); 
   z-index:-1;
 }
@@ -251,12 +251,28 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 10%;
+  padding: 10vh;
 }
 
 .purpose h4{
   width: 80%;
   text-align: center;
+  line-height: 200%;
+}
+
+.exhibition{
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.exhib-statement{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 5%;
+  font-size: 1.3vw;
 }
 
 .suggested-businesses{
@@ -264,9 +280,7 @@
   flex-direction: row;
   justify-content: space-around;
   background-color: rgba(255, 255, 255, 0.548);
-  padding-top: 5%;
   padding-bottom: 5%;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 /* Business Exhibit */

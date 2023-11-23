@@ -44,7 +44,9 @@ const Home = () => {
             <div className="purpose">
                 <h4>What sets you and your business apart? Is it your unique cultural identity, your LGBTQ+ pride, your gender, or your commitment to sustainability and charity? Join our marketplace of businesses, and let us help you connect with the audience you've been searching for.</h4>
             </div>
-            <div className="suggested-businesses">
+            <div className="exhibition">
+                <p className="exhib-statement">Take a look at some of our newest businesses that have joined our marketplace</p>
+                <div className="suggested-businesses">
                 {stores.map((store, index) => (
                     <BusinessExhibit
                         image="../src/assets/business.jpeg"
@@ -53,6 +55,7 @@ const Home = () => {
                         key={index}
                     />
                 ))}
+                </div>
             </div>
             <div className="test-buttons-home">
               <Link to={"/business/create"}>Create Business </Link>
