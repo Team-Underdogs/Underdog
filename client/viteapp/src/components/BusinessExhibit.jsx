@@ -10,7 +10,7 @@ const BusinessExhibit = ({ image, businessName, tags }) => {
                             <p key={index}>{tag}</p>
                         })}
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
     )

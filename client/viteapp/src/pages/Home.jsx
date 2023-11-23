@@ -40,7 +40,7 @@ const Home = () => {
                 <BrowseCard
                      image='../src/assets/products.jpg'
                     title='Products & Services'
-                    link='/browse/product'
+                    link='/browse/product' 
                 />
             </div> 
             <div className="purpose">
