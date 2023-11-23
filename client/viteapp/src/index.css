@@ -247,6 +247,58 @@
   margin-bottom: 20%;
 }
 
+.purpose{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.purpose h4{
+  width: 80%;
+  text-align: center;
+}
+
+.suggested-businesses{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+/* Business Exhibit */
+
+.store-card{
+  width: 15vw;
+  height: 30vh;
+  background-color: white;
+  position: relative;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.store-card img{
+  object-fit: cover;
+  position: absolute;
+  width: 80%;
+  height: 70%;
+  border-radius: 50%;
+}
+
+.store-card-text{
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  font-size: 1vw;
+}
+
+.store-card-text p{
+  font-weight: bold;
+}
+
 /* Business/Product/Service Card */
 
 .businesscard-container, .servicecard-container, .productcard-container{
