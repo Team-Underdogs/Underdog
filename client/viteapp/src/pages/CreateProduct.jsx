@@ -78,9 +78,9 @@ const CreateProduct = () => {
     };
     
     return (
-        <div>
+        <div className="content-container">
             <h1>Create Product</h1>
-            <div>
+            <div className="label-input-combo">
                 <label>Product Name</label>
                 <input
                     type="text"
@@ -88,7 +88,7 @@ const CreateProduct = () => {
                     onChange={(e) => (setName(e.target.value))}
                 />
             </div>
-            <div>
+            <div className="label-input-combo">
                 <label>Product Price</label>
                 <input
                     type="number"
@@ -96,7 +96,7 @@ const CreateProduct = () => {
                     onChange={(e) => (setPrice(e.target.value))}
                 />
             </div>
-            <div>
+            <div className="label-input-combo">
                 <label>Product Description</label>
                 <input
                     type="text"
@@ -104,12 +104,15 @@ const CreateProduct = () => {
                     onChange={(e) => (setDescription(e.target.value))}
                 />
             </div>
+            <h2>Product Tags</h2>
             {Object.entries(availableTags).map(([group, tags]) => (
-                <div key={group}>
-                    <label>Product Tags: {group}</label>
+                <div className="tag-groups" key={group}>
+                    <h3 className="group-label">Product Tags: {group}</h3>
+                    <div className="tag-rows">
                     {tags.map((tag) => (
-                        <div key={tag}>
+                        <div className="tag-select-container" key={tag}>
                             <input
+                            className="tag-checkbox"
                             type="checkbox"
                             id={tag}
                             value={tag}
@@ -119,13 +122,16 @@ const CreateProduct = () => {
                             <label htmlFor={tag}>{tag}</label>
                         </div>
                     ))}
+                    </div>
                 </div>
             ))}
             <div>
-                <label>Product Categories</label>
+            <h2>Product Categories</h2>
+                <div className="tag-rows">
                 {availableCategories.map((category) => (
-                    <div key={category}>
+                    <div className="tag-select-container" key={category}>
                         <input
+                        className="tag-checkbox"
                         type="checkbox"
                         id={category}
                         value={category}
@@ -135,6 +141,7 @@ const CreateProduct = () => {
                         <label htmlFor={category}>{category}</label>
                     </div>
                 ))}
+                </div>
             </div>
             <div>
                 <button onClick={handleCreateProduct}>Create Product</button>
