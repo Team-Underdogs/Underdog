@@ -22,7 +22,7 @@ const UpdateProduct = () => {
     const availableTags = {
         Regions: ['Northland', 'Auckland', 'Waikato', 'Bay of Plenty', 'Gisborne', 'Hawkes Bay', 'Taranaki', 'Whanganui', 'Wellington', 'Tasman', 'Nelson', 'Marlborough', 'West Coast', 'Canterbury', 'Otago', 'Southland'],
         Ethnicity: ['Maori', 'Pacific Islander', 'European', 'Asia', 'Africa', 'MENA'],
-        Identity: ['Women', 'LGBTQIA+'],
+        Identity: ['Women', 'LGBTQIA'],
         Religion: ['Muslim', 'Jewish', 'Sikh', 'Buddhist', 'Hindu', 'Other'],
         Sustainability: ['Eco-Friendly', 'Vegan', 'Halal', 'Organic'],
         Health: ['Mental Health', 'Disabilities', 'Aged']
