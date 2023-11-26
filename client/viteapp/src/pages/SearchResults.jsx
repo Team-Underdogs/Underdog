@@ -95,11 +95,15 @@ const SearchResults = () => {
 
     useEffect(()=>{
       if (category === 'all'){
+
         const filteredBusinesses = businesses.filter(business => business.BusinessName.toLowerCase().includes(keyword.toLowerCase()));
+
         const filteredProducts = products.filter(product => product.ProductName.toLowerCase().includes(keyword.toLowerCase()));
+
         const filteredServices = services.filter(service => service.ServiceName.toLowerCase().includes(keyword.toLowerCase()));
+
         const updatedAllItems = [
-          ...(filteredBusinesses || []).map((business, index) => (
+          (filteredBusinesses || []).map((business, index) => (
             <Link to={`/business/${business._id}`} key={index}>
               <BusinessCard
                 businessName={business.BusinessName}
@@ -110,7 +114,7 @@ const SearchResults = () => {
               />
             </Link>
           )),
-          ...(filteredProducts || []).map((product, index) => (
+          (filteredProducts || []).map((product, index) => (
             <Link to={`/products/${product._id}`} key={index}>
               <ProductCard
                 productName={product.ProductName}
@@ -121,7 +125,7 @@ const SearchResults = () => {
               />
             </Link>
           )),
-          ...(filteredServices || []).map((service, index) => (
+          (filteredServices || []).map((service, index) => (
             <Link to={`/services/${service._id}`} key={index}>
               <ServiceCard
                 serviceName={service.ServiceName}
@@ -134,10 +138,10 @@ const SearchResults = () => {
           ))
         ];
         console.log(updatedAllItems);
-      setAllItems(updatedAllItems);
+        setAllItems(updatedAllItems);
       }
-    }, [filteredBusinesses, filteredProducts, filteredServices, category])
-
+    }, [filteredBusinesses, filteredProducts, filteredServices, category, allItems])
+    
     const renderedItems = category === 'all' ? allItems : getFilteredResults();
     
     return(
