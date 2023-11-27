@@ -16,7 +16,7 @@
 
 .background-container {
   position: relative;
-  min-height: 70vh;
+  min-height: 30vh;
 }
 
 .gradient-background {
@@ -24,7 +24,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 30%;
   background: linear-gradient(to bottom, #C1D7AE, #ffffff); 
   z-index:-1;
 }
@@ -244,7 +244,90 @@
   margin-left: 10%;
   margin-right: 10%;
   border-bottom: 1px grey solid;
-  margin-bottom: 20%;
+}
+
+.purpose{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 10vh;
+}
+
+.purpose h4{
+  width: 80%;
+  text-align: center;
+  line-height: 200%;
+}
+
+.exhibition{
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.exhib-statement{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 5%;
+  font-size: 1.3vw;
+}
+
+.suggested-businesses{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  background-color: rgba(255, 255, 255, 0.548);
+  padding-bottom: 5%;
+}
+
+/* Business Exhibit */
+
+.store-card{
+  width: 15vw;
+  height: 30vh;
+  position: relative;
+  cursor: pointer;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+ 
+.store-card img{
+  object-fit: cover;
+  position: absolute;
+  width: 80%;
+  height: 70%;
+  border-radius: 50%;
+}
+
+.store-card-text{
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  font-size: 1vw;
+}
+
+.storeTitle{
+  font-weight: bold;
+}
+
+.singular-tag-exhibit{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.singular-tag-exhibit p{
+  font-size: 50%;
+  background-color: rgba(235, 150, 142, 0.276);
+  border-radius: 15%;
+  width: 100%;
+  margin: 2%;
 }
 
 /* Business/Product/Service Card */

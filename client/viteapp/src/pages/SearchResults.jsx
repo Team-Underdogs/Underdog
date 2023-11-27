@@ -17,6 +17,7 @@ const SearchResults = () => {
     const [filteredBusinesses, setFilteredBusinesses] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [filteredServices, setFilteredServices] = useState([]);
+    const [allItems, setAllItems] = useState([]);
 
     useEffect(()=>{
       setLoading(true);
@@ -86,48 +87,62 @@ const SearchResults = () => {
                 className='card'
               />
             </Link>
-        ), console.log(filteredServices))}
-        else if (category === 'all') {
-          const allItems = [
-            ...filteredBusinesses.map((business, index) => (
-              <Link to={`/business/${business._id}`} key={index}>
-                <BusinessCard
-                  businessName={business.BusinessName}
-                  city={business.City}
-                  suburb={business.Suburb}
-                  image='../src/assets/business.jpeg'
-                  className='card'
-                />
-              </Link>
-            )),
-            ...filteredProducts.map((product, index) => (
-              <Link to={`/products/${product._id}`} key={index}>
-                <ProductCard
-                  productName={product.ProductName}
-                  businessName={product.Store.BusinessName}
-                  image='../src/assets/products.jpg'
-                  price={`$ ${product.ProductPrice}`}
-                  className='card'
-                />
-              </Link>
-            )),
-            ...filteredServices.map((service, index) => (
-              <Link to={`/services/${service._id}`} key={index}>
-                <ServiceCard
-                  serviceName={service.ServiceName}
-                  businessName={service.Store.BusinessName}
-                  image='../src/assets/products.jpg'
-                  price={`$ ${service.ServicePrice}`}
-                  className='card'
-                />
-              </Link>
-            ))
-          ];
-          console.log(allItems);
-          return allItems;
-        }
+        ), 
+        console.log(filteredServices))
+      }
       return null;
     };
+
+    useEffect(()=>{
+      if (category === 'all'){
+
+        const filteredBusinesses = businesses.filter(business => business.BusinessName.toLowerCase().includes(keyword.toLowerCase()));
+
+        const filteredProducts = products.filter(product => product.ProductName.toLowerCase().includes(keyword.toLowerCase()));
+
+        const filteredServices = services.filter(service => service.ServiceName.toLowerCase().includes(keyword.toLowerCase()));
+
+        const updatedAllItems = [
+          (filteredBusinesses || []).map((business, index) => (
+            <Link to={`/business/${business._id}`} key={index}>
+              <BusinessCard
+                businessName={business.BusinessName}
+                city={business.City}
+                suburb={business.Suburb}
+                image='../src/assets/business.jpeg'
+                className='card'
+              />
+            </Link>
+          )),
+          (filteredProducts || []).map((product, index) => (
+            <Link to={`/products/${product._id}`} key={index}>
+              <ProductCard
+                productName={product.ProductName}
+                businessName={product.Store.BusinessName}
+                image='../src/assets/products.jpg'
+                price={`$ ${product.ProductPrice}`}
+                className='card'
+              />
+            </Link>
+          )),
+          (filteredServices || []).map((service, index) => (
+            <Link to={`/services/${service._id}`} key={index}>
+              <ServiceCard
+                serviceName={service.ServiceName}
+                businessName={service.Store.BusinessName}
+                image='../src/assets/products.jpg'
+                price={`$ ${service.ServicePrice}`}
+                className='card'
+              />
+            </Link>
+          ))
+        ];
+        console.log(updatedAllItems);
+        setAllItems(updatedAllItems);
+      }
+    }, [filteredBusinesses, filteredProducts, filteredServices, category, allItems])
+    
+    const renderedItems = category === 'all' ? allItems : getFilteredResults();
     
     return(
         <div className='searchResults-container'>
@@ -140,7 +155,7 @@ const SearchResults = () => {
                 )}
             </div>
             <div className='browse-bps-cards'>
-              {getFilteredResults()}
+              {renderedItems}
             </div>
         </div>
     )
