@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const StoreModel = require("../models/stores");
+const STRIPE_SECRET = process.env.STRIPE_SECRET;
+const stripe = require('stripe')(STRIPE_SECRET)
 
 // Get all stores
 router.get("/getAllStores", async (req, res) => {
@@ -58,9 +60,6 @@ router.post("/createStore", async (req, res) => {
         if (!UserId) {
             return res.status(401).json({ message: "Unauthorized, user id not provided"})
         }
-
-        const STRIPE_SECRET = process.env.STRIPE_SECRET;
-        const stripe = require('stripe')(STRIPE_SECRET)
 
         const account = await stripe.accounts.create({
             type: 'standard',

@@ -3,6 +3,8 @@ const router = express.Router();
 const checkJwt = require("../utils/auth");
 const ProductModel = require("../models/products");
 const StoreModel = require("../models/stores");
+const STRIPE_SECRET = process.env.STRIPE_SECRET;
+const stripe = require('stripe')(STRIPE_SECRET)
 
 // Get all products
 router.get("/getAllProducts", async (req, res) => {
@@ -72,6 +74,14 @@ router.post("/createProduct", async (req, res) => {
             return res.status(401).json({ message: "Unauthorized, user id not provided"})
         }
 
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: ProductPrice * 100,
+            currency: 'nzd',
+            transfer_data: {
+                destination: AssociatedStore.StripeId
+            }
+        })
+
         const product = new ProductModel({
             ProductName,
             ProductDescription,
@@ -79,10 +89,11 @@ router.post("/createProduct", async (req, res) => {
             ProductTags,
             ProductCategories,
             Store: AssociatedStore,
-            UserId
+            UserId,
+
         });
         await product.save();
-        return res.status(201).json({message: "Product created successfully", product});
+        return res.status(201).json({message: "Product created successfully", product, paymentIntent});
 
     } catch (error) {
         console.error(error);

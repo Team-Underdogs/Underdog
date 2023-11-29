@@ -48,7 +48,7 @@ const ProductDetail = () => {
             ) : (
                 <div className="item-detail-container">
                     <div className="item-text">
-                        <h1>Price: ${product.ProductPrice}</h1>
+                        <h1>${product.ProductPrice}</h1>
                         {user?.sub == product.UserId ? (
                             <div className="button section">
                                 <GeneralButton 
@@ -62,6 +62,9 @@ const ProductDetail = () => {
                         <h3>{store.BusinessName}</h3>
                         <p>{product.ProductDescription}</p>
                         <button>Purchase</button>
+                    </div>
+                    <div className="item-image">
+                        <img src="../src/assets/products.jpg" />
                     </div>
                 </div>
             )}

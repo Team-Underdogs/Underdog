@@ -48,7 +48,7 @@ const ServiceDetail = () => {
             ) : (
                 <div className="item-detail-container">
                     <div className="item-text">
-                        <h1>$ {service.ServicePrice}</h1>
+                        <h1>${service.ServicePrice}</h1>
                         {user?.sub == service.UserId ? (
                             <div className="button section">
                                 <GeneralButton 
@@ -61,11 +61,11 @@ const ServiceDetail = () => {
                         <h3>{service.ServiceName}</h3>
                         <h4>{store.BusinessName}</h4>
                         <p>{service.ServiceDescription}</p>
+                        <button>Purchase</button>
                     </div>
                     <div className="item-image">
                         <img src="../src/assets/products.jpg" />
                     </div>
-                    <button>Purchase</button>
                 </div>
             )}
         </div>
