@@ -57,6 +57,10 @@ const StoreSchema = new mongoose.Schema(
         UserId: {
             type: String,
             required: true
+        },
+        StripeId: {
+            type: String,
+            required: false
         }
     }
 );

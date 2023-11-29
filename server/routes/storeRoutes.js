@@ -51,7 +51,6 @@ router.post("/createStore", async (req, res) => {
         const UserId = req.query.UserId;
         const Email = req.query.Email
 
-
         if (!BusinessName || !Address || !Suburb || !City || !Phone || !BusinessDescription || !BusinessTags || !BusinessCategories) {
             return res.status(400).json({ message: "Please provide all neccessary fields"})
         }
@@ -59,6 +58,13 @@ router.post("/createStore", async (req, res) => {
         if (!UserId) {
             return res.status(401).json({ message: "Unauthorized, user id not provided"})
         }
+
+        const STRIPE_SECRET = process.env.STRIPE_SECRET;
+        const stripe = require('stripe')(STRIPE_SECRET)
+
+        const account = await stripe.accounts.create({
+            type: 'standard',
+        })
 
         const store = new StoreModel({
             BusinessName,
@@ -74,7 +80,8 @@ router.post("/createStore", async (req, res) => {
             LinkFB,
             LinkTwitter,
             LinkInstagram,
-            UserId
+            UserId,
+            StripeId: account.id 
         });
         await store.save();
         return res.status(201).json({ message: "Business created successfully", store})
@@ -88,7 +95,7 @@ router.post("/createStore", async (req, res) => {
 // Update a store
 router.put("/updateStore/:id", async (req, res) => {
     try {
-        const {...updatedFields} = req.body;
+        const {StripeId, ...updatedFields} = req.body;
         const UserId = req.query.UserId;
         const { id } = req.params;
 
@@ -104,6 +111,10 @@ router.put("/updateStore/:id", async (req, res) => {
 
         if (UserId !== store.UserId) {
             return res.status(403).json({ message: "Unauthorized. UserId does not match"})
+        }
+
+        if (StripeId) {
+            updatedFields.StripeAccountId = StripeAccountId;
         }
 
         const updatedStore = await StoreModel.findByIdAndUpdate(id, updatedFields, {
@@ -152,7 +163,7 @@ router.get('/filterBusinesses', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-});
+}); 
 
 // Export
 module.exports = router;

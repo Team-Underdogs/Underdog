@@ -37,29 +37,35 @@ const ServiceDetail = () => {
             }
         };
 
-        getData();
+        getData(); 
         
     }, [id]);
 
     return (
-        <div className="content-container">
+        <div className="item-container">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
-                <div className="service-detail-service-section">
-                    <h1>{service.ServicePrice}</h1>
-                    {user?.sub == service.UserId ? (
-                        <div className="button section">
-                            <GeneralButton 
-                            text={"Update service"} 
-                            link={`/service/update/${service._id}`}
-                            />
-                        </div>
-                        ) : (null)
-                        }
-                    <h2>{service.ServiceName}</h2>
-                    <h2>{store.BusinessName}</h2>
-                    <p>{service.ServiceDescription}</p>
+                <div className="item-detail-container">
+                    <div className="item-text">
+                        <h1>$ {service.ServicePrice}</h1>
+                        {user?.sub == service.UserId ? (
+                            <div className="button section">
+                                <GeneralButton 
+                                text={"Update service"} 
+                                link={`/service/update/${service._id}`}
+                                />
+                            </div>
+                            ) : (null)
+                            }
+                        <h3>{service.ServiceName}</h3>
+                        <h4>{store.BusinessName}</h4>
+                        <p>{service.ServiceDescription}</p>
+                    </div>
+                    <div className="item-image">
+                        <img src="../src/assets/products.jpg" />
+                    </div>
+                    <button>Purchase</button>
                 </div>
             )}
         </div>

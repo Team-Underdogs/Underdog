@@ -42,24 +42,27 @@ const ProductDetail = () => {
     }, [id]);
 
     return (
-        <div className="content-container">
+        <div className="item-container">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
-                <div className="product-detail-product-section">
-                    <h1>Price: ${product.ProductPrice}</h1>
-                    {user?.sub == product.UserId ? (
-                        <div className="button section">
-                            <GeneralButton 
-                            text={"Update product"} 
-                            link={`/product/update/${product._id}`}
-                            />
-                        </div>
-                        ) : (null)
-                        }
-                    <h3>{product.ProductName}</h3>
-                    <h3>{store.BusinessName}</h3>
-                    <p>{product.ProductDescription}</p>
+                <div className="item-detail-container">
+                    <div className="item-text">
+                        <h1>Price: ${product.ProductPrice}</h1>
+                        {user?.sub == product.UserId ? (
+                            <div className="button section">
+                                <GeneralButton 
+                                text={"Update product"} 
+                                link={`/product/update/${product._id}`}
+                                />
+                            </div>
+                            ) : (null)
+                            }
+                        <h3>{product.ProductName}</h3>
+                        <h3>{store.BusinessName}</h3>
+                        <p>{product.ProductDescription}</p>
+                        <button>Purchase</button>
+                    </div>
                 </div>
             )}
         </div>

@@ -482,25 +482,36 @@
   margin-top: 2%;
 }
 
-/* Product detail */
+/* Product & Service detail */
 
-.product-detail-product-section{
+.item-detail-container{
   display: flex;
-  flex-direction: column;
-  width: 80%;
+  flex-direction: row;
+  width: 100%;
   margin: auto;
-  margin-top: 2%;
 }
 
-/* Service detail */
-
-.service-detail-service-section{
+.item-text{
   display: flex;
   flex-direction: column;
-  width: 80%;
-  margin: auto;
-  margin-top: 2%;
+  justify-content: center;
+  align-items: center;
+  width: 150%;
+  margin-left: 5%;
 }
+
+.item-image{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item-image img{
+  width: 50%;
+  object-fit: cover;
+  height: 50%;
+}
+
 
 /* Login/Lgout buttons */
 
