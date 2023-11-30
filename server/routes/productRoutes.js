@@ -161,7 +161,7 @@ router.get('/filterProducts', async (req, res) => {
 });
 
 // Stripe payment for product
-router.post('/checkout', async (req, res) => {
+router.post('/checkout/:id', async (req, res) => {
     try {
 
         const productId = req.params.id;

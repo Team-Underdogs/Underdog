@@ -43,9 +43,7 @@ const ProductDetail = () => {
 
     const handlePayment = async () => {
         try {
-            const response = await axios.post(`http://localhost:3001/product/checkout`){
-                UserId: user?.sub
-            };
+            const response = await axios.post(`http://localhost:3001/product/checkout/${id}`);
             window.location.href = `https://checkout.stripe.com/${response.data.sessionId}`;
         } catch (error) {
             console.error({ message: error })
