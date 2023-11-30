@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const checkJwt = require("../utils/auth");
 const ServiceModel = require("../models/services");
 const StoreModel = require("../models/stores");
 
@@ -133,6 +132,7 @@ router.delete("/deleteService/:id", async (req, res) => {
         if (!service) {
             return res.status(404).json({message: "Service not found"});
         }
+        return res.status(200).json({message: "Service deleted successfully"});
     } catch (error) {
         console.error(error);
         res.status(500).json({message: error.message})
@@ -155,6 +155,17 @@ router.get('/filterServices', async (req, res) => {
         res.json(filteredServices);
     } catch (error) {
         res.status(500).json({ message: error.message });
+    }
+});
+
+// Delete all services with StoreId
+router.delete('/deleteAssociatedServices', async (req, res) => {
+    try {
+        const { storeId } = req.query;
+        await ServiceModel.deleteMany({ Store: storeId });
+        return res.status(200).json({message: "Services deleted successfully"})
+    } catch (error) {
+        res.status(500).json({ message: error.message })
     }
 });
 

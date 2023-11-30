@@ -166,7 +166,7 @@ const UpdateProduct = () => {
                     ))}
                     </div>
                     </div>
-                    <button onClick={handleUpdateProduct}>Save</button>
+                    <button className="general-button" onClick={handleUpdateProduct}>Save</button>
                 </div>
             )}
         </div>

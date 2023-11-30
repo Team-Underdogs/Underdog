@@ -31,6 +31,18 @@ router.get("/getStore/:id", async (req, res) => {
     }
 });
 
+// Get one store by userId
+router.get("/getUserStore", async (req, res) => {
+    try {
+        const UserId = req.query.UserId;
+        const store = await StoreModel.findOne({UserId})
+        res.json({store})
+    } catch (error) {
+        console.error(error);
+        res.status(404).json({message: "Store not found"})
+    }
+});
+
 // Create new store
 router.post("/createStore", async (req, res) => {
     try {

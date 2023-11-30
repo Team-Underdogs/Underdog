@@ -41,6 +41,25 @@ const ProductDetail = () => {
         
     }, [id]);
 
+    const handleDeleteProduct = async () => {
+        
+        const isConfirmed = window.confirm("Are you sure you want to delete this product?");
+
+        if (!isConfirmed) {
+            return;
+        }
+
+        try {
+            await axios.delete(`http://localhost:3001/products/deleteProduct/${product._id}`);
+            console.log("Product deleted successfully");
+            alert("Product deleted successfully");
+            navigate("/")
+        } catch (error) {
+            alert("Failed to delete product. CHECK CONSOLE FOR DETAILS");
+            console.error("Delete product error:", error)
+        }
+    };
+
     return (
         <div className="content-container">
             {loading ? (
@@ -54,6 +73,12 @@ const ProductDetail = () => {
                             text={"Update product"} 
                             link={`/product/update/${product._id}`}
                             />
+                            <button
+                            onClick={handleDeleteProduct}
+                            className="delete-button"
+                            >
+                            Delete product
+                            </button>
                         </div>
                         ) : (null)
                         }
