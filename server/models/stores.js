@@ -61,6 +61,10 @@ const StoreSchema = new mongoose.Schema(
         StripeId: {
             type: String,
             required: false
+        },
+        BusinessImage: {
+            type: String,
+            required: true
         }
     }
 );

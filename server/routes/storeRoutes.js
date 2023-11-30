@@ -164,5 +164,29 @@ router.get('/filterBusinesses', async (req, res) => {
     }
 }); 
 
+// Upload image
+router.post("/store-image/:id", async (req, res) => {
+    try {
+        const { BusinessImage } = req.body;
+        const { StoreId } = req.params.StoreId;
+
+        if(!BusinessImage){
+            res.status(500).json({ message: 'Please enter a business image URL'})
+        }
+
+        const store = await StoreModel.findById(StoreId);
+
+        if (!store) {
+            return res.status(404).json({ msg: "Store not found" });
+        }
+
+        store.BusinessImage = BusinessImage;
+        const updatedStore = await store.save();
+        res.json(updatedStore)
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+})
+
 // Export
 module.exports = router;
