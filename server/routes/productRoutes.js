@@ -74,14 +74,6 @@ router.post("/createProduct", async (req, res) => {
             return res.status(401).json({ message: "Unauthorized, user id not provided"})
         }
 
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: ProductPrice * 100,
-            currency: 'nzd',
-            transfer_data: {
-                destination: AssociatedStore.StripeId
-            }
-        })
-
         const product = new ProductModel({
             ProductName,
             ProductDescription,
@@ -89,11 +81,10 @@ router.post("/createProduct", async (req, res) => {
             ProductTags,
             ProductCategories,
             Store: AssociatedStore,
-            UserId,
-
+            UserId
         });
         await product.save();
-        return res.status(201).json({message: "Product created successfully", product, paymentIntent});
+        return res.status(201).json({message: "Product created successfully", product});
 
     } catch (error) {
         console.error(error);
@@ -168,6 +159,48 @@ router.get('/filterProducts', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+// Stripe payment for product
+router.post('/checkout', async (req, res) => {
+    try {
+
+        const productId = req.params.id;
+        const { UserId } = req.body;
+
+        const product = await ProductModel.findById(productId).populate('Store');
+
+        if (!product) {
+            return res.status(404).json({message: 'Product not found'});
+        }
+
+        const associatedStore = await StoreModel.findOne({UserId});
+
+        if (!associatedStore) {
+            return res.status(404).json({message: "Store not found"});
+        }
+
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: product.ProductPrice * 100,
+            currency: 'nzd',
+            transfer_data: {
+                destination: associatedStore.StripeId
+            }
+        })
+
+        const session = await stripe.checkout.sessions.create({
+            line_items: [{
+                price: paymentIntent.amount,
+                quantity: 1,
+            }],
+            mode: 'payment',
+            success_url: 'http://localhost:3000/',
+            cancel_url: 'http://localhost:3000/'
+        })
+        res.json({ sessionId: session.id });
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
 
 // Export
 module.exports = router;

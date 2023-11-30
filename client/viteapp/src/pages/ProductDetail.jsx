@@ -41,6 +41,17 @@ const ProductDetail = () => {
         
     }, [id]);
 
+    const handlePayment = async () => {
+        try {
+            const response = await axios.post(`http://localhost:3001/product/checkout`){
+                UserId: user?.sub
+            };
+            window.location.href = `https://checkout.stripe.com/${response.data.sessionId}`;
+        } catch (error) {
+            console.error({ message: error })
+        }
+    };
+
     return (
         <div className="item-container">
             {loading ? (
@@ -61,7 +72,7 @@ const ProductDetail = () => {
                         <h3>{product.ProductName}</h3>
                         <h3>{store.BusinessName}</h3>
                         <p>{product.ProductDescription}</p>
-                        <button>Purchase</button>
+                        <button onClick={handlePayment}>Purchase</button>
                     </div>
                     <div className="item-image">
                         <img src="../src/assets/products.jpg" />
