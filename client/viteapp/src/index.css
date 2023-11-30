@@ -150,6 +150,10 @@
   border-left: 1px solid #ccc;
 }
 
+.category-list li.selected {
+  background-color: #ededed;
+}
+
 /* Browse Business/Product */
 
 .browse-text{
@@ -487,29 +491,26 @@
 .item-detail-container{
   display: flex;
   flex-direction: row;
-  width: 100%;
-  margin: auto;
+  
 }
 
 .item-text{
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 150%;
-  margin-left: 5%;
+  width: 50%;
+  padding: 5%;
 }
 
 .item-image{
   display: flex;
   justify-content: center;
-  align-items: center;
+  width: 50%;
 }
 
 .item-image img{
-  width: 50%;
+  width: 80%;
   object-fit: cover;
-  height: 50%;
+  height: 65vh;
 }
 
 

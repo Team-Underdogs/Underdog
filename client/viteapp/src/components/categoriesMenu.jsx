@@ -15,7 +15,8 @@ const CategoriesBanner = ({ onCategorySelect }) => {
         <div className="category-container">
             <ul className="category-list">
                 {categories.map((category, index) => (
-                    <li key={index} onClick={()=>categoryChosen(category)} style={{backgroundColor: category === selectedCategory ? '#ededed' : '#ffffff'}}>
+                    <li key={index} onClick={()=>categoryChosen(category)}
+                    className={category === selectedCategory ? 'selected' : ''}>
                         <h3>{category}</h3>
                     </li>
                 ))}
