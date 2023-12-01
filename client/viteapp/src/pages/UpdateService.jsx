@@ -165,7 +165,7 @@ const UpdateService = () => {
                     ))}
                     </div>
                     </div>
-                    <button onClick={handleUpdateService}>Save</button>
+                    <button className="general-button" onClick={handleUpdateService}>Save</button>
                 </div>
             )}
         </div>

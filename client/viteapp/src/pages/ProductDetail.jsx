@@ -48,6 +48,25 @@ const ProductDetail = () => {
         } catch (error) {
             console.error({ message: error })
         }
+    }
+
+    const handleDeleteProduct = async () => {
+        
+        const isConfirmed = window.confirm("Are you sure you want to delete this product?");
+
+        if (!isConfirmed) {
+            return;
+        }
+
+        try {
+            await axios.delete(`http://localhost:3001/products/deleteProduct/${product._id}`);
+            console.log("Product deleted successfully");
+            alert("Product deleted successfully");
+            navigate("/")
+        } catch (error) {
+            alert("Failed to delete product. CHECK CONSOLE FOR DETAILS");
+            console.error("Delete product error:", error)
+        }
     };
 
     return (
@@ -55,23 +74,27 @@ const ProductDetail = () => {
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
-                <div className="item-detail-container">
-                    <div className="item-text">
-                        <h1>${product.ProductPrice}</h1>
-                        {user?.sub == product.UserId ? (
-                            <div className="button section">
-                                <GeneralButton 
-                                text={"Update product"} 
-                                link={`/product/update/${product._id}`}
-                                />
-                            </div>
-                            ) : (null)
-                            }
-                        <h3>{product.ProductName}</h3>
-                        <h3>{store.BusinessName}</h3>
-                        <p>{product.ProductDescription}</p>
-                        <button onClick={handlePayment}>Purchase</button>
-                    </div>
+                <div className="product-detail-product-section">
+                    <h1>Price: ${product.ProductPrice}</h1>
+                    {user?.sub == product.UserId ? (
+                        <div className="button section">
+                            <GeneralButton 
+                            text={"Update product"} 
+                            link={`/product/update/${product._id}`}
+                            />
+                            <button
+                            onClick={handleDeleteProduct}
+                            className="delete-button"
+                            >
+                            Delete product
+                            </button>
+                        </div>
+                        ) : (null)
+                        }
+                    <h3>{product.ProductName}</h3>
+                    <h3>{store.BusinessName}</h3>
+                    <p>{product.ProductDescription}</p>
+                    <button onClick={handlePayment}>Purchase</button>
                     <div className="item-image">
                         <img src="../src/assets/products.jpg" />
                     </div>

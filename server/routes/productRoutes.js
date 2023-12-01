@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const checkJwt = require("../utils/auth");
 const ProductModel = require("../models/products");
 const StoreModel = require("../models/stores");
 const STRIPE_SECRET = process.env.STRIPE_SECRET;
@@ -135,6 +134,7 @@ router.delete("/deleteProduct/:id", async (req, res) => {
         if (!product) {
             return res.status(404).json({message: "Product not found"});
         }
+        return res.status(200).json({message: "Product deleted successfully"});
     } catch (error) {
         console.error(error);
         res.status(500).json({message: error.message})
@@ -201,6 +201,17 @@ router.post('/checkout/:id', async (req, res) => {
         res.status(500).json({ message: error.message })
     }
 })
+
+// Delete all products with StoreId
+router.delete('/deleteAssociatedProducts', async (req, res) => {
+    try {
+        const { storeId } = req.query;
+        await ProductModel.deleteMany({ Store: storeId });
+        return res.status(200).json({message: "Products deleted successfully"})
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+});
 
 // Export
 module.exports = router;

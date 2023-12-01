@@ -57,14 +57,6 @@ const Home = () => {
                 ))}
                 </div>
             </div>
-            <div className="test-buttons-home">
-              <Link to={"/business/create"}>Create Business </Link>
-              <Link to={"/product/create"}>Create Product </Link>
-              <Link to={"/service/create"}>Create Service </Link>
-              <Link to={"/business/update/654c3b948c52fbaf13e2be3b"}>test update </Link>
-              <Link to={"/business/654c3b948c52fbaf13e2be3b"}>test browse </Link>
-              <Link to={"/product/6551878a24021192cb5bc275"}>test browse product </Link>
-            </div>
         </div>
     );
 }

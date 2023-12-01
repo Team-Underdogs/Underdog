@@ -85,6 +85,7 @@ const CreateBusiness = () => {
             .then(response => {
                 console.log(response.data);
                 alert("Store created successfully");
+                navigate("/")
             })
             .catch(error => {
                 alert("Failed to create store. CHECK CONSOLE FOR DETAILS")
@@ -215,7 +216,7 @@ const CreateBusiness = () => {
                 </div>
             </div>
             <div>
-                <button onClick={handleCreateStore}>Create Store</button>
+                <button className="general-button" onClick={handleCreateStore}>Create Store</button>
             </div>
         </div>
     );

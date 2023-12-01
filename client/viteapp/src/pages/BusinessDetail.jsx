@@ -27,6 +27,32 @@ const BusinessDetail = () => {
             })
     }, [id]);
 
+    const handleDeleteBusiness = async () => {
+
+        const isConfirmed = window.confirm("This will delete your business and all products/services. Are you sure you want to delete?")
+
+        if (!isConfirmed) {
+            return;
+        }
+
+        try {
+            await axios.delete(`http://localhost:3001/products/deleteAssociatedProducts`, { params: { storeId: business._id } });
+            console.log("Products deleted successfully.");
+    
+            await axios.delete(`http://localhost:3001/services/deleteAssociatedServices`, { params: { storeId: business._id } });
+            console.log("Services deleted successfully.");
+    
+            await axios.delete(`http://localhost:3001/stores/deleteStore/${business._id}`);
+            console.log("Store deleted successfully.");
+
+            alert("Succesfully deleted business and products");
+            navigate("/")
+        } catch (error) {
+            alert("Failed to delete. CHECK CONSOLE FOR DETAILS");
+            console.error("Delete error:", error);
+        }
+    };
+
     return (
         <div className="content-container">
             {loading ? (
@@ -49,6 +75,12 @@ const BusinessDetail = () => {
                             text={"Add new service"} 
                             link={`/service/create`}
                             />
+                            <button
+                            className="delete-button"
+                            onClick={handleDeleteBusiness}
+                            >
+                            Delete business
+                            </button>
                         </div>
                         ) : (null)
                         }

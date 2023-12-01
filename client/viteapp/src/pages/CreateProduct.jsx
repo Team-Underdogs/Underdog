@@ -144,7 +144,7 @@ const CreateProduct = () => {
                 </div>
             </div>
             <div>
-                <button onClick={handleCreateProduct}>Create Product</button>
+                <button className="general-button" onClick={handleCreateProduct}>Create Product</button>
             </div>
         </div>
     );

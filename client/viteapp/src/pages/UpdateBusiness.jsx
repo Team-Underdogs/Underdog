@@ -175,7 +175,7 @@ const UpdateBusiness = () => {
                     ))}
                     </div>
                     </div>
-                    <button onClick={handleUpdateBusiness}>Save</button>
+                    <button className="general-button" onClick={handleUpdateBusiness}>Save</button>
                 </div>
             )}
         </div>
