@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const ProductModel = require("../models/products");
 const StoreModel = require("../models/stores");
+const STRIPE_SECRET = process.env.STRIPE_SECRET;
+const stripe = require('stripe')(STRIPE_SECRET)
 
 // Get all products
 router.get("/getAllProducts", async (req, res) => {
@@ -157,6 +159,48 @@ router.get('/filterProducts', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
+// Stripe payment for product
+router.post('/checkout/:id', async (req, res) => {
+    try {
+
+        const productId = req.params.id;
+        const { UserId } = req.body;
+
+        const product = await ProductModel.findById(productId).populate('Store');
+
+        if (!product) {
+            return res.status(404).json({message: 'Product not found'});
+        }
+
+        const associatedStore = await StoreModel.findOne({UserId});
+
+        if (!associatedStore) {
+            return res.status(404).json({message: "Store not found"});
+        }
+
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: product.ProductPrice * 100,
+            currency: 'nzd',
+            transfer_data: {
+                destination: associatedStore.StripeId
+            }
+        })
+
+        const session = await stripe.checkout.sessions.create({
+            line_items: [{
+                price: paymentIntent.amount,
+                quantity: 1,
+            }],
+            mode: 'payment',
+            success_url: 'http://localhost:3000/',
+            cancel_url: 'http://localhost:3000/'
+        })
+        res.json({ sessionId: session.id });
+    } catch (error) {
+        res.status(500).json({ message: error.message })
+    }
+})
 
 // Delete all products with StoreId
 router.delete('/deleteAssociatedProducts', async (req, res) => {

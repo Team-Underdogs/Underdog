@@ -1,6 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const StoreModel = require("../models/stores");
+const STRIPE_SECRET = process.env.STRIPE_SECRET;
+const stripe = require('stripe')(STRIPE_SECRET)
+const multer = require('multer');
+
+// Images
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, '../client/viteapp/src/assets/uploads')
+    },
+    filename: (req, file, callback) => {
+        callback(null, file.originalname)
+    }
+})
+
+const upload = multer({storage: storage})
 
 // Get all stores
 router.get("/getAllStores", async (req, res) => {
@@ -44,7 +59,7 @@ router.get("/getUserStore", async (req, res) => {
 });
 
 // Create new store
-router.post("/createStore", async (req, res) => {
+router.post("/createStore", upload.single("businessimage"), async (req, res) => {
     try {
         const {
             BusinessName,
@@ -58,11 +73,10 @@ router.post("/createStore", async (req, res) => {
             LinkWebsite = "Not found",
             LinkFB = "Not found",
             LinkTwitter = "Not found",
-            LinkInstagram = "Not found"
+            LinkInstagram = "Not found",
         } = req.body;
         const UserId = req.query.UserId;
         const Email = req.query.Email
-
 
         if (!BusinessName || !Address || !Suburb || !City || !Phone || !BusinessDescription || !BusinessTags || !BusinessCategories) {
             return res.status(400).json({ message: "Please provide all neccessary fields"})
@@ -71,6 +85,14 @@ router.post("/createStore", async (req, res) => {
         if (!UserId) {
             return res.status(401).json({ message: "Unauthorized, user id not provided"})
         }
+
+        if (!req.file || !req.file.businessimage) {
+            return res.status(400).json({ message: "Business image not provided" });
+        }
+
+        const account = await stripe.accounts.create({
+            type: 'standard',
+        })
 
         const store = new StoreModel({
             BusinessName,
@@ -86,7 +108,9 @@ router.post("/createStore", async (req, res) => {
             LinkFB,
             LinkTwitter,
             LinkInstagram,
-            UserId
+            UserId,
+            StripeId: account.id,
+            BusinessImage: req.file.originalname
         });
         await store.save();
         return res.status(201).json({ message: "Business created successfully", store})
@@ -100,7 +124,7 @@ router.post("/createStore", async (req, res) => {
 // Update a store
 router.put("/updateStore/:id", async (req, res) => {
     try {
-        const {...updatedFields} = req.body;
+        const {StripeId, ...updatedFields} = req.body;
         const UserId = req.query.UserId;
         const { id } = req.params;
 
@@ -116,6 +140,10 @@ router.put("/updateStore/:id", async (req, res) => {
 
         if (UserId !== store.UserId) {
             return res.status(403).json({ message: "Unauthorized. UserId does not match"})
+        }
+
+        if (StripeId) {
+            updatedFields.StripeAccountId = StripeAccountId;
         }
 
         const updatedStore = await StoreModel.findByIdAndUpdate(id, updatedFields, {
@@ -164,7 +192,7 @@ router.get('/filterBusinesses', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
-});
+}); 
 
 // Export
 module.exports = router;

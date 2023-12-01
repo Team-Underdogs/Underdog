@@ -150,6 +150,10 @@
   border-left: 1px solid #ccc;
 }
 
+.category-list li.selected {
+  background-color: #ededed;
+}
+
 /* Browse Business/Product */
 
 .browse-text{
@@ -483,25 +487,33 @@
   margin-top: 2%;
 }
 
-/* Product detail */
+/* Product & Service detail */
 
-.product-detail-product-section{
+.item-detail-container{
   display: flex;
-  flex-direction: column;
-  width: 80%;
-  margin: auto;
-  margin-top: 2%;
+  flex-direction: row;
+  
 }
 
-/* Service detail */
-
-.service-detail-service-section{
+.item-text{
   display: flex;
   flex-direction: column;
-  width: 80%;
-  margin: auto;
-  margin-top: 2%;
+  width: 50%;
+  padding: 5%;
 }
+
+.item-image{
+  display: flex;
+  justify-content: center;
+  width: 50%;
+}
+
+.item-image img{
+  width: 80%;
+  object-fit: cover;
+  height: 65vh;
+}
+
 
 /* Login/Lgout buttons */
 

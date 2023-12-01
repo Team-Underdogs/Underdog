@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const ServiceModel = require("../models/services");
 const StoreModel = require("../models/stores");
+const STRIPE_SECRET = process.env.STRIPE_SECRET;
+const stripe = require('stripe')(STRIPE_SECRET)
 
 // Get all services
 router.get("/getAllServices", async (req, res) => {
@@ -52,7 +54,7 @@ router.post("/createService", async (req, res) => {
             ServiceDescription,
             ServicePrice,
             ServiceTags,
-            ServiceCategories
+            ServiceCategories,
         } = req.body;
 
         const UserId = req.query.UserId;
@@ -71,6 +73,14 @@ router.post("/createService", async (req, res) => {
             return res.status(401).json({message: "Unauthorized, user id is not provided"})
         }
 
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount: ServicePrice * 100,
+            currency: 'nzd',
+            transfer_data: {
+                destination: AssociatedStore.StripeId
+            }
+        })
+
         const service = new ServiceModel({
             ServiceName,
             ServiceDescription,
@@ -81,7 +91,7 @@ router.post("/createService", async (req, res) => {
             UserId
         })
         await service.save();
-        return res.status(201).json({message: "Service created successfully", service});
+        return res.status(201).json({message: "Service created successfully", service, paymentIntent});
 
     } catch (error) {
         console.error(error);

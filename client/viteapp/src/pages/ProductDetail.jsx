@@ -41,6 +41,15 @@ const ProductDetail = () => {
         
     }, [id]);
 
+    const handlePayment = async () => {
+        try {
+            const response = await axios.post(`http://localhost:3001/product/checkout/${id}`);
+            window.location.href = `https://checkout.stripe.com/${response.data.sessionId}`;
+        } catch (error) {
+            console.error({ message: error })
+        }
+    }
+
     const handleDeleteProduct = async () => {
         
         const isConfirmed = window.confirm("Are you sure you want to delete this product?");
@@ -61,7 +70,7 @@ const ProductDetail = () => {
     };
 
     return (
-        <div className="content-container">
+        <div className="item-container">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
@@ -85,6 +94,10 @@ const ProductDetail = () => {
                     <h3>{product.ProductName}</h3>
                     <h3>{store.BusinessName}</h3>
                     <p>{product.ProductDescription}</p>
+                    <button onClick={handlePayment}>Purchase</button>
+                    <div className="item-image">
+                        <img src="../src/assets/products.jpg" />
+                    </div>
                 </div>
             )}
         </div>

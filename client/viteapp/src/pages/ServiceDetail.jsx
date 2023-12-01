@@ -37,7 +37,7 @@ const ServiceDetail = () => {
             }
         };
 
-        getData();
+        getData(); 
         
     }, [id]);
 
@@ -61,7 +61,7 @@ const ServiceDetail = () => {
     };
 
     return (
-        <div className="content-container">
+        <div className="item-container">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
@@ -85,6 +85,10 @@ const ServiceDetail = () => {
                     <h2>{service.ServiceName}</h2>
                     <h2>{store.BusinessName}</h2>
                     <p>{service.ServiceDescription}</p>
+                    <button>Purchase</button>
+                    <div className="item-image">
+                        <img src="../src/assets/products.jpg" />
+                    </div>
                 </div>
             )}
         </div>
