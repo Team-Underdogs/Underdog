@@ -5,6 +5,7 @@ import { useState } from 'react';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
 import { useAuth0 } from '@auth0/auth0-react';
+import BusinessButton from './BusinessButton';
 
 const Header = () => {
     const [searchField, setSearchField] = useState('');
@@ -60,9 +61,7 @@ const Header = () => {
                 <Link to='/cart/:id'>
                     <FaShoppingCart className="icon" />
                 </Link>
-                <Link to='/account/:id'> 
-                    <FaUser className="icon" />
-                </Link>
+                <BusinessButton/>
             </div>
         </div>
     )

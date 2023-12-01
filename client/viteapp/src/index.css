@@ -389,10 +389,11 @@
 .content-container{
   display: flex;
   flex-direction: column;
-  font-size: 150%;
+  font-size: 1.5vw;
   width: 80%;
   margin: auto;
   padding-top: 2%;
+  padding-bottom: 2%;
 }
 
 .label-input-combo{
@@ -541,9 +542,22 @@
   opacity: 0.8;
 }
 
-/* temp */
+/* Delete Button */
 
-.test-buttons-home{
-  display: flex;
-  flex-direction: column;
+.delete-button{
+  border: 1px solid rgb(167, 48, 48);
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  background: rgb(167, 48, 48);
+  box-shadow: rgba(0, 0, 0, 0.2) 1px 2px 4px;
+  margin: 1em;
+}
+
+.delete-button:hover{
+  background: white;
+}
+
+.delete-button:active{
+  opacity: 0.8;
 }

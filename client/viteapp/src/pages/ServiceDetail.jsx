@@ -41,19 +41,44 @@ const ServiceDetail = () => {
         
     }, [id]);
 
+    const handleDeleteService = async () => {
+        
+        const isConfirmed = window.confirm("Are you sure you want to delete this service?");
+
+        if (!isConfirmed) {
+            return;
+        }
+
+        try {
+            await axios.delete(`http://localhost:3001/services/deleteService/${service._id}`);
+            console.log("Service deleted successfully");
+            alert("Service deleted successfully");
+            navigate("/")
+        } catch (error) {
+            alert("Failed to delete service. CHECK CONSOLE FOR DETAILS");
+            console.error("Delete service error:", error)
+        }
+    };
+
     return (
         <div className="content-container">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
                 <div className="service-detail-service-section">
-                    <h1>{service.ServicePrice}</h1>
+                    <h1>Price: ${service.ServicePrice}</h1>
                     {user?.sub == service.UserId ? (
                         <div className="button section">
                             <GeneralButton 
                             text={"Update service"} 
                             link={`/service/update/${service._id}`}
                             />
+                            <button
+                            onClick={handleDeleteService}
+                            className="delete-button"
+                            >
+                            Delete service
+                            </button>
                         </div>
                         ) : (null)
                         }

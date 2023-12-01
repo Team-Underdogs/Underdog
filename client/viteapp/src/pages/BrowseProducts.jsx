@@ -61,7 +61,7 @@ const BrowseProducts = () => {
                 <TagsBanner onTagsSelect={selectTagFilters} />
                 <div className="browse-bps-cards">
                     {filteredProducts.map((product, index)=>(
-                        <Link to={`/products/${product._id}`} key={index}>
+                        <Link to={`/product/${product._id}`} key={index}>
                             <ProductCard 
                             productName={product.ProductName}
                             businessName={product.Store.BusinessName}
@@ -72,7 +72,7 @@ const BrowseProducts = () => {
                         </Link>
                     ))}
                     {filteredServices.map((service, index)=>(
-                        <Link to={`/services/${service._id}`} key={index}>
+                        <Link to={`/service/${service._id}`} key={index}>
                             <ServiceCard 
                             serviceName={service.ServiceName}
                             businessName={service.Store.BusinessName}
