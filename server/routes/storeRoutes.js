@@ -3,6 +3,19 @@ const router = express.Router();
 const StoreModel = require("../models/stores");
 const STRIPE_SECRET = process.env.STRIPE_SECRET;
 const stripe = require('stripe')(STRIPE_SECRET)
+const multer = require('multer');
+
+// Images
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, '../client/viteapp/src/assets/uploads')
+    },
+    filename: (req, file, callback) => {
+        callback(null, file.originalname)
+    }
+})
+
+const upload = multer({storage: storage})
 
 // Get all stores
 router.get("/getAllStores", async (req, res) => {
@@ -34,7 +47,7 @@ router.get("/getStore/:id", async (req, res) => {
 });
 
 // Create new store
-router.post("/createStore", async (req, res) => {
+router.post("/createStore", upload.single("businessimage"), async (req, res) => {
     try {
         const {
             BusinessName,
@@ -48,7 +61,7 @@ router.post("/createStore", async (req, res) => {
             LinkWebsite = "Not found",
             LinkFB = "Not found",
             LinkTwitter = "Not found",
-            LinkInstagram = "Not found"
+            LinkInstagram = "Not found",
         } = req.body;
         const UserId = req.query.UserId;
         const Email = req.query.Email
@@ -59,6 +72,10 @@ router.post("/createStore", async (req, res) => {
 
         if (!UserId) {
             return res.status(401).json({ message: "Unauthorized, user id not provided"})
+        }
+
+        if (!req.file || !req.file.businessimage) {
+            return res.status(400).json({ message: "Business image not provided" });
         }
 
         const account = await stripe.accounts.create({
@@ -80,7 +97,8 @@ router.post("/createStore", async (req, res) => {
             LinkTwitter,
             LinkInstagram,
             UserId,
-            StripeId: account.id 
+            StripeId: account.id,
+            BusinessImage: req.file.originalname
         });
         await store.save();
         return res.status(201).json({ message: "Business created successfully", store})
@@ -163,30 +181,6 @@ router.get('/filterBusinesses', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }); 
-
-// Upload image
-router.post("/store-image/:id", async (req, res) => {
-    try {
-        const { BusinessImage } = req.body;
-        const { StoreId } = req.params.StoreId;
-
-        if(!BusinessImage){
-            res.status(500).json({ message: 'Please enter a business image URL'})
-        }
-
-        const store = await StoreModel.findById(StoreId);
-
-        if (!store) {
-            return res.status(404).json({ msg: "Store not found" });
-        }
-
-        store.BusinessImage = BusinessImage;
-        const updatedStore = await store.save();
-        res.json(updatedStore)
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-})
 
 // Export
 module.exports = router;

@@ -77,7 +77,7 @@ const CreateBusiness = () => {
             LinkTwitter: twitter,
             LinkInstagram: insta,
             BusinessTags: selectedTags,
-            BusinessCategories: categories
+            BusinessCategories: categories,
         }
 
         axios
