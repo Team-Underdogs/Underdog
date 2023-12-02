@@ -54,11 +54,10 @@ router.post("/createService", authMiddleware, upload.single('serviceImage'), asy
             ServiceName,
             ServiceDescription,
             ServicePrice,
-            ServiceTags,
-            ServiceCategories,
             ServiceImage
         } = req.body;
-
+        const ServiceTags = req.body.ServiceTags.split(',');
+        const ServiceCategories = req.body.ServiceCategories.split(',');
         const UserId = req.query.UserId;
 
         const AssociatedStore = await StoreModel.findOne({UserId});
@@ -67,7 +66,7 @@ router.post("/createService", authMiddleware, upload.single('serviceImage'), asy
             return res.status(404).json({message: "Store not found"});
         }
 
-        if (!ServiceName || !ServiceDescription || !ServicePrice || !ServiceTags || !ServiceCategories) {
+        if (!ServiceName || !ServiceDescription || !ServicePrice || !ServiceTags.length || !ServiceCategories.length) {
             return res.status(400).json({message: "Please provide all neccessary fields"})
         }
 

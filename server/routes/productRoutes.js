@@ -54,11 +54,10 @@ router.post("/createProduct", authMiddleware, upload.single('productImage'), asy
             ProductName,
             ProductDescription,
             ProductPrice,
-            ProductTags,
-            ProductCategories,
             ProductImage
         } = req.body;
-
+        const ProductTags = req.body.ProductTags.split(',');
+        const ProductCategories = req.body.ProductCategories.split(',');
         const UserId = req.query.UserId;
 
         const AssociatedStore = await StoreModel.findOne({UserId});
@@ -67,7 +66,7 @@ router.post("/createProduct", authMiddleware, upload.single('productImage'), asy
             return res.status(404).json({message: "Store not found"});
         }
 
-        if (!ProductName || !ProductDescription || !ProductPrice || !ProductTags || !ProductCategories) {
+        if (!ProductName || !ProductDescription || !ProductPrice || !ProductTags.length || !ProductCategories.length) {
             return res.status(400).json({ message: "Please provide all neccessary fields"})
         }
 

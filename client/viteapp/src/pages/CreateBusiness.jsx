@@ -82,8 +82,8 @@ const CreateBusiness = () => {
         formData.append("LinkFB", fb);
         formData.append("LinkTwitter", twitter);
         formData.append("LinkInstagram", insta);
-        formData.append("BusinessTags", JSON.stringify(selectedTags));
-        formData.append("BusinessCategories", JSON.stringify(categories));
+        formData.append("BusinessTags", selectedTags.join(','));
+        formData.append("BusinessCategories", categories.join(','));
         formData.append("businessImage", filename);
 
         axios

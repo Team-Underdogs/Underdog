@@ -67,8 +67,8 @@ const CreateProduct = () => {
         formData.append("ProductName", name);
         formData.append("ProductDescription", description);
         formData.append("ProductPrice", price);
-        formData.append("ProductTags", JSON.stringify(selectedTags));
-        formData.append("ProductCategories", JSON.stringify(categories));
+        formData.append("ProductTags", selectedTags.join(','));
+        formData.append("ProductCategories", categories.join(','));
         formData.append("productImage", filename)
 
         axios

@@ -56,18 +56,18 @@ router.post("/createStore", authMiddleware, upload.single('businessImage'), asyn
             City,
             Phone,
             BusinessDescription,
-            BusinessTags,
-            BusinessCategories,
             LinkWebsite = "Not found",
             LinkFB = "Not found",
             LinkTwitter = "Not found",
             LinkInstagram = "Not found",
             BusinessImage
         } = req.body;
+        const BusinessTags = req.body.BusinessTags.split(',');
+        const BusinessCategories = req.body.BusinessCategories.split(',');
         const UserId = req.query.UserId;
         const Email = req.query.Email
 
-        if (!BusinessName || !Address || !Suburb || !City || !Phone || !BusinessDescription || !BusinessTags || !BusinessCategories) {
+        if (!BusinessName || !Address || !Suburb || !City || !Phone || !BusinessDescription || !BusinessTags.length || !BusinessCategories.length) {
             return res.status(400).json({ message: "Please provide all neccessary fields"})
         }
 
@@ -182,6 +182,24 @@ router.get('/filterBusinesses', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }); 
+
+// router.get('/filterBusinesses', async (req, res) => {
+//     try {
+//         const { category, tags } = req.query;
+//         let query = {};
+//         if (category) {
+//             query.BusinessCategories = { $in: Array.isArray(category) ? category : [category] };
+//         }
+//         if (tags) {
+//             const tagsArray = Array.isArray(tags) ? tags : tags.split(',');
+//             query.BusinessTags = { $in: tagsArray };
+//         }
+//         const filteredBusinesses = await StoreModel.find(query);
+//         res.json(filteredBusinesses);
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// });
 
 // Export
 module.exports = router;

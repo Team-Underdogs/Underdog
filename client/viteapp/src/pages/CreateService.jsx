@@ -67,8 +67,8 @@ const CreateService = () => {
         formData.append("ServiceName", name);
         formData.append("ServiceDescription", description);
         formData.append("ServicePrice", price);
-        formData.append("ServiceTags", JSON.stringify(selectedTags));
-        formData.append("ServiceCategories", JSON.stringify(categories));
+        formData.append("ServiceTags", selectedTags.join(','));
+        formData.append("ServiceCategories", categories.join(','));
         formData.append("serviceImage", filename);
 
         axios
