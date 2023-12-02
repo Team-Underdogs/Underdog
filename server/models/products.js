@@ -30,6 +30,10 @@ const ProductSchema = new mongoose.Schema(
         UserId: {
             type: String,
             required: true
+        },
+        ProductImage: {
+            type: String,
+            required: true
         }
     }
 );

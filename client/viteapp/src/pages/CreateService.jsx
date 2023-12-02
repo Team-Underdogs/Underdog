@@ -9,11 +9,16 @@ const CreateService = () => {
     const [description, setDescription] = useState('');
     const [selectedTags, setTags] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [filename, setFilename] = useState("");
 
     const {user, isAuthenticated} = useAuth0();
 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    const onChangeFile = (e) => {
+        setFilename(e.target.files[0])
+    }
 
     const availableTags = {
         Regions: ['Northland', 'Auckland', 'Waikato', 'Bay of Plenty', 'Gisborne', 'Hawkes Bay', 'Taranaki', 'Whanganui', 'Wellington', 'Tasman', 'Nelson', 'Marlborough', 'West Coast', 'Canterbury', 'Otago', 'Southland'],
@@ -57,16 +62,17 @@ const CreateService = () => {
             return;
         }
 
-        const data = {
-            ServiceName: name,
-            ServiceDescription: description,
-            ServicePrice: price,
-            ServiceTags: selectedTags,
-            ServiceCategories: categories
-        }
+        const formData = new FormData();
+
+        formData.append("ServiceName", name);
+        formData.append("ServiceDescription", description);
+        formData.append("ServicePrice", price);
+        formData.append("ServiceTags", JSON.stringify(selectedTags));
+        formData.append("ServiceCategories", JSON.stringify(categories));
+        formData.append("serviceImage", filename);
 
         axios
-            .post("http://localhost:3001/services/createService", data, {params: {UserId: user.sub}})
+            .post("http://localhost:3001/services/createService", formData, {params: {UserId: user?.sub}})
             .then(response => {
                 console.log(response.data);
                 alert("Service created successfully");
@@ -80,6 +86,7 @@ const CreateService = () => {
     return (
         <div className="content-container">
             <h1>Create Service</h1>
+            <form onSubmit={handleCreateService} encType="multipart/form-data" name="create-form">
             <div className="label-input-combo">
                 <label>Service Name</label>
                 <input
@@ -102,6 +109,15 @@ const CreateService = () => {
                     type="text"
                     value={description}
                     onChange={(e) => (setDescription(e.target.value))}
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="file">Upload service image</label>
+                <input 
+                    type="file"
+                    filename="serviceimage"
+                    className="form-control-file"
+                    onChange={onChangeFile}
                 />
             </div>
             <h2>Service Tags</h2>
@@ -144,8 +160,9 @@ const CreateService = () => {
                 </div>
             </div>
             <div>
-                <button className="general-button" onClick={handleCreateService}>Create Service</button>
+                <button className="general-button" type="submit">Create Service</button>
             </div>
+            </form>
         </div>
         
     );

@@ -67,7 +67,7 @@ router.post("/createStore", authMiddleware, upload.single('businessImage'), asyn
         const UserId = req.query.UserId;
         const Email = req.query.Email
 
-        if (!BusinessName || !Address || !Suburb || !City || !Phone || !BusinessDescription || !BusinessTags || !BusinessCategories || BusinessImage) {
+        if (!BusinessName || !Address || !Suburb || !City || !Phone || !BusinessDescription || !BusinessTags || !BusinessCategories) {
             return res.status(400).json({ message: "Please provide all neccessary fields"})
         }
 

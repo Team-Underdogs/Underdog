@@ -19,7 +19,7 @@ const CreateBusiness = () => {
     const [categories, setCategories] = useState([]);
     const [filename, setFilename] = useState("");
 
-    const { user, isAuthenticated } = useAuth0();
+    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -104,7 +104,7 @@ const CreateBusiness = () => {
     return (
         <div className="content-container">
             <h1>Create Business</h1>
-            <form onSubmit={handleCreateStore} encType="multipart/form-data" name="create-store-form">
+            <form onSubmit={handleCreateStore} encType="multipart/form-data" name="create-form">
             <div className="label-input-combo">
                 <label>Business Name *</label>
                 <input
