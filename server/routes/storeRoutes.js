@@ -2,20 +2,8 @@ const express = require("express");
 const router = express.Router();
 const StoreModel = require("../models/stores");
 const STRIPE_SECRET = process.env.STRIPE_SECRET;
-const stripe = require('stripe')(STRIPE_SECRET)
-const multer = require('multer');
-
-// Images
-const storage = multer.diskStorage({
-    destination: (req, file, callback) => {
-        callback(null, '../client/viteapp/src/assets/uploads')
-    },
-    filename: (req, file, callback) => {
-        callback(null, file.originalname)
-    }
-})
-
-const upload = multer({storage: storage})
+const stripe = require('stripe')(STRIPE_SECRET);
+const { authMiddleware, upload } = require('../index.js');
 
 // Get all stores
 router.get("/getAllStores", async (req, res) => {
@@ -59,7 +47,7 @@ router.get("/getUserStore", async (req, res) => {
 });
 
 // Create new store
-router.post("/createStore", upload.single("businessimage"), async (req, res) => {
+router.post("/createStore", authMiddleware, upload.single('businessImage'), async (req, res) => {
     try {
         const {
             BusinessName,
@@ -86,7 +74,7 @@ router.post("/createStore", upload.single("businessimage"), async (req, res) => 
             return res.status(401).json({ message: "Unauthorized, user id not provided"})
         }
 
-        if (!req.file || !req.file.businessimage) {
+        if (!req.file || !req.file.originalname) {
             return res.status(400).json({ message: "Business image not provided" });
         }
 

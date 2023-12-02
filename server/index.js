@@ -3,6 +3,7 @@ const cors = require('cors');
 const express = require("express");
 const mongoose = require("mongoose");
 const { auth } = require('express-openid-connect');
+const multer = require('multer');
 
 // Enviroment variables
 const PORT = process.env.PORT;
@@ -34,6 +35,33 @@ const config = {
     clientID: 'ygohHzPuXtkMMcMiUq5GEA6Be9s78d5G',
     issuerBaseURL: 'https://underdogs.au.auth0.com'
   };
+
+// Auth Middleware
+const authMiddleware = (req, res, next) => {
+    const UserId = req.query.UserId;
+    if (!UserId) {
+        return res.status(401).json({ message: "Unauthorized, user id not provided" });
+    } else {
+        next();
+    }
+};
+
+// Multer setup
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, '../client/viteapp/src/assets/uploads/')
+    },
+    filename: (req, file, callback) => {
+        callback(null, file.originalname)
+    }
+});
+
+const upload = multer({ storage: storage });
+
+module.exports = {
+    authMiddleware,
+    upload,
+};
 
 // Create express app
 const app = express();

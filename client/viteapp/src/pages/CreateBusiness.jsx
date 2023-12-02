@@ -17,11 +17,16 @@ const CreateBusiness = () => {
     const [insta, setInsta] = useState('');
     const [selectedTags, setTags] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [fileName, setFileName] = useState("");
 
-    const { user, isAuthenticated } = useAuth0();
+    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    // const onChangeFile = (e) => {
+    //     setFileName(e.target.files[0])
+    // }
 
     const availableTags = {
         Regions: ['Northland', 'Auckland', 'Waikato', 'Bay of Plenty', 'Gisborne', 'Hawkes Bay', 'Taranaki', 'Whanganui', 'Wellington', 'Tasman', 'Nelson', 'Marlborough', 'West Coast', 'Canterbury', 'Otago', 'Southland'],
@@ -54,7 +59,7 @@ const CreateBusiness = () => {
         });
     };
 
-    const handleCreateStore = () => {
+    const handleCreateStore = async () => {
         if (!name || !address || !suburb || !city || !description || !phone || !categories || !selectedTags) {
             alert("Please fill in all fields that have a *");
             return;
@@ -65,25 +70,28 @@ const CreateBusiness = () => {
             return;
         }
 
-        const data = {
-            BusinessName: name,
-            Address: address,
-            Suburb: suburb,
-            City: city,
-            Phone: phone,
-            BusinessDescription: description,
-            LinkWebsite: website,
-            LinkFB: fb,
-            LinkTwitter: twitter,
-            LinkInstagram: insta,
-            BusinessTags: selectedTags,
-            BusinessCategories: categories,
-        }
+        const formData = new FormData();
+
+        formData.append("BusinessName", name);
+        formData.append("Address", address);
+        formData.append("Suburb", suburb);
+        formData.append("City", city);
+        formData.append("Phone", phone);
+        formData.append("BusinessDescription", description);
+        formData.append("LinkWebsite", website);
+        formData.append("LinkFB", fb);
+        formData.append("LinkTwitter", twitter);
+        formData.append("LinkInstagram", insta);
+        formData.append("BusinessTags", JSON.stringify(selectedTags));
+        formData.append("BusinessCategories", JSON.stringify(categories));
+        formData.append("businessImage", fileName);
 
         axios
-            .post("http://localhost:3001/stores/createStore", data, {params: { UserId: user.sub, Email: user.email}})
+            .post("http://localhost:3001/stores/createStore", 
+            formData, 
+            {params: { UserId: user?.sub, Email: user?.email}})
             .then(response => {
-                console.log(response.data);
+                console.log(response.formData);
                 alert("Store created successfully");
                 navigate("/")
             })
@@ -96,6 +104,7 @@ const CreateBusiness = () => {
     return (
         <div className="content-container">
             <h1>Create Business</h1>
+            <form onSubmit={handleCreateStore} encType="multipart/form-data" name="create-store-form">
             <div className="label-input-combo">
                 <label>Business Name *</label>
                 <input
@@ -176,6 +185,15 @@ const CreateBusiness = () => {
                     onChange={(e) => setInsta(e.target.value)}
                 />
             </div>
+            <div className="form-group">
+                <label htmlFor="file">Upload business image</label>
+                <input 
+                    type="file"
+                    filename="businessimage"
+                    className="form-control-file"
+                    onChange={onChangeFile}
+                />
+            </div>
             <h2>Business Tags</h2>
             {Object.entries(availableTags).map(([group, tags]) => (
                 <div className="tag-groups" key={group}>
@@ -216,8 +234,9 @@ const CreateBusiness = () => {
                 </div>
             </div>
             <div>
-                <button className="general-button" onClick={handleCreateStore}>Create Store</button>
+                <button className="general-button" type="submit" onClick={handleCreateStore}>Create Store</button>
             </div>
+            </form>
         </div>
     );
 }
