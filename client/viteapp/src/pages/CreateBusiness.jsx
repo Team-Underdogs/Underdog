@@ -17,16 +17,16 @@ const CreateBusiness = () => {
     const [insta, setInsta] = useState('');
     const [selectedTags, setTags] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [fileName, setFileName] = useState("");
+    const [filename, setFilename] = useState("");
 
-    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const { user, isAuthenticated } = useAuth0();
 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    // const onChangeFile = (e) => {
-    //     setFileName(e.target.files[0])
-    // }
+    const onChangeFile = (e) => {
+        setFilename(e.target.files[0])
+    }
 
     const availableTags = {
         Regions: ['Northland', 'Auckland', 'Waikato', 'Bay of Plenty', 'Gisborne', 'Hawkes Bay', 'Taranaki', 'Whanganui', 'Wellington', 'Tasman', 'Nelson', 'Marlborough', 'West Coast', 'Canterbury', 'Otago', 'Southland'],
@@ -84,7 +84,7 @@ const CreateBusiness = () => {
         formData.append("LinkInstagram", insta);
         formData.append("BusinessTags", JSON.stringify(selectedTags));
         formData.append("BusinessCategories", JSON.stringify(categories));
-        formData.append("businessImage", fileName);
+        formData.append("businessImage", filename);
 
         axios
             .post("http://localhost:3001/stores/createStore", 
@@ -234,7 +234,7 @@ const CreateBusiness = () => {
                 </div>
             </div>
             <div>
-                <button className="general-button" type="submit" onClick={handleCreateStore}>Create Store</button>
+                <button className="general-button" type="submit">Create Store</button>
             </div>
             </form>
         </div>

@@ -100,6 +100,11 @@ const BusinessDetail = () => {
                         <a href={business.LinkTwitter}>insta icon</a>
                         <a href={business.LinkInstagram}>twitter icon</a>
                     </div>
+                    {business && business.BusinessImage && (
+                        <div className="business-main-image">
+                            <img src={`http://localhost:3001/uploads/${business.BusinessImage}`} alt="..." />
+                        </div>
+                    )}
                 </div>
             )}
         </div>

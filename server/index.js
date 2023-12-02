@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const { auth } = require('express-openid-connect');
 const multer = require('multer');
+const path = require('path');
 
 // Enviroment variables
 const PORT = process.env.PORT;
@@ -49,7 +50,7 @@ const authMiddleware = (req, res, next) => {
 // Multer setup
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
-        callback(null, '../client/viteapp/src/assets/uploads/')
+        callback(null, './uploads/')
     },
     filename: (req, file, callback) => {
         callback(null, file.originalname)
@@ -65,6 +66,9 @@ module.exports = {
 
 // Create express app
 const app = express();
+
+// Display image
+app.use("/uploads", express.static('uploads'))
 
 // Parse json and handle CORS
 app.use(express.json());
