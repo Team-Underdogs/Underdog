@@ -65,7 +65,7 @@ const BrowseProducts = () => {
                             <ProductCard 
                             productName={product.ProductName}
                             businessName={product.Store.BusinessName}
-                            image='../src/assets/products.jpg'
+                            image={`http://localhost:3001/uploads/${product.ProductImage}`}
                             price={`$ ${product.ProductPrice}`}
                             className='card'
                         />
@@ -76,7 +76,7 @@ const BrowseProducts = () => {
                             <ServiceCard 
                             serviceName={service.ServiceName}
                             businessName={service.Store.BusinessName}
-                            image='../src/assets/products.jpg'
+                            image={`http://localhost:3001/uploads/${service.ServiceImage}`}
                             price={`$ ${service.ServicePrice}`}
                             className='card'
                             />
