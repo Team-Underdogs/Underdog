@@ -47,7 +47,70 @@ router.get("/getUserStore", async (req, res) => {
 });
 
 // Create new store
-router.post("/createStore", authMiddleware, upload.single('businessImage'), async (req, res) => {
+// router.post("/createStore", authMiddleware, upload.single('businessImage'), async (req, res) => {
+//     try {
+//         const {
+//             BusinessName,
+//             Address,
+//             Suburb,
+//             City,
+//             Phone,
+//             BusinessDescription,
+//             LinkWebsite = "Not found",
+//             LinkFB = "Not found",
+//             LinkTwitter = "Not found",
+//             LinkInstagram = "Not found",
+//             BusinessImage
+//         } = req.body;
+//         const BusinessTags = req.body.BusinessTags.split(',');
+//         const BusinessCategories = req.body.BusinessCategories.split(',');
+//         const UserId = req.query.UserId;
+//         const Email = req.query.Email
+
+//         if (!BusinessName || !Address || !Suburb || !City || !Phone || !BusinessDescription || !BusinessTags.length || !BusinessCategories.length) {
+//             return res.status(400).json({ message: "Please provide all neccessary fields"})
+//         }
+
+//         if (!UserId) {
+//             return res.status(401).json({ message: "Unauthorized, user id not provided"})
+//         }
+
+//         if (!req.file || !req.file.originalname) {
+//             return res.status(400).json({ message: "Business image not provided" });
+//         }
+
+//         const account = await stripe.accounts.create({
+//             type: 'standard',
+//         })
+
+//         const store = new StoreModel({
+//             BusinessName,
+//             Address,
+//             Suburb,
+//             City,
+//             Email,
+//             Phone,
+//             BusinessDescription,
+//             BusinessTags,
+//             BusinessCategories,
+//             LinkWebsite,
+//             LinkFB,
+//             LinkTwitter,
+//             LinkInstagram,
+//             UserId,
+//             StripeId: account.id,
+//             BusinessImage: req.file.originalname,
+//             BusinessBanner: req.file.originalname
+//         });
+//         await store.save();
+//         return res.status(201).json({ message: "Business created successfully", store})
+
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: "Error creating business"})
+//     }
+// });
+router.post("/createStore", authMiddleware, upload.fields([{name: 'businessImage', maxCount: 1}, {name: 'businessBanner', maxCount: 1}]), async (req, res) => {
     try {
         const {
             BusinessName,
@@ -75,8 +138,8 @@ router.post("/createStore", authMiddleware, upload.single('businessImage'), asyn
             return res.status(401).json({ message: "Unauthorized, user id not provided"})
         }
 
-        if (!req.file || !req.file.originalname) {
-            return res.status(400).json({ message: "Business image not provided" });
+        if (!req.files['businessImage'][0] || !req.files['businessBanner'][0]) {
+            return res.status(400).json({ message: "Both images are required" });
         }
 
         const account = await stripe.accounts.create({
@@ -99,7 +162,8 @@ router.post("/createStore", authMiddleware, upload.single('businessImage'), asyn
             LinkInstagram,
             UserId,
             StripeId: account.id,
-            BusinessImage: req.file.originalname
+            BusinessImage: req.files['businessImage'][0].originalname,
+            BusinessBanner: req.files['businessBanner'][0].originalname
         });
         await store.save();
         return res.status(201).json({ message: "Business created successfully", store})
@@ -182,24 +246,6 @@ router.get('/filterBusinesses', async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }); 
-
-// router.get('/filterBusinesses', async (req, res) => {
-//     try {
-//         const { category, tags } = req.query;
-//         let query = {};
-//         if (category) {
-//             query.BusinessCategories = { $in: Array.isArray(category) ? category : [category] };
-//         }
-//         if (tags) {
-//             const tagsArray = Array.isArray(tags) ? tags : tags.split(',');
-//             query.BusinessTags = { $in: tagsArray };
-//         }
-//         const filteredBusinesses = await StoreModel.find(query);
-//         res.json(filteredBusinesses);
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// });
 
 // Export
 module.exports = router;

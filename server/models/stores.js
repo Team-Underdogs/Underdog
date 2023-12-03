@@ -65,6 +65,9 @@ const StoreSchema = new mongoose.Schema(
         BusinessImage: {
             type: String,
             required: true
+        },
+        BusinessBanner: {
+            type: String
         }
     }
 );

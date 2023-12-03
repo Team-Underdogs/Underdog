@@ -17,16 +17,21 @@ const CreateBusiness = () => {
     const [insta, setInsta] = useState('');
     const [selectedTags, setTags] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [filename, setFilename] = useState("");
+    const [filenameDP, setFilenameDP] = useState("");
+    const [filenameBan, setFilenameBan] = useState("");
 
     const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const onChangeFile = (e) => {
-        setFilename(e.target.files[0])
-    }
+    const onChangeFileDP = (e) => {
+        setFilenameDP(e.target.files[0])
+    };
+
+    const onChangeFileBan = (e) => {
+        setFilenameBan(e.target.files[0])
+    };
 
     const availableTags = {
         Regions: ['Northland', 'Auckland', 'Waikato', 'Bay of Plenty', 'Gisborne', 'Hawkes Bay', 'Taranaki', 'Whanganui', 'Wellington', 'Tasman', 'Nelson', 'Marlborough', 'West Coast', 'Canterbury', 'Otago', 'Southland'],
@@ -84,7 +89,8 @@ const CreateBusiness = () => {
         formData.append("LinkInstagram", insta);
         formData.append("BusinessTags", selectedTags.join(','));
         formData.append("BusinessCategories", categories.join(','));
-        formData.append("businessImage", filename);
+        formData.append("businessImage", filenameDP);
+        formData.append("businessBanner", filenameBan);
 
         axios
             .post("http://localhost:3001/stores/createStore", 
@@ -185,13 +191,22 @@ const CreateBusiness = () => {
                     onChange={(e) => setInsta(e.target.value)}
                 />
             </div>
-            <div className="form-group">
+            <div className="form-group-dp">
                 <label htmlFor="file">Upload business image</label>
                 <input 
                     type="file"
                     filename="businessimage"
                     className="form-control-file"
-                    onChange={onChangeFile}
+                    onChange={onChangeFileDP}
+                />
+            </div>
+            <div className="form-group-ban">
+                <label htmlFor="file">Upload business banner</label>
+                <input 
+                    type="file"
+                    filename="businessbanner"
+                    className="form-control-file"
+                    onChange={onChangeFileBan}
                 />
             </div>
             <h2>Business Tags</h2>

@@ -100,9 +100,9 @@ const BusinessDetail = () => {
                         <a href={business.LinkTwitter}>insta icon</a>
                         <a href={business.LinkInstagram}>twitter icon</a>
                     </div>
-                    {business && business.BusinessImage && (
+                    {business && business.BusinessBanner && (
                         <div className="business-main-image">
-                            <img src={`http://localhost:3001/uploads/${business.BusinessImage}`} alt="..." />
+                            <img src={`http://localhost:3001/uploads/${business.BusinessBanner}`} alt="..." />
                         </div>
                     )}
                 </div>
