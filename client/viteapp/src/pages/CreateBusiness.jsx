@@ -11,6 +11,7 @@ const CreateBusiness = () => {
     const [city, setCity] = useState('');
     const [description, setDescription] = useState('');
     const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
     const [website, setWebsite] = useState('');
     const [fb, setFb] = useState('');
     const [twitter, setTwitter] = useState('');
@@ -82,6 +83,7 @@ const CreateBusiness = () => {
         formData.append("Suburb", suburb);
         formData.append("City", city);
         formData.append("Phone", phone);
+        formData.append("Email", email);
         formData.append("BusinessDescription", description);
         formData.append("LinkWebsite", website);
         formData.append("LinkFB", fb);
@@ -109,148 +111,199 @@ const CreateBusiness = () => {
 
     return (
         <div className="content-container">
-            <h1>Create Business</h1>
-            <form onSubmit={handleCreateStore} encType="multipart/form-data" name="create-form">
-            <div className="label-input-combo">
-                <label>Business Name *</label>
-                <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
+            <div className="browse-text">
+                <h1>Create Business</h1>
+                <h4>Enter details about your business in order to be registered on the Underdog marketplace.</h4>
             </div>
-            <div className="label-input-combo">
-                <label>Address *</label>
-                <input
-                    type="text"
-                    value={address}
-                    onChange={(e) => setAddress(e.target.value)}
-                />
-            </div>
-            <div className="label-input-combo">
-                <label>City *</label>
-                <input
-                    type="text"
-                    value={city}
-                    onChange={(e) => setCity(e.target.value)}
-                />
-            </div>
-            <div className="label-input-combo">
-                <label>Suburb *</label>
-                <input
-                    type="text"
-                    value={suburb}
-                    onChange={(e) => setSuburb(e.target.value)}
-                />
-            </div>
-            <div className="label-input-combo">
-                <label>Business Description *</label>
-                <textarea
-                    type="text"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                />
-            </div>
-            <div className="label-input-combo">
-                <label>Phone *</label>
-                <input
-                    type="text"
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                />
-            </div>
-            <div className="label-input-combo">
-                <label>Website</label>
-                <input
-                    type="text"
-                    value={website}
-                    onChange={(e) => setWebsite(e.target.value)}
-                />
-            </div>
-            <div className="label-input-combo">
-                <label>Facebook</label>
-                <input
-                    type="text"
-                    value={fb}
-                    onChange={(e) => setFb(e.target.value)}
-                />
-            </div>
-            <div className="label-input-combo">
-                <label>Twitter</label>
-                <input
-                    type="text"
-                    value={twitter}
-                    onChange={(e) => setTwitter(e.target.value)}
-                />
-            </div>
-            <div className="label-input-combo">
-                <label>Instagram</label>
-                <input
-                    type="text"
-                    value={insta}
-                    onChange={(e) => setInsta(e.target.value)}
-                />
-            </div>
-            <div className="form-group-dp">
-                <label htmlFor="file">Upload business image</label>
-                <input 
-                    type="file"
-                    filename="businessimage"
-                    className="form-control-file"
-                    onChange={onChangeFileDP}
-                />
-            </div>
-            <div className="form-group-ban">
-                <label htmlFor="file">Upload business banner</label>
-                <input 
-                    type="file"
-                    filename="businessbanner"
-                    className="form-control-file"
-                    onChange={onChangeFileBan}
-                />
-            </div>
-            <h2>Business Tags</h2>
-            {Object.entries(availableTags).map(([group, tags]) => (
-                <div className="tag-groups" key={group}>
-                    <h3 className="group-label">Business Tags: {group}</h3>
-                    <div className="tag-rows">
-                    {tags.map((tag) => (
-                        <div className="tag-select-container" key={tag}>
+            <form onSubmit={handleCreateStore} encType="multipart/form-data" name="create-form" className="create-form">
+                <div className="basic-info">
+                    <div className="info-title">
+                        <h4>Basic Information:</h4>
+                        <p>All fields are required.</p>
+                    </div>
+                    <div className="info-grid">
+                        <div className="info-grid-item">
+                            <div className="average-input">
+                                <input
+                                    type="text"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                />
+                                <label for="input" placeholder="Business Name"></label>
+                            </div>
+                        </div>
+                        <div className="info-grid-item">
+                            <div className="upload-input">
+                                <label htmlFor="file">Business Image:</label>
+                                <input 
+                                    type="file"
+                                    filename="businessimage"
+                                    className="form-control-file"
+                                    onChange={onChangeFileDP}
+                                />
+                            </div>
+                        </div>
+                        <div className="info-grid-item">
+                            <div className="average-input">
+                                <input
+                                    type="text"
+                                    value={address}
+                                    onChange={(e) => setAddress(e.target.value)}
+                                />
+                                <label for="input" placeholder="Address"></label>
+                            </div>
+                        </div>
+                        <div className="info-grid-item">
+                            <div className="upload-input">
+                                <label htmlFor="file">Business Banner:</label>
+                                <input 
+                                    type="file"
+                                    filename="businessbanner"
+                                    className="form-control-file"
+                                    onChange={onChangeFileBan}
+                                />
+                            </div>
+                        </div>
+                        <div className="info-grid-item">
+                            <div className="average-input">
+                                <input
+                                    type="text"
+                                    value={suburb}
+                                    onChange={(e) => setSuburb(e.target.value)}
+                                />
+                                <label for="input" placeholder="Suburb"></label>
+                            </div>
+                        </div>
+                        <div className="info-grid-item">
+                            <div className="average-input">
+                                <input
+                                    type="text"
+                                    value={city}
+                                    onChange={(e) => setCity(e.target.value)}
+                                />
+                                <label for="input" placeholder="City"></label>
+                            </div>
+                        </div>
+                        <div className="info-grid-item">
+                            <div className="average-input">
+                                <input
+                                    type="text"
+                                    value={phone}
+                                    onChange={(e) => setPhone(e.target.value)}
+                                />
+                                <label for="input" placeholder="Phone Number"></label>
+                            </div>
+                        </div>
+                        <div className="info-grid-item">
+                            <div className="average-input">
+                                <input
+                                    type="text"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
+                                <label for="input" placeholder="Business Email Address"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="textarea-input">
+                        <textarea
+                            type="text"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            placeholder="Describe Your Business..."
+                        />
+                    </div>
+                </div>
+                <div className="links-form">
+                    <div className="info-title">
+                        <h4>External Links:</h4>
+                        <p>These are optional fields.</p>
+                    </div>
+                    <div className="grid-links">
+                        <div className="average-input">
                             <input
-                            className="tag-checkbox"
-                            type="checkbox"
-                            id={tag}
-                            value={tag}
-                            checked={selectedTags.includes(tag)}
-                            onChange={() => handleTagChange(tag)}
+                                type="text"
+                                value={website}
+                                onChange={(e) => setWebsite(e.target.value)}
                             />
-                            <label htmlFor={tag}>{tag}</label>
+                            <label for="input" placeholder="Business Website"></label>
+                        </div>
+                        <div className="average-input">
+                            <input
+                                type="text"
+                                value={fb}
+                                onChange={(e) => setFb(e.target.value)}
+                            />
+                            <label for="input" placeholder="Facebook Page"></label>
+                        </div>
+                        <div className="average-input">
+                            <input
+                                type="text"
+                                value={twitter}
+                                onChange={(e) => setTwitter(e.target.value)}
+                            />
+                            <label for="input" placeholder="X (Twitter)"></label>
+                        </div>
+                        <div className="average-input">
+                            <input
+                                type="text"
+                                value={insta}
+                                onChange={(e) => setInsta(e.target.value)}
+                            />
+                            <label for="input" placeholder="Instagram"></label>
+                        </div>
+                    </div>
+                </div>
+                <div className="category-assignment">
+                    <div className="info-title">
+                        <h4>Business Categories:</h4>
+                        <p>What kind of items/services does your business provide? You must select at least one.</p>
+                    </div>
+                    <div className="tag-rows">
+                        {availableCategories.map((category) => (
+                            <div className="tag-select-container" key={category}>
+                                <input
+                                className="tag-checkbox"
+                                type="checkbox"
+                                id={category}
+                                value={category}
+                                checked={categories.includes(category)}
+                                onChange={() => handleCategoryChange(category)}
+                                />
+                                <label htmlFor={category}>{category}</label>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="tag-assignment">
+                    <div className="info-title">
+                        <h4>Business Tags:</h4>
+                        <p>What makes your business unique? You must select at least one.</p>
+                    </div>
+                    {Object.entries(availableTags).map(([group, tags]) => (
+                        <div className="tag-groups" key={group}>
+                            <p className="group-label">{group}</p>
+                            <div className="tag-rows">
+                                {tags.map((tag) => (
+                                    <div className="tag-select-container" key={tag}>
+                                        <input
+                                            className="tag-checkbox"
+                                            type="checkbox"
+                                            id={tag}
+                                            value={tag}
+                                            checked={selectedTags.includes(tag)}
+                                            onChange={() => handleTagChange(tag)}
+                                        />
+                                        <label htmlFor={tag}>{tag}</label>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     ))}
-                    </div>
                 </div>
-            ))}
-            <div>
-                <h2>Business Categories</h2>
-                <div className="tag-rows">
-                {availableCategories.map((category) => (
-                    <div className="tag-select-container" key={category}>
-                        <input
-                        className="tag-checkbox"
-                        type="checkbox"
-                        id={category}
-                        value={category}
-                        checked={categories.includes(category)}
-                        onChange={() => handleCategoryChange(category)}
-                        />
-                        <label htmlFor={category}>{category}</label>
-                    </div>
-                ))}
+                <div>
+                    <button className="general-button" type="submit">Create Store</button>
                 </div>
-            </div>
-            <div>
-                <button className="general-button" type="submit">Create Store</button>
-            </div>
             </form>
         </div>
     );
