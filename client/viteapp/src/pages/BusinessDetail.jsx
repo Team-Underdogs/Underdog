@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import GeneralButton from "../components/GeneralButton";
+import Banner from '../components/Banner';
 
 const BusinessDetail = () => {
     const [business, setBusiness] = useState({});
@@ -54,11 +55,14 @@ const BusinessDetail = () => {
     };
 
     return (
-        <div className="content-container">
+        <div className="content-container-bs">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
                 <div className="business-detail-business-section">
+                    {business && business.BusinessBanner && (
+                        <Banner image={`http://localhost:3001/uploads/${business.BusinessBanner}`} alt="..." />
+                    )}
                     <div className="business-detail-info">
                         <h1>{business.BusinessName}</h1>
                         {user?.sub == business.UserId ? (
@@ -85,7 +89,7 @@ const BusinessDetail = () => {
                         ) : (null)
                         }
                         {business.BusinessTags && business.BusinessTags.length > 0 && (
-                            <p>Tags: {business.BusinessTags.join(" • ")}</p>
+                            <p>{business.BusinessTags.join(" • ")}</p>
                         )}
                         <p className="business-detail-info-desc">{business.BusinessDescription}</p>
                     </div>
@@ -100,11 +104,6 @@ const BusinessDetail = () => {
                         <a href={business.LinkTwitter}>insta icon</a>
                         <a href={business.LinkInstagram}>twitter icon</a>
                     </div>
-                    {business && business.BusinessBanner && (
-                        <div className="business-main-image">
-                            <img src={`http://localhost:3001/uploads/${business.BusinessBanner}`} alt="..." />
-                        </div>
-                    )}
                 </div>
             )}
         </div>

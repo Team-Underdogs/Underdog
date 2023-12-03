@@ -29,6 +29,32 @@
   z-index:-1;
 }
 
+/* Banner Image */
+
+.banner-container {
+  max-height: 30vh;
+  z-index: -1;
+  position: relative;
+  overflow: hidden;
+}
+
+.bannerImg{
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transform: translateY(-40%);
+}
+
+.gradient-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 1) 100%);
+  pointer-events: none;
+}
+
 /* Header */
 
 .header{
@@ -455,14 +481,11 @@
   margin-bottom: 10px;
 }
 
-
-
 /* Business detail */
 
 .business-detail-business-section{
   display: flex;
   flex-direction: column;
-  max-width: 80%;
   align-self: center;
 }
 
@@ -470,6 +493,11 @@
   display: flex;
   flex-direction: column;
   margin-top: 2%;
+  font-size: 1.5vw;
+  width: 80%;
+  margin: auto;
+  padding-top: 2%;
+  padding-bottom: 2%;
 }
 
 .business-detail-info-desc{
