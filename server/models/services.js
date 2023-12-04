@@ -30,6 +30,10 @@ const ServiceSchema = new mongoose.Schema(
         UserId: {
             type: String,
             required: true
+        },
+        ServiceImage: {
+            type: String,
+            required: true
         }
     }
 );

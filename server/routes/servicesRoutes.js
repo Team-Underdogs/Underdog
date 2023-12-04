@@ -3,7 +3,8 @@ const router = express.Router();
 const ServiceModel = require("../models/services");
 const StoreModel = require("../models/stores");
 const STRIPE_SECRET = process.env.STRIPE_SECRET;
-const stripe = require('stripe')(STRIPE_SECRET)
+const stripe = require('stripe')(STRIPE_SECRET);
+const { authMiddleware, upload } = require('../index.js');
 
 // Get all services
 router.get("/getAllServices", async (req, res) => {
@@ -47,16 +48,16 @@ router.get("/getService/:id", async (req, res) => {
 });
 
 // Create new service
-router.post("/createService", async (req, res) => {
+router.post("/createService", authMiddleware, upload.single('serviceImage'), async (req, res) => {
     try {
         const {
             ServiceName,
             ServiceDescription,
             ServicePrice,
-            ServiceTags,
-            ServiceCategories,
+            ServiceImage
         } = req.body;
-
+        const ServiceTags = req.body.ServiceTags.split(',');
+        const ServiceCategories = req.body.ServiceCategories.split(',');
         const UserId = req.query.UserId;
 
         const AssociatedStore = await StoreModel.findOne({UserId});
@@ -65,12 +66,16 @@ router.post("/createService", async (req, res) => {
             return res.status(404).json({message: "Store not found"});
         }
 
-        if (!ServiceName || !ServiceDescription || !ServicePrice || !ServiceTags || !ServiceCategories) {
+        if (!ServiceName || !ServiceDescription || !ServicePrice || !ServiceTags.length || !ServiceCategories.length) {
             return res.status(400).json({message: "Please provide all neccessary fields"})
         }
 
         if (!UserId) {
             return res.status(401).json({message: "Unauthorized, user id is not provided"})
+        }
+
+        if (!req.file || !req.file.originalname) {
+            return res.status(400).json({ message: "Service image not provided" });
         }
 
         const paymentIntent = await stripe.paymentIntents.create({
@@ -88,7 +93,8 @@ router.post("/createService", async (req, res) => {
             ServiceTags,
             ServiceCategories,
             Store: AssociatedStore,
-            UserId
+            UserId,
+            ServiceImage: req.file.originalname
         })
         await service.save();
         return res.status(201).json({message: "Service created successfully", service, paymentIntent});

@@ -2,20 +2,8 @@ const express = require("express");
 const router = express.Router();
 const StoreModel = require("../models/stores");
 const STRIPE_SECRET = process.env.STRIPE_SECRET;
-const stripe = require('stripe')(STRIPE_SECRET)
-const multer = require('multer');
-
-// Images
-const storage = multer.diskStorage({
-    destination: (req, file, callback) => {
-        callback(null, '../client/viteapp/src/assets/uploads')
-    },
-    filename: (req, file, callback) => {
-        callback(null, file.originalname)
-    }
-})
-
-const upload = multer({storage: storage})
+const stripe = require('stripe')(STRIPE_SECRET);
+const { authMiddleware, upload } = require('../index.js');
 
 // Get all stores
 router.get("/getAllStores", async (req, res) => {
@@ -59,7 +47,7 @@ router.get("/getUserStore", async (req, res) => {
 });
 
 // Create new store
-router.post("/createStore", upload.single("businessimage"), async (req, res) => {
+router.post("/createStore", authMiddleware, upload.fields([{name: 'businessImage', maxCount: 1}, {name: 'businessBanner', maxCount: 1}]), async (req, res) => {
     try {
         const {
             BusinessName,
@@ -68,17 +56,18 @@ router.post("/createStore", upload.single("businessimage"), async (req, res) => 
             City,
             Phone,
             BusinessDescription,
-            BusinessTags,
-            BusinessCategories,
             LinkWebsite = "Not found",
             LinkFB = "Not found",
             LinkTwitter = "Not found",
             LinkInstagram = "Not found",
+            BusinessImage
         } = req.body;
+        const BusinessTags = req.body.BusinessTags.split(',');
+        const BusinessCategories = req.body.BusinessCategories.split(',');
         const UserId = req.query.UserId;
         const Email = req.query.Email
 
-        if (!BusinessName || !Address || !Suburb || !City || !Phone || !BusinessDescription || !BusinessTags || !BusinessCategories) {
+        if (!BusinessName || !Address || !Suburb || !City || !Phone || !BusinessDescription || !BusinessTags.length || !BusinessCategories.length) {
             return res.status(400).json({ message: "Please provide all neccessary fields"})
         }
 
@@ -86,8 +75,8 @@ router.post("/createStore", upload.single("businessimage"), async (req, res) => 
             return res.status(401).json({ message: "Unauthorized, user id not provided"})
         }
 
-        if (!req.file || !req.file.businessimage) {
-            return res.status(400).json({ message: "Business image not provided" });
+        if (!req.files['businessImage'][0] || !req.files['businessBanner'][0]) {
+            return res.status(400).json({ message: "Both images are required" });
         }
 
         const account = await stripe.accounts.create({
@@ -110,7 +99,8 @@ router.post("/createStore", upload.single("businessimage"), async (req, res) => 
             LinkInstagram,
             UserId,
             StripeId: account.id,
-            BusinessImage: req.file.originalname
+            BusinessImage: req.files['businessImage'][0].originalname,
+            BusinessBanner: req.files['businessBanner'][0].originalname
         });
         await store.save();
         return res.status(201).json({ message: "Business created successfully", store})
