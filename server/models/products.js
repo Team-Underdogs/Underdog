@@ -31,6 +31,14 @@ const ProductSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        stripeProduct: {
+            type: Object,
+            required: true
+        },
+        stripePrice: {
+            type: Object,
+            required: true
+        },
         ProductImage: {
             type: String,
             required: true

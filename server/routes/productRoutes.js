@@ -73,7 +73,20 @@ router.post("/createProduct", authMiddleware, upload.single('productImage'), asy
         if (!UserId) {
             return res.status(401).json({ message: "Unauthorized, user id not provided"})
         }
+      
+        const stripeProduct = await stripe.products.create({
+            name: ProductName,
+            type: 'good'
+        },
+        { stripeAccount: AssociatedStore.StripeId});
 
+        const stripePrice = await stripe.prices.create({
+            product: stripeProduct.id,
+            unit_amount: ProductPrice * 100,
+            currency: 'nzd'
+        },
+        { stripeAccount: AssociatedStore.StripeId});
+      
         if (!req.file || !req.file.originalname) {
             return res.status(400).json({ message: "Product image not provided" });
         }
@@ -86,8 +99,11 @@ router.post("/createProduct", authMiddleware, upload.single('productImage'), asy
             ProductCategories,
             Store: AssociatedStore,
             UserId,
+            stripeProduct,
+            stripePrice
             ProductImage: req.file.originalname
         });
+
         await product.save();
         return res.status(201).json({message: "Product created successfully", product});
 
@@ -171,7 +187,7 @@ router.post('/checkout/:id', async (req, res) => {
     try {
 
         const productId = req.params.id;
-        const { UserId } = req.body;
+        const { StoreId } = req.body;
 
         const product = await ProductModel.findById(productId).populate('Store');
 
@@ -179,7 +195,9 @@ router.post('/checkout/:id', async (req, res) => {
             return res.status(404).json({message: 'Product not found'});
         }
 
-        const associatedStore = await StoreModel.findOne({UserId});
+        const associatedStore = await StoreModel.findById(StoreId);
+        console.log({associatedStore})
+        console.log(StoreId)
 
         if (!associatedStore) {
             return res.status(404).json({message: "Store not found"});
@@ -195,15 +213,17 @@ router.post('/checkout/:id', async (req, res) => {
 
         const session = await stripe.checkout.sessions.create({
             line_items: [{
-                price: paymentIntent.amount,
+                price: product.stripePrice.id,
                 quantity: 1,
             }],
             mode: 'payment',
             success_url: 'http://localhost:3000/',
             cancel_url: 'http://localhost:3000/'
-        })
+        },
+        { stripeAccount: associatedStore.StripeId });
         res.json({ sessionId: session.id });
     } catch (error) {
+        console.error(error)
         res.status(500).json({ message: error.message })
     }
 })

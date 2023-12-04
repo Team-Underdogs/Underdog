@@ -83,6 +83,13 @@ router.post("/createStore", authMiddleware, upload.fields([{name: 'businessImage
             type: 'standard',
         })
 
+        const accountLink = await stripe.accountLinks.create({
+            account: account.id,
+            refresh_url: 'http://localhost:3000',
+            return_url: 'http://localhost:3000',
+            type: 'account_onboarding'
+        })
+
         const store = new StoreModel({
             BusinessName,
             Address,
@@ -103,7 +110,7 @@ router.post("/createStore", authMiddleware, upload.fields([{name: 'businessImage
             BusinessBanner: req.files['businessBanner'][0].originalname
         });
         await store.save();
-        return res.status(201).json({ message: "Business created successfully", store})
+        return res.status(201).json({ message: "Business created successfully", store, accountLink})
 
     } catch (error) {
         console.error(error);
