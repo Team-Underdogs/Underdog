@@ -476,6 +476,13 @@
   width: 100%;
 }
 
+.info-grid-update {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
+  grid-gap: 1vw;
+  width: 100%;
+}
+
 .grid-info-item {
   height: 35vh;
   align-items: center;
