@@ -100,7 +100,7 @@ router.post("/createProduct", authMiddleware, upload.single('productImage'), asy
             Store: AssociatedStore,
             UserId,
             stripeProduct,
-            stripePrice
+            stripePrice,
             ProductImage: req.file.originalname
         });
 
