@@ -89,6 +89,11 @@ const ServiceDetail = () => {
                     <div className="item-image">
                         <img src="../src/assets/products.jpg" />
                     </div>
+                    {service && service.ServiceImage && (
+                    <div className="item-main-image">
+                        <img src={`http://localhost:3001/uploads/${service.ServiceImage}`} alt="..." />
+                    </div>
+                )}
                 </div>
             )}
         </div>

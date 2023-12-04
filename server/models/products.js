@@ -38,6 +38,10 @@ const ProductSchema = new mongoose.Schema(
         stripePrice: {
             type: Object,
             required: true
+        },
+        ProductImage: {
+            type: String,
+            required: true
         }
     }
 );

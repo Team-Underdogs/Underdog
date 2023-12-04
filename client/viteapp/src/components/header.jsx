@@ -58,9 +58,6 @@ const Header = () => {
                 ) : (
                     <LoginButton/>
                 )}
-                <Link to='/cart/:id'>
-                    <FaShoppingCart className="icon" />
-                </Link>
                 <BusinessButton/>
             </div>
         </div>

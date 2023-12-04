@@ -100,6 +100,11 @@ const ProductDetail = () => {
                     <div className="item-image">
                         <img src="../src/assets/products.jpg" />
                     </div>
+                    {product && product.ProductImage && (
+                        <div className="item-main-image">
+                            <img src={`http://localhost:3001/uploads/${product.ProductImage}`} alt="..." />
+                        </div>
+                    )}
                 </div>
             )}
         </div>

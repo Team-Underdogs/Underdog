@@ -9,11 +9,16 @@ const CreateProduct = () => {
     const [description, setDescription] = useState('');
     const [selectedTags, setTags] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [filename, setFilename] = useState("");
 
     const {user, isAuthenticated} = useAuth0();
 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    const onChangeFile = (e) => {
+        setFilename(e.target.files[0])
+    }
 
     const availableTags = {
         Regions: ['Northland', 'Auckland', 'Waikato', 'Bay of Plenty', 'Gisborne', 'Hawkes Bay', 'Taranaki', 'Whanganui', 'Wellington', 'Tasman', 'Nelson', 'Marlborough', 'West Coast', 'Canterbury', 'Otago', 'Southland'],
@@ -57,16 +62,17 @@ const CreateProduct = () => {
             return;
         }
 
-        const data = {
-            ProductName: name,
-            ProductDescription: description,
-            ProductPrice: price,
-            ProductTags: selectedTags,
-            ProductCategories: categories,
-        }
+        const formData = new FormData();
+
+        formData.append("ProductName", name);
+        formData.append("ProductDescription", description);
+        formData.append("ProductPrice", price);
+        formData.append("ProductTags", selectedTags.join(','));
+        formData.append("ProductCategories", categories.join(','));
+        formData.append("productImage", filename)
 
         axios
-            .post("http://localhost:3001/products/createProduct", data, {params: {UserId: user.sub}})
+            .post("http://localhost:3001/products/createProduct", formData, {params: {UserId: user?.sub}})
             .then(response => {
                 console.log(response.data);
                 alert("Product created successfully");
@@ -80,6 +86,7 @@ const CreateProduct = () => {
     return (
         <div className="content-container">
             <h1>Create Product</h1>
+            <form onSubmit={handleCreateProduct} encType="multipart/form-data" name="create-form">
             <div className="label-input-combo">
                 <label>Product Name</label>
                 <input
@@ -102,6 +109,15 @@ const CreateProduct = () => {
                     type="text"
                     value={description}
                     onChange={(e) => (setDescription(e.target.value))}
+                />
+            </div>
+            <div className="form-group">
+                <label htmlFor="file">Upload product image</label>
+                <input 
+                    type="file"
+                    filename="productimage"
+                    className="form-control-file"
+                    onChange={onChangeFile}
                 />
             </div>
             <h2>Product Tags</h2>
@@ -144,8 +160,9 @@ const CreateProduct = () => {
                 </div>
             </div>
             <div>
-                <button className="general-button" onClick={handleCreateProduct}>Create Product</button>
+                <button className="general-button" type="submit">Create Product</button>
             </div>
+            </form>
         </div>
     );
 }

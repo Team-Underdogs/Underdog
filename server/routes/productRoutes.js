@@ -3,7 +3,8 @@ const router = express.Router();
 const ProductModel = require("../models/products");
 const StoreModel = require("../models/stores");
 const STRIPE_SECRET = process.env.STRIPE_SECRET;
-const stripe = require('stripe')(STRIPE_SECRET)
+const stripe = require('stripe')(STRIPE_SECRET);
+const { authMiddleware, upload } = require('../index.js');
 
 // Get all products
 router.get("/getAllProducts", async (req, res) => {
@@ -47,16 +48,16 @@ router.get("/getProduct/:id", async (req, res) => {
 });
 
 // Create new product
-router.post("/createProduct", async (req, res) => {
+router.post("/createProduct", authMiddleware, upload.single('productImage'), async (req, res) => {
     try {
         const {
             ProductName,
             ProductDescription,
             ProductPrice,
-            ProductTags,
-            ProductCategories
+            ProductImage
         } = req.body;
-
+        const ProductTags = req.body.ProductTags.split(',');
+        const ProductCategories = req.body.ProductCategories.split(',');
         const UserId = req.query.UserId;
 
         const AssociatedStore = await StoreModel.findOne({UserId});
@@ -65,14 +66,14 @@ router.post("/createProduct", async (req, res) => {
             return res.status(404).json({message: "Store not found"});
         }
 
-        if (!ProductName || !ProductDescription || !ProductPrice || !ProductTags || !ProductCategories) {
+        if (!ProductName || !ProductDescription || !ProductPrice || !ProductTags.length || !ProductCategories.length) {
             return res.status(400).json({ message: "Please provide all neccessary fields"})
         }
 
         if (!UserId) {
             return res.status(401).json({ message: "Unauthorized, user id not provided"})
         }
-
+      
         const stripeProduct = await stripe.products.create({
             name: ProductName,
             type: 'good'
@@ -85,6 +86,10 @@ router.post("/createProduct", async (req, res) => {
             currency: 'nzd'
         },
         { stripeAccount: AssociatedStore.StripeId});
+      
+        if (!req.file || !req.file.originalname) {
+            return res.status(400).json({ message: "Product image not provided" });
+        }
 
         const product = new ProductModel({
             ProductName,
@@ -96,6 +101,7 @@ router.post("/createProduct", async (req, res) => {
             UserId,
             stripeProduct,
             stripePrice
+            ProductImage: req.file.originalname
         });
 
         await product.save();

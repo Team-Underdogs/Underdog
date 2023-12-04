@@ -54,7 +54,7 @@ const BrowseBusiness = () => {
                         businessName={business.BusinessName}
                         city={business.City}
                         suburb={business.Suburb}
-                        image='../src/assets/business.jpeg'
+                        image={`http://localhost:3001/uploads/${business.BusinessImage}`}
                         className='card'
                         />
                     </Link>

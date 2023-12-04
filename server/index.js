@@ -3,6 +3,8 @@ const cors = require('cors');
 const express = require("express");
 const mongoose = require("mongoose");
 const { auth } = require('express-openid-connect');
+const multer = require('multer');
+const path = require('path');
 
 // Enviroment variables
 const PORT = process.env.PORT;
@@ -35,8 +37,38 @@ const config = {
     issuerBaseURL: 'https://underdogs.au.auth0.com'
   };
 
+// Auth Middleware
+const authMiddleware = (req, res, next) => {
+    const UserId = req.query.UserId;
+    if (!UserId) {
+        return res.status(401).json({ message: "Unauthorized, user id not provided" });
+    } else {
+        next();
+    }
+};
+
+// Multer setup
+const storage = multer.diskStorage({
+    destination: (req, file, callback) => {
+        callback(null, './uploads/')
+    },
+    filename: (req, file, callback) => {
+        callback(null, file.originalname)
+    }
+});
+
+const upload = multer({ storage: storage });
+
+module.exports = {
+    authMiddleware,
+    upload,
+};
+
 // Create express app
 const app = express();
+
+// Display image
+app.use("/uploads", express.static('uploads'))
 
 // Parse json and handle CORS
 app.use(express.json());
