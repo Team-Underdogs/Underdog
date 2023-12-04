@@ -52,13 +52,13 @@ const Header = () => {
                     <FaSearch size={18} color='black' />
                 </button> 
             </div>
-            <div className="header-buttons">
+            <div className={`header-buttons ${isAuthenticated ? 'logout' : 'login'}`}>
+                <BusinessButton/>
                 {isAuthenticated ? (
                     <LogoutButton/>
                 ) : (
                     <LoginButton/>
                 )}
-                <BusinessButton/>
             </div>
         </div>
     )

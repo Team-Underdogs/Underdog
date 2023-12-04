@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios";
 import CategoriesBanner from "../components/CategoriesMenu";
-import TagsBanner from "../components/TagsMenu";
+import TagsBanner from "../components/tagsMenu";
 import BusinessCard from "../components/BusinessCard";
 
 const BrowseBusiness = () => {
