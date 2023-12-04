@@ -30,6 +30,14 @@ const ProductSchema = new mongoose.Schema(
         UserId: {
             type: String,
             required: true
+        },
+        stripeProduct: {
+            type: Object,
+            required: true
+        },
+        stripePrice: {
+            type: Object,
+            required: true
         }
     }
 );

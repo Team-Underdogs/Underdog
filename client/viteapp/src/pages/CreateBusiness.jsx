@@ -89,6 +89,7 @@ const CreateBusiness = () => {
             })
             .catch(error => {
                 alert("Failed to create store. CHECK CONSOLE FOR DETAILS")
+                console.log(error)
                 console.error("Create store error:", error);
             });
     };

@@ -86,12 +86,19 @@ router.post("/createStore", upload.single("businessimage"), async (req, res) => 
             return res.status(401).json({ message: "Unauthorized, user id not provided"})
         }
 
-        if (!req.file || !req.file.businessimage) {
-            return res.status(400).json({ message: "Business image not provided" });
-        }
+        // if (!req.file || !req.file.businessimage) {
+        //     return res.status(400).json({ message: "Business image not provided" });
+        // }
 
         const account = await stripe.accounts.create({
             type: 'standard',
+        })
+
+        const accountLink = await stripe.accountLinks.create({
+            account: account.id,
+            refresh_url: 'http://localhost:3000',
+            return_url: 'http://localhost:3000',
+            type: 'account_onboarding'
         })
 
         const store = new StoreModel({
@@ -110,10 +117,10 @@ router.post("/createStore", upload.single("businessimage"), async (req, res) => 
             LinkInstagram,
             UserId,
             StripeId: account.id,
-            BusinessImage: req.file.originalname
+            // BusinessImage: req.file.originalname
         });
         await store.save();
-        return res.status(201).json({ message: "Business created successfully", store})
+        return res.status(201).json({ message: "Business created successfully", store, accountLink})
 
     } catch (error) {
         console.error(error);

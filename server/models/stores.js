@@ -62,10 +62,10 @@ const StoreSchema = new mongoose.Schema(
             type: String,
             required: false
         },
-        BusinessImage: {
-            type: String,
-            required: true
-        }
+        //BusinessImage: {
+        //    type: String,
+        //    required: true
+        //}
     }
 );
 

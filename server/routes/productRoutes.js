@@ -73,6 +73,19 @@ router.post("/createProduct", async (req, res) => {
             return res.status(401).json({ message: "Unauthorized, user id not provided"})
         }
 
+        const stripeProduct = await stripe.products.create({
+            name: ProductName,
+            type: 'good'
+        },
+        { stripeAccount: AssociatedStore.StripeId});
+
+        const stripePrice = await stripe.prices.create({
+            product: stripeProduct.id,
+            unit_amount: ProductPrice * 100,
+            currency: 'nzd'
+        },
+        { stripeAccount: AssociatedStore.StripeId});
+
         const product = new ProductModel({
             ProductName,
             ProductDescription,
@@ -80,18 +93,9 @@ router.post("/createProduct", async (req, res) => {
             ProductTags,
             ProductCategories,
             Store: AssociatedStore,
-            UserId
-        });
-
-        const stripeProduct = await stripe.products.create({
-            name: ProductName,
-            type: 'good'
-        });
-
-        const stripePrice = await stripe.prices.create({
-            product: stripeProduct.id,
-            unit_amount: ProductPrice * 100,
-            currency: 'nzd'
+            UserId,
+            stripeProduct,
+            stripePrice
         });
 
         await product.save();
@@ -203,13 +207,14 @@ router.post('/checkout/:id', async (req, res) => {
 
         const session = await stripe.checkout.sessions.create({
             line_items: [{
-                price: paymentIntent.amount,
+                price: product.stripePrice.id,
                 quantity: 1,
             }],
             mode: 'payment',
             success_url: 'http://localhost:3000/',
             cancel_url: 'http://localhost:3000/'
-        })
+        },
+        { stripeAccount: associatedStore.StripeId });
         res.json({ sessionId: session.id });
     } catch (error) {
         console.error(error)
