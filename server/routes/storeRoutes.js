@@ -59,13 +59,12 @@ router.post("/createStore", authMiddleware, upload.fields([{name: 'businessImage
             LinkWebsite = "Not found",
             LinkFB = "Not found",
             LinkTwitter = "Not found",
-            LinkInstagram = "Not found",
-            BusinessImage
+            LinkInstagram = "Not found"
         } = req.body;
         const BusinessTags = req.body.BusinessTags.split(',');
         const BusinessCategories = req.body.BusinessCategories.split(',');
         const UserId = req.query.UserId;
-        const Email = req.query.Email
+        const Email = req.query.Email;
 
         if (!BusinessName || !Address || !Suburb || !City || !Phone || !BusinessDescription || !BusinessTags.length || !BusinessCategories.length) {
             return res.status(400).json({ message: "Please provide all neccessary fields"})

@@ -21,7 +21,7 @@ const CreateBusiness = () => {
     const [filenameDP, setFilenameDP] = useState("");
     const [filenameBan, setFilenameBan] = useState("");
 
-    const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+    const { user, isAuthenticated } = useAuth0();
 
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -65,7 +65,8 @@ const CreateBusiness = () => {
         });
     };
 
-    const handleCreateStore = async () => {
+    const handleCreateStore = async (e) => {
+        e.preventDefault();
         if (!name || !address || !suburb || !city || !description || !phone || !categories || !selectedTags) {
             alert("Please fill in all fields that have a *");
             return;
