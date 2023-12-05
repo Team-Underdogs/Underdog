@@ -27,6 +27,8 @@ const UpdateBusiness = () => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const { id } = useParams();
+    const [filenameDP, setFilenameDP] = useState("");
+    const [filenameBan, setFilenameBan] = useState("");
 
     const availableTags = {
         Regions: ['Northland', 'Auckland', 'Waikato', 'Bay of Plenty', 'Gisborne', 'Hawkes Bay', 'Taranaki', 'Whanganui', 'Wellington', 'Tasman', 'Nelson', 'Marlborough', 'West Coast', 'Canterbury', 'Otago', 'Southland'],
@@ -113,11 +115,19 @@ const UpdateBusiness = () => {
             });
     };
 
+    const onChangeFileDP = (e) => {
+        setFilenameDP(e.target.files[0])
+    };
+
+    const onChangeFileBan = (e) => {
+        setFilenameBan(e.target.files[0])
+    };
+
     return (
         <div className="content-container">
-            <div className="browse-text">
+            <div className="browse-text-form">
                 <h1>Update Business</h1>
-                <h4>Edit your details to update </h4>
+                <h4>Edit your details to update your business information.</h4>
             </div>
             {loading ? (
                 <h1>Loading, please wait</h1>
@@ -129,47 +139,67 @@ const UpdateBusiness = () => {
                     </div>
                     <div className="info-grid-update">
                         {Object.entries(business).map(([field, value]) => {
-                            if (["_id", "UserId", "__v", "BusinessTags", "BusinessCategories", "StripeId"].includes(field)) {
-                            return null;
+                            if (["_id", "UserId", "__v", "BusinessTags", "BusinessCategories", "StripeId", "BusinessImage", "BusinessBanner", "BusinessDescription"].includes(field)) {
+                                if (field === "BusinessDescription") {
+                                    return (
+                                        <div className="info-grid-item-update" key={field}>
+                                            <div className="textarea-input-update">
+                                                <label>Business Description: </label>
+                                                <textarea
+                                                    name={field}
+                                                    value={value}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </div>
+                                        </div>
+                                    );
+                                }
+                                return null;
                             }
                             return (
-                            <div className="info-grid-item-update" key={field}>
-                                <div className="average-input">
-                                <input
-                                    type="text"
-                                    name={field}
-                                    value={value}
-                                    onChange={handleInputChange}
-                                />
-                                <label htmlFor="input" placeholder={field}></label>
+                                <div className="info-grid-item-update" key={field}>
+                                    <div className="average-input">
+                                        <input
+                                            type="text"
+                                            name={field}
+                                            value={value}
+                                            onChange={handleInputChange}
+                                        />
+                                        <label htmlFor="input" placeholder={field}></label>
+                                    </div>
                                 </div>
-                            </div>
                             );
                         })}
                     </div>
-                    <div>
-                        <h1>Business Categories</h1>
-                        <div className="tag-rows">
-                        {availableCategories.map((category) => (
-                        <div className="tag-select-container" key={category}>
-                            <input
-                            className="tag-checkbox"
-                            type="checkbox"
-                            id={category}
-                            value={category}
-                            checked={business.BusinessCategories.includes(category)}
-                            onChange={() => handleCategoryChange(category)}
-                            />
-                            <label htmlFor={category}>{category}</label>
+                    <div className="category-assignment">
+                        <div className="info-title">
+                            <h4>Business Categories:</h4>
+                            <p>What kind of items/services does your business provide? You must select at least one.</p>
                         </div>
-                    ))}
+                        <div className="tag-rows">
+                            {availableCategories.map((category) => (
+                            <div className="tag-select-container" key={category}>
+                                <input
+                                className="tag-checkbox"
+                                type="checkbox"
+                                id={category}
+                                value={category}
+                                checked={business.BusinessCategories.includes(category)}
+                                onChange={() => handleCategoryChange(category)}
+                                />
+                                <label htmlFor={category}>{category}</label>
+                            </div>
+                            ))}
+                        </div>
                     </div>
-                    </div>
-                    <div>
-                        <h1>Business Tags</h1>
+                    <div className="tag-assignment">
+                        <div className="info-title">
+                            <h4>Business Tags:</h4>
+                            <p>What makes your business unique? You must select at least one.</p>
+                        </div>
                         {Object.entries(availableTags).map(([group, tags]) => (
                             <div className="tag-groups" key={group}>
-                                <h3 className="group-label">Business Tags: {group}</h3>
+                                <h3 className="group-label">{group}</h3>
                                 <div className="tag-rows">
                                 {tags.map((tag) => (
                                 <div className="tag-select-container" key={tag}>
@@ -185,7 +215,7 @@ const UpdateBusiness = () => {
                                 </div>
                             ))}
                             </div>
-                            </div>
+                        </div>
                     ))}
                     </div>
                     <button className="general-button" onClick={handleUpdateBusiness}>Save</button>
@@ -196,13 +226,3 @@ const UpdateBusiness = () => {
 }
 
 export default UpdateBusiness;
-
-// <div className="label-input-combo" key={field}>
-//     <label>{field}</label>
-//     <input
-//         type="text"
-//         name={field}
-//         value={value}
-//         onChange={handleInputChange}
-//     />
-// </div>

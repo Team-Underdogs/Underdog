@@ -5,7 +5,7 @@ import Button from '@mui/material-next/Button';
 const LoginButton = () => {
   const { loginWithRedirect } = useAuth0();
 
-  return <Button variant="filledTonal" className="login-logout-button" onClick={() => loginWithRedirect()} sx={{ backgroundColor: "#C1D7AE", "&:hover": { backgroundColor: "#d2e7c0" }}}>Log In</Button>
+  return <Button variant="filledTonal" onClick={() => loginWithRedirect()} sx={{ backgroundColor: "#C1D7AE", "&:hover": { backgroundColor: "#d2e7c0" }}}>Log In</Button>
   
 };
 
