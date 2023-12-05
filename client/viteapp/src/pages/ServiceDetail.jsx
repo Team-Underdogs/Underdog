@@ -86,7 +86,7 @@ const ServiceDetail = () => {
                         ) : (null)
                         }
                     <h3>{store.BusinessName}</h3>
-                    <h3>$ {service.ServicetPrice}</h3>
+                    <h3>$ {service.ServicePrice}</h3>
                     <p>{service.ServiceDescription}</p>
                     <button >Purchase</button>
                     </div>
