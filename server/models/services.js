@@ -31,6 +31,14 @@ const ServiceSchema = new mongoose.Schema(
             type: String,
             required: true
         },
+        stripeProduct: {
+            type: Object,
+            required: true
+        },
+        stripePrice: {
+            type: Object,
+            required: true
+        },
         ServiceImage: {
             type: String,
             required: true

@@ -51,7 +51,8 @@ const CreateService = () => {
         });
     };
 
-    const handleCreateService = () => {
+    const handleCreateService = (e) => {
+        e.preventDefault();
         if (!name || !price || !description || !selectedTags || !categories) {
             alert("Please fill in all fields");
             return;

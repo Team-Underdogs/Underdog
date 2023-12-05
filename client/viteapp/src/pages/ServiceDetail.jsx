@@ -41,6 +41,16 @@ const ServiceDetail = () => {
         
     }, [id]);
 
+    const handlePayment = async () => {
+        try {
+            const response = await axios.post(`http://localhost:3001/services/checkout/${id}`, {StoreId: store._id});
+            window.location.href = response.data.sessionUrl
+            console.log(response.data)
+        } catch (error) {
+            console.error({ message: error })
+        }
+    }
+
     const handleDeleteService = async () => {
         
         const isConfirmed = window.confirm("Are you sure you want to delete this service?");
@@ -85,7 +95,7 @@ const ServiceDetail = () => {
                     <h2>{service.ServiceName}</h2>
                     <h2>{store.BusinessName}</h2>
                     <p>{service.ServiceDescription}</p>
-                    <button>Purchase</button>
+                    <button onClick={handlePayment}>Purchase</button>
                     <div className="item-image">
                         <img src="../src/assets/products.jpg" />
                     </div>

@@ -51,7 +51,8 @@ const CreateProduct = () => {
         });
     };
 
-    const handleCreateProduct = () => {
+    const handleCreateProduct = (e) => {
+        e.preventDefault();
         if (!name || !price || !description || !selectedTags || !categories) {
             alert("Please fill in all fields");
             return;
