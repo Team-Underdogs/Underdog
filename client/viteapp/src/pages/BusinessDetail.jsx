@@ -4,13 +4,19 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import GeneralButton from "../components/GeneralButton";
 import Banner from '../components/Banner';
+import { Link } from "react-router-dom";
+import ProductCard from "../components/ProductCard";
+import ServiceCard from "../components/ServiceCard";
 
 const BusinessDetail = () => {
     const [business, setBusiness] = useState({});
+    const [products, setProducts] = useState([]);
+    const [services, setServices] = useState([]);
 
     const { user, isAuthenticated } = useAuth0();
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [toggle, setToggle] = useState(false);
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -19,6 +25,15 @@ const BusinessDetail = () => {
             .get(`http://localhost:3001/stores/getStore/${id}`)
             .then((res) => {
                 setBusiness(res.data);
+                return axios.get(`http://localhost:3001/products/getProductsByStore/${id}`);
+            })
+            .then((res2) => {
+                console.log(res2)
+                setProducts(res2.data)
+                return axios.get(`http://localhost:3001/services/getServicesByStore/${id}`)
+            })
+            .then((res3) => {
+                setServices(res3.data)
                 setLoading(false);
             })
             .catch((error) => {
@@ -27,6 +42,10 @@ const BusinessDetail = () => {
                 console.error("Get store error:", error)
             })
     }, [id]);
+
+    const handleToggle = () => {
+        setToggle(!toggle)
+    }
 
     const handleDeleteBusiness = async () => {
 
@@ -103,6 +122,35 @@ const BusinessDetail = () => {
                         <a href={business.LinkFB}>fb icon</a>
                         <a href={business.LinkTwitter}>insta icon</a>
                         <a href={business.LinkInstagram}>twitter icon</a>
+                    </div>
+                    <button onClick={handleToggle}>toggle</button>
+                    <div className="browse-body">
+                    <div className="browse-bps-cards">
+                            {toggle ? (
+                                products.map((product, index) => (
+                                <Link to={`/product/${product._id}`} key={index}>
+                                    <ProductCard
+                                    productName={product.ProductName}
+                                    businessName={product.Store.BusinessName}
+                                    image={`http://localhost:3001/uploads/${product.ProductImage}`}
+                                    price={`$ ${product.ProductPrice}`}
+                                    className='card'
+                                    />
+                                </Link>
+                            ))) : (
+                                services.map((service, index) => (
+                                    <Link to={`/service/${service._id}`} key={index}>
+                                        <ServiceCard 
+                                        serviceName={service.ServiceName}
+                                        businessName={service.Store.BusinessName}
+                                        image={`http://localhost:3001/uploads/${service.ServiceImage}`}
+                                        price={`$ ${service.ServicePrice}`}
+                                        className='card'
+                                    />
+                                    </Link>
+                                ))
+                            )}
+                    </div>
                     </div>
                 </div>
             )}
