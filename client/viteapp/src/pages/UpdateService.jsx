@@ -9,7 +9,8 @@ const UpdateService = () => {
         ServicePrice: "",
         ServiceDescription: "",
         ServiceTags: [],
-        ServiceCategories: []
+        ServiceCategories: [],
+        ServiceImage: "",
     })
 
     const { user, isAuthenticated } = useAuth0();
@@ -103,32 +104,81 @@ const UpdateService = () => {
     
     return (
         <div className="content-container">
-            <h1>Update Service</h1>
+            <div className="browse-text-form">
+                <h1>Update Service</h1>
+                <h4>Edit your details to update your service's information.</h4>
+            </div>
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
-                <div>
-                    {Object.entries(service).map(([field, value]) => {
-                        if (["_id", "UserId", "__v", "ServiceTags", "ServiceCategories", "Store"].includes(field)) {
-                            return null;
-                        }
-                    return (
-                        <div className="label-input-combo" key={field}>
-                            <label>{field}</label>
-                            <input
-                                type="text"
-                                name={field}
-                                value={value}
-                                onChange={handleInputChange}
-                            />
+                <div className="info-container">
+                    <div className="info-title">
+                        <h4>Basic Information:</h4>
+                        <p>All fields are required.</p>
+                    </div>
+                    <div className="info-grid-update">
+                        {Object.entries(service).map(([field, value]) => {
+                            if (["_id", "UserId", "__v", "ServiceTags", "ServiceCategories", "Store", "ServiceImage", "ServiceDescription", "stripeService", "stripePrice"].includes(field)) {
+                                if (field === "ServiceDescription") {
+                                    return (
+                                        <div className="info-grid-item-update" key={field}>
+                                            <div className="textarea-input-update">
+                                                <label>Service Description:</label>
+                                                <textarea
+                                                    name={field}
+                                                    value={value}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </div>
+                                        </div>
+                                    );
+                                }
+                                return null;
+                            }
+                            return (
+                                <div className="info-grid-item-update" key={field}>
+                                    <div className="average-input">
+                                        <input
+                                            type="text"
+                                            name={field}
+                                            value={value}
+                                            onChange={handleInputChange}
+                                        />
+                                        <label htmlFor="input" placeholder={field}></label>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                    <div className="category-assignment">
+                        <div className="info-title">
+                            <h4>Service Categories:</h4>
+                            <p>What is your service related to? You must select at least one.</p>
                         </div>
-                    );
-                    })}
-                    <div>
-                        <h1>Service Tags</h1>
+                        <div className="tag-rows">
+                            {availableCategories.map((category) => (
+                            <div className="tag-select-container" key={category}>
+                                <input
+                                className="tag-checkbox"
+                                type="checkbox"
+                                id={category}
+                                value={category}
+                                checked={service.ServiceCategories.includes(category)}
+                                onChange={() => handleCategoryChange(category)}
+                                />
+                                <label htmlFor={category}>{category}</label>
+                            </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="tag-assignment">
+                        <div className="info-title">
+                            <h4>Service Tags:</h4>
+                            <p>Some users will directly search for services based on the businesses values and ownership. You can select the same as your business, or personalise the tags for each service. You must select at least one.</p>
+                        </div>
                         {Object.entries(availableTags).map(([group, tags]) => (
                             <div className="tag-groups" key={group}>
-                                <h3 className="group-label">Service Tags: {group}</h3>
+                                <h3 className="group-label">{group}</h3>
                                 <div className="tag-rows">
                                 {tags.map((tag) => (
                                 <div className="tag-select-container" key={tag}>
@@ -144,31 +194,13 @@ const UpdateService = () => {
                                 </div>
                             ))}
                             </div>
-                            </div>
-                    ))}
-                    </div>
-                    <div>
-                        <h1>Service Categories</h1>
-                        <div className="tag-rows">
-                        {availableCategories.map((category) => (
-                        <div className="tag-select-container" key={category}>
-                            <input
-                            className="tag-checkbox"
-                            type="checkbox"
-                            id={category}
-                            value={category}
-                            checked={service.ServiceCategories.includes(category)}
-                            onChange={() => handleCategoryChange(category)}
-                            />
-                            <label htmlFor={category}>{category}</label>
                         </div>
                     ))}
                     </div>
-                    </div>
-                    <button className="general-button" onClick={handleUpdateService}>Save</button>
+                    <button onClick={handleUpdateService}>Save</button>
                 </div>
             )}
-        </div>
+        </div>   
     );
 }
 

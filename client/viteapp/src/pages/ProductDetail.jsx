@@ -3,6 +3,9 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import GeneralButton from "../components/GeneralButton";
+import Button from '@mui/material-next/Button';
+import { FaEdit } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 
 const ProductDetail = () => {
     const [product, setProduct] = useState({});
@@ -71,40 +74,39 @@ const ProductDetail = () => {
         }
     };
 
-    return (
+    return ( 
         <div className="item-container">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
-                <div className="product-detail-product-section">
-                    <h1>Price: ${product.ProductPrice}</h1>
-                    {user?.sub == product.UserId ? (
-                        <div className="button section">
-                            <GeneralButton 
-                            text={"Update product"} 
-                            link={`/product/update/${product._id}`}
-                            />
-                            <button
-                            onClick={handleDeleteProduct}
-                            className="delete-button"
-                            >
-                            Delete product
-                            </button>
-                        </div>
-                        ) : (null)
-                        }
-                    <h3>{product.ProductName}</h3>
-                    <h3>{store.BusinessName}</h3>
-                    <p>{product.ProductDescription}</p>
-                    <button onClick={handlePayment}>Purchase</button>
-                    <div className="item-image">
-                        <img src="../src/assets/products.jpg" />
+                <div className="detail-section">
+                    <div className="item-info">
+                        <h1>{product.ProductName}</h1>
+                        {user?.sub == product.UserId ? (
+                            <div className="button-section">
+                                <GeneralButton 
+                                icon={<FaEdit />}
+                                text={"Update Product"} 
+                                link={`/product/update/${product._id}`}
+                                />
+                                <Button variant="filledTonal" onClick={handleDeleteProduct} sx={{ backgroundColor: "rgb(197, 77, 77)", "&:hover": { backgroundColor: "rgb(224, 102, 102)" }}}>
+                                <FaTrash />
+                                Delete Product
+                                </Button>
+                            </div>
+                        ) : (null)}
+                        <h3>{store.BusinessName}</h3>
+                        <h3>$ {product.ProductPrice}</h3>
+                        <p>{product.ProductDescription}</p>
+                        <button onClick={handlePayment}>Purchase</button>
                     </div>
-                    {product && product.ProductImage && (
-                        <div className="item-main-image">
-                            <img src={`http://localhost:3001/uploads/${product.ProductImage}`} alt="..." />
-                        </div>
-                    )}
+                    <div className="item-image">
+                        {product && product.ProductImage && (
+                            <div className="item-main-image">
+                                <img src={`http://localhost:3001/uploads/${product.ProductImage}`} alt="..." />
+                            </div>
+                        )}
+                    </div>
                 </div>
             )}
         </div>

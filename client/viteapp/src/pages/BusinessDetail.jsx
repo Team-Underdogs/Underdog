@@ -95,7 +95,7 @@ const BusinessDetail = () => {
                                 text={"Add new service"} 
                                 link={`/service/create`}
                                 />
-                                <Button variant="filledTonal" className="general-button" onClick={handleDeleteBusiness} sx={{ backgroundColor: "rgb(197, 77, 77)", "&:hover": { backgroundColor: "rgb(224, 102, 102)" }}}>
+                                <Button variant="filledTonal" onClick={handleDeleteBusiness} sx={{ backgroundColor: "rgb(197, 77, 77)", "&:hover": { backgroundColor: "rgb(224, 102, 102)" }}}>
                                 <FaTrash />
                                 Delete Business
                                 </Button>

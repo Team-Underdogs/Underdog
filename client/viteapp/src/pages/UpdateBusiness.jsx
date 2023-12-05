@@ -27,8 +27,6 @@ const UpdateBusiness = () => {
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const { id } = useParams();
-    const [filenameDP, setFilenameDP] = useState("");
-    const [filenameBan, setFilenameBan] = useState("");
 
     const availableTags = {
         Regions: ['Northland', 'Auckland', 'Waikato', 'Bay of Plenty', 'Gisborne', 'Hawkes Bay', 'Taranaki', 'Whanganui', 'Wellington', 'Tasman', 'Nelson', 'Marlborough', 'West Coast', 'Canterbury', 'Otago', 'Southland'],
@@ -84,7 +82,6 @@ const UpdateBusiness = () => {
           }
         });
       };
-    
 
     const handleUpdateBusiness = () => {
 
@@ -113,14 +110,6 @@ const UpdateBusiness = () => {
                 console.error("Update store error.", error);
                 console.log(error)
             });
-    };
-
-    const onChangeFileDP = (e) => {
-        setFilenameDP(e.target.files[0])
-    };
-
-    const onChangeFileBan = (e) => {
-        setFilenameBan(e.target.files[0])
     };
 
     return (

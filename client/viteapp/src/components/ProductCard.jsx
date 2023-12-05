@@ -11,4 +11,4 @@ const ProductCard = ({ productID, productName, businessName, price, image }) => 
     )
 }
 
-export default ProductCard;
+export default ProductCard; 

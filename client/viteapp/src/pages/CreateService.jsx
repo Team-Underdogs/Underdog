@@ -77,6 +77,7 @@ const CreateService = () => {
             .then(response => {
                 console.log(response.data);
                 alert("Service created successfully");
+                navigate('/');
             })
             .catch(error => {
                 alert("Failed to create service. CHECK CONSOLE FOR DETAILS")
@@ -86,86 +87,104 @@ const CreateService = () => {
     
     return (
         <div className="content-container">
-            <h1>Create Service</h1>
+            <div className="browse-text">
+                <h1>Create Service</h1>
+                <h4>Describe a service that your business provides. All fields are required.</h4>
+            </div>
             <form onSubmit={handleCreateService} encType="multipart/form-data" name="create-form">
-            <div className="label-input-combo">
-                <label>Service Name</label>
-                <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => (setName(e.target.value))}
-                />
-            </div>
-            <div className="label-input-combo">
-                <label>Service Price</label>
-                <input
-                    type="number"
-                    value={price}
-                    onChange={(e) => (setPrice(e.target.value))}
-                />
-            </div>
-            <div className="label-input-combo">
-                <label>Service Description</label>
-                <input
-                    type="text"
-                    value={description}
-                    onChange={(e) => (setDescription(e.target.value))}
-                />
-            </div>
-            <div className="form-group">
-                <label htmlFor="file">Upload service image</label>
-                <input 
-                    type="file"
-                    filename="serviceimage"
-                    className="form-control-file"
-                    onChange={onChangeFile}
-                />
-            </div>
-            <h2>Service Tags</h2>
-            {Object.entries(availableTags).map(([group, tags]) => (
-                <div className="tag-groups" key={group}>
-                    <h3 className="group-label">Business Tags: {group}</h3>
-                    <div className="tag-rows">
-                    {tags.map((tag) => (
-                        <div className="tag-select-container" key={tag}>
+                <div className="info-grid">
+                    <div className="info-grid-item">
+                        <div className="average-input">
                             <input
-                            className="tag-checkbox"
-                            type="checkbox"
-                            id={tag}
-                            value={tag}
-                            checked={selectedTags.includes(tag)}
-                            onChange={() => handleTagChange(tag)}
+                                type="text"
+                                value={name}
+                                onChange={(e) => (setName(e.target.value))}
                             />
-                            <label htmlFor={tag}>{tag}</label>
+                            <label for="input" placeholder="Name"></label>
+                        </div>
+                    </div>
+                    <div className="info-grid-item">
+                        <div className="average-input">
+                            <input
+                                type="text"
+                                value={price}
+                                onChange={(e) => (setPrice(e.target.value))}
+                            />
+                            <label for="input" placeholder="Price"></label>
+                        </div>
+                    </div>
+                    <div className="info-grid-item">
+                        <div className="textarea-input">
+                            <textarea
+                                type="text"
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
+                                placeholder="Describe Your Product..."
+                            />
+                        </div>
+                    </div>
+                    <div className="info-grid-item">
+                        <div className="upload-input">
+                            <label htmlFor="file">Upload Service Image:</label>
+                            <input 
+                                type="file"
+                                filename="serviceimage"
+                                className="form-control-file"
+                                onChange={onChangeFile}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="category-assignment">
+                    <div className="info-title">
+                        <h4>Service Categories:</h4>
+                        <p>What is your service? You must select at least one.</p>
+                    </div>
+                    <div className="tag-rows">
+                        {availableCategories.map((category) => (
+                            <div className="tag-select-container" key={category}>
+                                <input
+                                className="tag-checkbox"
+                                type="checkbox"
+                                id={category}
+                                value={category}
+                                checked={categories.includes(category)}
+                                onChange={() => handleCategoryChange(category)}
+                                />
+                                <label htmlFor={category}>{category}</label>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="tag-assignment">
+                    <div className="info-title">
+                        <h4>Service Tags:</h4>
+                        <p>Some users will directly search for services based on the businesses values and ownership. You can select the same as your business, or personalise the tags for each service. You must select at least one.</p>
+                    </div>
+                    {Object.entries(availableTags).map(([group, tags]) => (
+                        <div className="tag-groups" key={group}>
+                            <p className="group-label">{group}</p>
+                            <div className="tag-rows">
+                                {tags.map((tag) => (
+                                    <div className="tag-select-container" key={tag}>
+                                        <input
+                                            className="tag-checkbox"
+                                            type="checkbox"
+                                            id={tag}
+                                            value={tag}
+                                            checked={selectedTags.includes(tag)}
+                                            onChange={() => handleTagChange(tag)}
+                                        />
+                                        <label htmlFor={tag}>{tag}</label>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     ))}
-                    </div>
                 </div>
-            ))}
-            <div>
-            <h2>Service Categories</h2>
-                <div className="tag-rows">
-                {availableCategories.map((category) => (
-                    <div className="tag-select-container" key={category}>
-                        <input
-                        className="tag-checkbox"
-                        type="checkbox"
-                        id={category}
-                        value={category}
-                        checked={categories.includes(category)}
-                        onChange={() => handleCategoryChange(category)}
-                        />
-                        <label htmlFor={category}>{category}</label>
-                    </div>
-                ))}
-                </div>
-            </div>
-            <div>
-                <button className="general-button" type="submit">Create Service</button>
-            </div>
+                <button type="submit">Create Service</button>
             </form>
         </div>
-        
     );
 }
 
