@@ -132,7 +132,7 @@ const UpdateBusiness = () => {
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
-                <div className="content-container"> 
+                <div className="info-container"> 
                     <div className="info-title">
                         <h4>Basic Information:</h4>
                         <p>All fields are required.</p>
