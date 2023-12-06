@@ -11,4 +11,4 @@ const ServiceCard = ({ serviceID, serviceName, businessName, price, image }) => 
     )
 }
 
-export default ServiceCard;
+export default ServiceCard; 

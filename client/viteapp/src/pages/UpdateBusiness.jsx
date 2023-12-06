@@ -12,12 +12,14 @@ const UpdateBusiness = () => {
         Phone: "",
         Email: "",
         BusinessDescription: "",
-        BusinessTags: [],
-        BusinessCategories: [],
+        BusinessImage: "",
+        BusinessBanner: "",
         LinkWebsite: "",
         LinkFB: "",
         LinkTwitter: "",
-        LinkInstagram: ""
+        LinkInstagram: "",
+        BusinessTags: [],
+        BusinessCategories: [],
     })
 
     const { user, isAuthenticated} = useAuth0();
@@ -80,7 +82,6 @@ const UpdateBusiness = () => {
           }
         });
       };
-    
 
     const handleUpdateBusiness = () => {
 
@@ -113,32 +114,81 @@ const UpdateBusiness = () => {
 
     return (
         <div className="content-container">
-            <h1>Update Business</h1>
+            <div className="browse-text-form">
+                <h1>Update Business</h1>
+                <h4>Edit your details to update your business information.</h4>
+            </div>
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
-                <div>
-                    {Object.entries(business).map(([field, value]) => {
-                        if (["_id", "UserId", "__v", "BusinessTags", "BusinessCategories"].includes(field)) {
-                            return null;
-                        }
-                    return (
-                        <div className="label-input-combo" key={field}>
-                            <label>{field}</label>
-                            <input
-                                type="text"
-                                name={field}
-                                value={value}
-                                onChange={handleInputChange}
-                            />
+                <div className="info-container"> 
+                    <div className="info-title">
+                        <h4>Basic Information:</h4>
+                        <p>All fields are required.</p>
+                    </div>
+                    <div className="info-grid-update">
+                        {Object.entries(business).map(([field, value]) => {
+                            if (["_id", "UserId", "__v", "BusinessTags", "BusinessCategories", "StripeId", "BusinessImage", "BusinessBanner", "BusinessDescription"].includes(field)) {
+                                if (field === "BusinessDescription") {
+                                    return (
+                                        <div className="info-grid-item-update" key={field}>
+                                            <div className="textarea-input-update">
+                                                <label>Business Description: </label>
+                                                <textarea
+                                                    name={field}
+                                                    value={value}
+                                                    onChange={handleInputChange}
+                                                />
+                                            </div>
+                                        </div>
+                                    );
+                                }
+                                return null;
+                            }
+                            return (
+                                <div className="info-grid-item-update" key={field}>
+                                    <div className="average-input">
+                                        <input
+                                            type="text"
+                                            name={field}
+                                            value={value}
+                                            onChange={handleInputChange}
+                                        />
+                                        <label htmlFor="input" placeholder={field}></label>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                    <div className="category-assignment">
+                        <div className="info-title">
+                            <h4>Business Categories:</h4>
+                            <p>What kind of items/services does your business provide? You must select at least one.</p>
                         </div>
-                    );
-                    })}
-                    <div>
-                        <h1>Business Tags</h1>
+                        <div className="tag-rows">
+                            {availableCategories.map((category) => (
+                            <div className="tag-select-container" key={category}>
+                                <input
+                                className="tag-checkbox"
+                                type="checkbox"
+                                id={category}
+                                value={category}
+                                checked={business.BusinessCategories.includes(category)}
+                                onChange={() => handleCategoryChange(category)}
+                                />
+                                <label htmlFor={category}>{category}</label>
+                            </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="tag-assignment">
+                        <div className="info-title">
+                            <h4>Business Tags:</h4>
+                            <p>What makes your business unique? You must select at least one.</p>
+                        </div>
                         {Object.entries(availableTags).map(([group, tags]) => (
                             <div className="tag-groups" key={group}>
-                                <h3 className="group-label">Business Tags: {group}</h3>
+                                <h3 className="group-label">{group}</h3>
                                 <div className="tag-rows">
                                 {tags.map((tag) => (
                                 <div className="tag-select-container" key={tag}>
@@ -154,26 +204,8 @@ const UpdateBusiness = () => {
                                 </div>
                             ))}
                             </div>
-                            </div>
-                    ))}
-                    </div>
-                    <div>
-                        <h1>Business Categories</h1>
-                        <div className="tag-rows">
-                        {availableCategories.map((category) => (
-                        <div className="tag-select-container" key={category}>
-                            <input
-                            className="tag-checkbox"
-                            type="checkbox"
-                            id={category}
-                            value={category}
-                            checked={business.BusinessCategories.includes(category)}
-                            onChange={() => handleCategoryChange(category)}
-                            />
-                            <label htmlFor={category}>{category}</label>
                         </div>
                     ))}
-                    </div>
                     </div>
                     <button className="general-button" onClick={handleUpdateBusiness}>Save</button>
                 </div>

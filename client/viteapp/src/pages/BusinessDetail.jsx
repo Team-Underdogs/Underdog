@@ -4,6 +4,16 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import GeneralButton from "../components/GeneralButton";
 import Banner from '../components/Banner';
+import { FaPlus } from 'react-icons/fa';
+import { FaEdit } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
+import Button from '@mui/material-next/Button';
+import { FaFacebook } from "react-icons/fa";
+import { FaInstagram } from "react-icons/fa";
+import { FaTwitter } from "react-icons/fa";
+import { FaMailBulk } from "react-icons/fa";
+import { FaPhone } from "react-icons/fa";
+import { FaRegArrowAltCircleRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import ServiceCard from "../components/ServiceCard";
@@ -74,7 +84,7 @@ const BusinessDetail = () => {
     };
 
     return (
-        <div className="content-container-bs">
+        <div className="content-container">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
@@ -84,44 +94,65 @@ const BusinessDetail = () => {
                     )}
                     <div className="business-detail-info">
                         <h1>{business.BusinessName}</h1>
-                        {user?.sub == business.UserId ? (
-                            <div className="button section">
-                            <GeneralButton 
-                            text={"Update business"} 
-                            link={`/business/update/${business._id}`}
-                            />
-                            <GeneralButton 
-                            text={"Add new product"} 
-                            link={`/product/create`}
-                            />
-                            <GeneralButton 
-                            text={"Add new service"} 
-                            link={`/service/create`}
-                            />
-                            <button
-                            className="delete-button"
-                            onClick={handleDeleteBusiness}
-                            >
-                            Delete business
-                            </button>
-                        </div>
-                        ) : (null)
-                        }
                         {business.BusinessTags && business.BusinessTags.length > 0 && (
                             <p>{business.BusinessTags.join(" • ")}</p>
                         )}
+                        {user?.sub == business.UserId ? (
+                            <div className="button-section">
+                                <GeneralButton 
+                                icon={<FaEdit />}
+                                text={"Update business"} 
+                                link={`/business/update/${business._id}`}
+                                />
+                                <GeneralButton 
+                                icon={<FaPlus />}
+                                text={"Add new product"} 
+                                link={`/product/create`}
+                                />
+                                <GeneralButton 
+                                icon={<FaPlus />}
+                                text={"Add new service"} 
+                                link={`/service/create`}
+                                />
+                                <Button variant="filledTonal" onClick={handleDeleteBusiness} sx={{ backgroundColor: "rgb(197, 77, 77)", "&:hover": { backgroundColor: "rgb(224, 102, 102)" }}}>
+                                <FaTrash />
+                                Delete Business
+                                </Button>
+                            </div>
+                        ) : (null) }
                         <p className="business-detail-info-desc">{business.BusinessDescription}</p>
                     </div>
                     <div className="business-detail-contact">
-                        <p>Address: {business.Address}, {business.Suburb}, {business.City}</p>
-                        <p>{business.Email}</p>
-                        <p>{business.Phone}</p>
-                        <p>{business.LinkWebsite}</p>
+                        <p>{business.Address}, {business.Suburb}, {business.City}</p>
+                        <div className="contact-link">
+                            <FaMailBulk />
+                            <p>{business.Email}</p>
+                        </div>
+                        <div className="contact-link">
+                            <FaPhone />
+                            <p>{business.Phone}</p>
+                        </div>
+                        <div className="contact-link">
+                            <FaRegArrowAltCircleRight />
+                            <a href={business.LinkWebsite}>{business.LinkWebsite}</a>
+                        </div>
                     </div>
-                    <div className="business-detail-links">
-                        <a href={business.LinkFB}>fb icon</a>
-                        <a href={business.LinkTwitter}>insta icon</a>
-                        <a href={business.LinkInstagram}>twitter icon</a>
+                    <div className="external-links">
+                        {business.LinkFB !== "" && (
+                            <a href={business.LinkFB} target="_blank" rel="noopener noreferrer">
+                                <FaFacebook />
+                            </a>
+                        )}
+                        {business.LinkInstagram !== "" && (
+                            <a href={business.LinkInstagram} target="_blank" rel="noopener noreferrer">
+                                <FaInstagram />
+                            </a>
+                        )}
+                        {business.LinkTwitter !== "" && (
+                            <a href={business.LinkTwitter} target="_blank" rel="noopener noreferrer">
+                                <FaTwitter />
+                            </a>
+                        )}
                     </div>
                     <button className="general-button" onClick={handleToggle}>Now viewing: {toggle ? "Products" : "Services"}</button>
                     <div className="browse-body">

@@ -52,7 +52,7 @@ router.post("/createStore", authMiddleware, upload.fields([{name: 'businessImage
     try {
         const {
             BusinessName,
-            Address,
+            Address, 
             Suburb,
             City,
             Phone,
@@ -128,43 +128,44 @@ router.post("/createStore", authMiddleware, upload.fields([{name: 'businessImage
 });
 
 // Update a store
-router.put("/updateStore/:id", async (req, res) => {
+router.put("/updateStore/:id", authMiddleware, upload.fields([{ name: 'businessImage', maxCount: 1 }, { name: 'businessBanner', maxCount: 1 }]), async (req, res) => {
     try {
-        const {StripeId, ...updatedFields} = req.body;
-        const UserId = req.query.UserId;
-        const { id } = req.params;
-
-        const store = await StoreModel.findById(id);
-
-        if (!store) {
-            return res.status(404).json({ message: "Store not found"})
-        }
-
-        if (!UserId) {
-            return res.status(401).json({ message: "Unauthorized, user id not provided"})
-        }
-
-        if (UserId !== store.UserId) {
-            return res.status(403).json({ message: "Unauthorized. UserId does not match"})
-        }
-
-        if (StripeId) {
-            updatedFields.StripeAccountId = StripeAccountId;
-        }
-
-        const updatedStore = await StoreModel.findByIdAndUpdate(id, updatedFields, {
-            new: true
-        });
-
-        if(!updatedStore) {
-            return res.status(404).json({ message: "Store not found"})
-        }
-        res.json(updatedStore);
+      const { id } = req.params;
+      const updatedStoreData = { ...req.body };
+      const UserId = req.query.UserId;
+  
+      const store = await StoreModel.findById(id);
+  
+      if (!store) {
+        return res.status(404).json({ message: "Store not found" })
+      }
+  
+      if (!UserId) {
+        return res.status(401).json({ message: "Unauthorized, user id not provided" })
+      }
+  
+      if (UserId !== store.UserId) {
+        return res.status(403).json({ message: "Unauthorized. UserId does not match" })
+      }
+  
+      delete updatedStoreData.UserId;
+      delete updatedStoreData._id;
+      delete updatedStoreData.StripeId;
+  
+      const updatedStore = await StoreModel.findByIdAndUpdate(id, updatedStoreData, {
+        new: true
+      });
+  
+      if (!updatedStore) {
+        return res.status(404).json({ message: "Store not found" })
+      }
+      res.json(updatedStore);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({message: error})
+      console.error(error);
+      res.status(500).json({ message: error })
     }
-});
+  });
+  
 
 // Delete a store
 router.delete("/deleteStore/:id", async (req, res) => {
