@@ -78,35 +78,42 @@ const ProductDetail = () => {
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
-                <div className="detail-section">
-                    <div className="item-info">
-                        <div className="item-identity">
-                        <h1>{product.ProductName}</h1>
-                        <p>{store.BusinessName}</p>
-                        </div>
-                        {user?.sub == product.UserId ? (
+                <div className="detail-body">
+                    <div className="detail-section">
+                        <div className="item-info">
+                            <div className="item-identity">
+                            <h1>{product.ProductName}</h1>
+                            <p>{store.BusinessName}</p>
+                            </div>
+                            <h3 className="detail-price">$ {product.ProductPrice}</h3>
+                            <Button onClick={handlePayment} sx={{color: "black", backgroundColor: "#C1D7AE", "&:hover": { backgroundColor: "#d2e7c0" }}} className="purchase-button">Purchase</Button>
                             <div className="button-section">
-                                <GeneralButton 
-                                icon={<FaEdit />}
-                                text={"Update Product"} 
-                                link={`/product/update/${product._id}`}
-                                />
-                                <Button variant="filledTonal" onClick={handleDeleteProduct} sx={{ backgroundColor: "rgb(197, 77, 77)", "&:hover": { backgroundColor: "rgb(224, 102, 102)" }}}>
-                                <FaTrash />
-                                Delete Product
-                                </Button>
+                                {user?.sub == product.UserId ? (
+                                    <div className="detail-button-section">
+                                        <GeneralButton 
+                                        icon={<FaEdit />}
+                                        text={"Update Service"} 
+                                        link={`/product/update/${service._id}`}
+                                        />
+                                        <Button 
+                                        className="detail-button" variant="filledTonal" onClick={handleDeleteProduct} sx={{ backgroundColor: "rgb(197, 77, 77)", "&:hover": { backgroundColor: "rgb(224, 102, 102)" }}}>
+                                        <FaTrash />
+                                        Delete Product
+                                        </Button>
+                                    </div>
+                                ) : (null)}
                             </div>
-                        ) : (null)}
-                        <h3>$ {product.ProductPrice}</h3>
-                        <p>{product.ProductDescription}</p>
-                        <Button onClick={handlePayment} sx={{color: "black", backgroundColor: "#C1D7AE", "&:hover": { backgroundColor: "#d2e7c0" }}} className="purchase-button">Purchase</Button>
+                        </div>
+                        <div className="item-image">
+                            {product && product.ProductImage && (
+                                <div className="item-main-image">
+                                    <img src={`http://localhost:3001/uploads/${product.ProductImage}`} alt="..." />
+                                </div>
+                            )}
+                        </div>
                     </div>
-                    <div className="item-image">
-                        {product && product.ProductImage && (
-                            <div className="item-main-image">
-                                <img src={`http://localhost:3001/uploads/${product.ProductImage}`} alt="..." />
-                            </div>
-                        )}
+                    <div className="detail-desc">
+                        <p>{product.ProductDescription}</p>
                     </div>
                 </div>
             )}

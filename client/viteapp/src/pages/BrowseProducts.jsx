@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import CategoriesBanner from "../components/CategoriesMenu";
-import TagsBanner from "../components/TagsMenu";
+import TagsBanner from "../components/tagsMenu";
 import ProductCard from "../components/ProductCard";
 import ServiceCard from "../components/ServiceCard";
 import { Link } from 'react-router-dom';
@@ -52,7 +52,8 @@ const BrowseProducts = () => {
       
     return (
         <div className="browse-container">
-            <div className="browse-text">
+            <div className="browse-text-bps">
+              <div className="background-overlay"></div>
                 <h1>Browse By Products & Services</h1>
                 <h4>Explore unique products sourced by our diverse communities within New Zealand!</h4>
             </div>

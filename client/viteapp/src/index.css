@@ -63,6 +63,8 @@
   flex-direction: row;
   justify-content: space-between;
   height: 12vh;
+  z-index: 999;
+  position: relative;
 } 
 
 .logo{
@@ -207,6 +209,75 @@
   line-height: 250%;
 }
 
+.browse-text-bb{
+  padding:4%;
+  line-height: 250%;
+  background-image: url('../src/assets/business.jpeg'); 
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  box-shadow: inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2)
+}
+
+.background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.browse-text-bb h1, .browse-text-bb h4{
+  z-index: 2;
+  position: relative;
+}
+
+.browse-text-bps{
+  padding:4%;
+  line-height: 250%;
+  background-image: url('../src/assets/products.jpg'); 
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  box-shadow: inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2)
+}
+
+.browse-text-bps h1, .browse-text-bps h4{
+  z-index: 2;
+  position: relative;
+}
+
+.browse-text-sr{
+  padding:4%;
+  line-height: 250%;
+  background-image: url('../src/assets/searchPage.jpg'); 
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  box-shadow: inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2)
+}
+
+.browse-text-sr h1, .browse-text-sr h4{
+  z-index: 2;
+  position: relative;
+}
+
+.browse-text-h{
+  padding:4%;
+  line-height: 250%;
+  background-image: url('../src/assets/boxed-water.jpg'); 
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  box-shadow: inset 0 -10px 10px -10px rgba(0, 0, 0, 0.2)
+}
+
+.browse-text-h h1, .browse-text-h h4{
+  z-index: 2;
+  position: relative;
+}
+
 .browse-text-form{
   padding-top: 4%;
   line-height: 250%;
@@ -306,6 +377,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+  margin-top: 5%;
   margin-left: 10%;
   margin-right: 10%;
   border-bottom: 1px grey solid;
@@ -366,7 +438,6 @@
   position: absolute;
   width: 80%;
   height: 70%;
-  border-radius: 50%;
 }
 
 .store-card-text{
@@ -405,6 +476,8 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   cursor: pointer;
   text-decoration: none;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .businesscard-container:hover, .servicecard-container:hover, .productcard-container:hover{
@@ -416,6 +489,8 @@
   position: absolute;
   width: 100%;
   height: 70%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .businesscard-textbanner, .servicecard-textbanner, .productcard-textbanner{
@@ -441,12 +516,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #A7524C;
-  color: white;
+  /* background-color: #A7524C; */
+  /* color: white; */
+  color: black;
   bottom: 0;
   position: absolute;
   width: 100%;
-  font-size: 1vw;
+  font-size: 1.3vw;
+  height: 20px;
+  background-color: #e3f1d8;
 }
 
 /* Content container */
@@ -668,6 +746,8 @@
   display: flex;
   flex-direction: column;
   align-self: center;
+  width: 80%;
+  margin: auto;
 }
 
 .business-detail-info{
@@ -682,13 +762,15 @@
 }
 
 .business-detail-info-desc{
-  margin-top: 1%;
+  margin-top: 5%;
 }
 
 .business-detail-contact{
   display: flex;
   flex-direction: column;
   margin-top: 2%;
+  width: 80%;
+  margin: auto;
 }
 
 .business-detail-links{
@@ -700,7 +782,38 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  
+  padding-bottom: 2%;
+}
+
+.contact-link a{
+  color: blue;
+}
+
+.contact-link svg{
+  margin-right: 10px;
+}
+
+.external-links{
+  width: 80%;
+  margin: auto;
+}
+
+.external-links svg{
+  color: blue;
+  margin-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.external-links svg:hover{
+  color: rgb(75, 75, 255);
+}
+
+.toggle-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 /* Product & Service detail */

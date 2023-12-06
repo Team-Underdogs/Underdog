@@ -146,7 +146,8 @@ const SearchResults = () => {
     
     return(
         <div className='searchResults-container'>
-            <div className="browse-text">
+            <div className="browse-text-sr">
+              <div className="background-overlay"></div>
                 <h1>Search Results</h1>
                 {category === 'all' ? (
                   <h4>All items associated with '{keyword}'</h4>

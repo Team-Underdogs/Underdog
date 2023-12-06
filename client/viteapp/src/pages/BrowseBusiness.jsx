@@ -40,7 +40,8 @@ const BrowseBusiness = () => {
 
     return (
         <div className="browse-container">
-            <div className="browse-text">
+            <div className="browse-text-bb">
+                <div className="background-overlay"></div>
                 <h1>Browse Our Businesses</h1>
                 <h4>Explore our diverse marketplace of locally owned businesses!</h4>
             </div>

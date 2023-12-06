@@ -14,6 +14,7 @@ import { FaTwitter } from "react-icons/fa";
 import { FaMailBulk } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa";
 import { FaRegArrowAltCircleRight } from "react-icons/fa";
+import { FaStore } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import ServiceCard from "../components/ServiceCard";
@@ -53,10 +54,6 @@ const BusinessDetail = () => {
             })
     }, [id]);
 
-    const handleToggle = () => {
-        setToggle(!toggle)
-    }
-
     const handleDeleteBusiness = async () => {
 
         const isConfirmed = window.confirm("This will delete your business and all products/services. Are you sure you want to delete?")
@@ -83,15 +80,24 @@ const BusinessDetail = () => {
         }
     };
 
+    const toggleProducts = () => {
+        setToggle(true)
+    }
+
+    const toggleServices = () => {
+        setToggle(false)
+    }
+
     return (
-        <div className="content-container">
+        <div className="bs-detail-container">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
-                <div className="business-detail-business-section">
+                <div>
                     {business && business.BusinessBanner && (
-                        <Banner image={`http://localhost:3001/uploads/${business.BusinessBanner}`} alt="..." />
+                        <Banner image={`http://localhost:3001/uploads/${business.BusinessBanner}`} alt="..." className="business-banner" />
                     )}
+                <div className="business-detail-business-section">
                     <div className="business-detail-info">
                         <h1>{business.BusinessName}</h1>
                         {business.BusinessTags && business.BusinessTags.length > 0 && (
@@ -123,38 +129,56 @@ const BusinessDetail = () => {
                         <p className="business-detail-info-desc">{business.BusinessDescription}</p>
                     </div>
                     <div className="business-detail-contact">
-                        <p>{business.Address}, {business.Suburb}, {business.City}</p>
                         <div className="contact-link">
-                            <FaMailBulk />
-                            <p>{business.Email}</p>
+                            <FaStore />
+                            <p>{business.Address}, {business.Suburb}, {business.City}</p>
                         </div>
                         <div className="contact-link">
                             <FaPhone />
                             <p>{business.Phone}</p>
                         </div>
                         <div className="contact-link">
+                            <FaMailBulk />
+                            <p>{business.Email}</p>
+                        </div>
+                        <div className="contact-link">
                             <FaRegArrowAltCircleRight />
-                            <a href={business.LinkWebsite}>{business.LinkWebsite}</a>
+                            <a href={business.LinkWebsite} target="_blank" rel="noopener noreferrer">{business.LinkWebsite}</a>
                         </div>
                     </div>
                     <div className="external-links">
                         {business.LinkFB !== "" && (
                             <a href={business.LinkFB} target="_blank" rel="noopener noreferrer">
-                                <FaFacebook />
+                                <FaFacebook size={30} />
                             </a>
                         )}
                         {business.LinkInstagram !== "" && (
                             <a href={business.LinkInstagram} target="_blank" rel="noopener noreferrer">
-                                <FaInstagram />
+                                <FaInstagram size={30} />
                             </a>
                         )}
                         {business.LinkTwitter !== "" && (
                             <a href={business.LinkTwitter} target="_blank" rel="noopener noreferrer">
-                                <FaTwitter />
+                                <FaTwitter size={30} />
                             </a>
                         )}
                     </div>
-                    <button className="general-button" onClick={handleToggle}>Now viewing: {toggle ? "Products" : "Services"}</button>
+                    <div className="toggle-buttons">
+                        <Button
+                            className={`general-button-p ${toggle ? '' : 'active'}`}
+                            onClick={toggleProducts}
+                            sx={{color: 'black', fontSize: '1.3vw', "&:hover": {backgroundColor: '#dfefd1' }, backgroundColor: toggle ? '#d2e7c0' : ''}}
+                        >
+                            Products
+                        </Button>
+                        <Button
+                            className={`general-button-s ${toggle ? 'active' : ''}`}
+                            onClick={toggleServices}
+                            sx={{color: 'black', fontSize: '1.3vw', "&:hover": {backgroundColor: '#dfefd1' }, backgroundColor: toggle ? '' : '#d2e7c0'}}
+                        >
+                            Services
+                        </Button>
+                    </div>
                     <div className="browse-body">
                         <div className="browse-bps-cards">
                             {toggle ? (
@@ -184,6 +208,7 @@ const BusinessDetail = () => {
                         </div>
                     </div>
                 </div>
+            </div>
             )}
         </div>
     );
