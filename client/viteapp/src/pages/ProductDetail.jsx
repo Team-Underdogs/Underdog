@@ -92,8 +92,8 @@ const ProductDetail = () => {
                                     <div className="detail-button-section">
                                         <GeneralButton 
                                         icon={<FaEdit />}
-                                        text={"Update Service"} 
-                                        link={`/product/update/${service._id}`}
+                                        text={"Update product"} 
+                                        link={`/product/update/${product._id}`}
                                         />
                                         <Button 
                                         className="detail-button" variant="filledTonal" onClick={handleDeleteProduct} sx={{ backgroundColor: "rgb(197, 77, 77)", "&:hover": { backgroundColor: "rgb(224, 102, 102)" }}}>
