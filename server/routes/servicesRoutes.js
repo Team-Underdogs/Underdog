@@ -78,13 +78,18 @@ router.post("/createService", authMiddleware, upload.single('serviceImage'), asy
             return res.status(400).json({ message: "Service image not provided" });
         }
 
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: ServicePrice * 100,
-            currency: 'nzd',
-            transfer_data: {
-                destination: AssociatedStore.StripeId
-            }
-        })
+        const stripeProduct = await stripe.products.create({
+            name: ServiceName,
+            type: 'good'
+        },
+        { stripeAccount: AssociatedStore.StripeId});
+
+        const stripePrice = await stripe.prices.create({
+            product: stripeProduct.id,
+            unit_amount: ServicePrice * 100,
+            currency: 'nzd'
+        },
+        { stripeAccount: AssociatedStore.StripeId })
 
         const service = new ServiceModel({
             ServiceName,
@@ -93,11 +98,13 @@ router.post("/createService", authMiddleware, upload.single('serviceImage'), asy
             ServiceTags,
             ServiceCategories,
             Store: AssociatedStore,
+            stripeProduct,
+            stripePrice,
             UserId,
             ServiceImage: req.file.originalname
         })
         await service.save();
-        return res.status(201).json({message: "Service created successfully", service, paymentIntent});
+        return res.status(201).json({message: "Service created successfully", service});
 
     } catch (error) {
         console.error(error);
@@ -139,6 +146,43 @@ router.put("/updateService/:id", async (req, res) => {
         res.status(500).json({message: error})
     }
 });
+
+// Stripe payment for service
+router.post('/checkout/:id', async (req, res) => {
+    try {
+
+        const serviceId = req.params.id;
+        const { StoreId } = req.body;
+
+        const service = await ServiceModel.findById(serviceId).populate('Store');
+
+        if (!service) {
+            return res.status(404).json({message: 'Service not found'});
+        }
+
+        const associatedStore = await StoreModel.findById(StoreId);
+
+        if (!associatedStore) {
+            return res.status(404).json({message: "Store not found"});
+        }
+
+        const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
+            line_items: [{
+                price: service?.stripePrice?.id,
+                quantity: 1,
+            }],
+            mode: 'payment',
+            success_url: 'http://localhost:3000/',
+            cancel_url: 'http://localhost:3000/',
+        },
+        { stripeAccount: associatedStore.StripeId });
+        res.json({ sessionUrl: session.url });
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({ message: error.message })
+    }
+})
 
 // Delete service by id
 router.delete("/deleteService/:id", async (req, res) => {

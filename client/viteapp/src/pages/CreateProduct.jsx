@@ -53,6 +53,7 @@ const CreateProduct = () => {
     };
 
     const handleCreateProduct = async (e) => {
+
         e.preventDefault();
         if (!name || !price || !description || !selectedTags || !categories) {
             alert("Please fill in all fields");

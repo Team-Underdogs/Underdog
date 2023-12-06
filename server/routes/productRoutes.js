@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 const ProductModel = require("../models/products");
@@ -196,32 +197,23 @@ router.post('/checkout/:id', async (req, res) => {
         }
 
         const associatedStore = await StoreModel.findById(StoreId);
-        console.log({associatedStore})
-        console.log(StoreId)
 
         if (!associatedStore) {
             return res.status(404).json({message: "Store not found"});
         }
 
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: product.ProductPrice * 100,
-            currency: 'nzd',
-            transfer_data: {
-                destination: associatedStore.StripeId
-            }
-        })
-
         const session = await stripe.checkout.sessions.create({
+            payment_method_types: ['card'],
             line_items: [{
-                price: product.stripePrice.id,
+                price: product?.stripePrice?.id,
                 quantity: 1,
             }],
             mode: 'payment',
             success_url: 'http://localhost:3000/',
-            cancel_url: 'http://localhost:3000/'
+            cancel_url: 'http://localhost:3000/',
         },
         { stripeAccount: associatedStore.StripeId });
-        res.json({ sessionId: session.id });
+        res.json({ sessionUrl: session.url });
     } catch (error) {
         console.error(error)
         res.status(500).json({ message: error.message })

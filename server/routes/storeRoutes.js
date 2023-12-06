@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const router = express.Router();
 const StoreModel = require("../models/stores");
@@ -79,8 +80,17 @@ router.post("/createStore", authMiddleware, upload.fields([{name: 'businessImage
         }
 
         const account = await stripe.accounts.create({
-            type: 'standard',
-        })
+            country: 'nz',
+            type: 'custom',
+            capabilities: {
+                card_payments: {
+                    requested: true,
+                },
+                transfers: {
+                    requested: true,
+                },
+            },
+        });
 
         const accountLink = await stripe.accountLinks.create({
             account: account.id,

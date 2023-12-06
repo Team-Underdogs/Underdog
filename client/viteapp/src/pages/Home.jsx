@@ -1,7 +1,5 @@
 import BrowseCard from "../components/BrowseCard";
 import { Link } from "react-router-dom";
-import LoginButton from "../components/LoginButton";
-import LogoutButton from "../components/LogoutButton";
 import BusinessExhibit from "../components/BusinessExhibit";
 import { useState, useEffect } from 'react';
 import axios from 'axios';

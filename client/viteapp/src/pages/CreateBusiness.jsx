@@ -102,7 +102,7 @@ const CreateBusiness = () => {
             .then(response => {
                 console.log(response.formData);
                 alert("Store created successfully");
-                navigate("/")
+                window.location.href = response.data.accountLink.url
             })
             .catch(error => {
                 alert("Failed to create store. CHECK CONSOLE FOR DETAILS")
