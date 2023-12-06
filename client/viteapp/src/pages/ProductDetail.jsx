@@ -13,7 +13,7 @@ const ProductDetail = () => {
 
     const { user, isAuthenticated } = useAuth0();
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false); 
     const navigate = useNavigate();
     const { id } = useParams();
 
@@ -74,13 +74,16 @@ const ProductDetail = () => {
     };
 
     return ( 
-        <div className="item-container">
+        <div className="content-container">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
                 <div className="detail-section">
                     <div className="item-info">
+                        <div className="item-identity">
                         <h1>{product.ProductName}</h1>
+                        <p>{store.BusinessName}</p>
+                        </div>
                         {user?.sub == product.UserId ? (
                             <div className="button-section">
                                 <GeneralButton 
@@ -94,10 +97,9 @@ const ProductDetail = () => {
                                 </Button>
                             </div>
                         ) : (null)}
-                        <h3>{store.BusinessName}</h3>
                         <h3>$ {product.ProductPrice}</h3>
                         <p>{product.ProductDescription}</p>
-                        <button onClick={handlePayment}>Purchase</button>
+                        <Button onClick={handlePayment} sx={{color: "black", backgroundColor: "#C1D7AE", "&:hover": { backgroundColor: "#d2e7c0" }}} className="purchase-button">Purchase</Button>
                     </div>
                     <div className="item-image">
                         {product && product.ProductImage && (

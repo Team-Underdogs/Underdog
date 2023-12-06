@@ -705,11 +705,6 @@
 
 /* Product & Service detail */
 
-.item-detail-container{
-  display: flex;
-  flex-direction: row;
-}
-
 .item-text{
   display: flex;
   flex-direction: column;
@@ -717,16 +712,58 @@
   padding: 5%;
 }
 
-.item-image{
+.item-info{
+  padding: 10%;
   display: flex;
-  justify-content: center;
-  width: 50%;
+  flex-direction: column;
+  justify-content: space-between;
+  align-self: center;
+}
+
+.item-info p, .item-info h3, .item-identity, .purchase-button{
+  margin-bottom: 15%;
+}
+
+.detail-section{
+  display: grid;
+  grid-template-columns: 1fr 70%;
+  margin-top: 5%;
+  text-align: center;
 }
 
 .item-image img{
-  width: 80%;
-  object-fit: cover;
+  width: 100%;
+  object-fit: fill;
   height: 65vh;
+  padding-left: 10%;
+}
+
+.detail-section h1{
+  font-size: 1.4vw;
+}
+
+.detail-price{
+  font-size: 1.5vw;
+  color: rgb(0, 102, 255);
+}
+
+.detail-button-section{
+  padding: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items:center;
+}
+
+.detail-desc{
+  text-align: center;
+  font-size: 1.2vw;
+  padding: 5%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 /* General Buttons */

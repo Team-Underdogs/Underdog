@@ -74,40 +74,46 @@ const ServiceDetail = () => {
     };
 
     return ( 
-        <div className="item-container">
+        <div className="content-container">
             {loading ? (
                 <h1>Loading, please wait</h1>
             ) : (
-                <div className="detail-section">
-                    <div className="item-info">
-                    <h1>{service.ServiceName}</h1>
-                    {user?.sub == service.UserId ? (
-                        <div className="button-section">
-                            <GeneralButton 
-                            icon={<FaEdit />}
-                            text={"Update Service"} 
-                            link={`/service/update/${service._id}`}
-                            />
-                            <Button variant="filledTonal" onClick={handleDeleteService} sx={{ backgroundColor: "rgb(197, 77, 77)", "&:hover": { backgroundColor: "rgb(224, 102, 102)" }}}>
-                            <FaTrash />
-                            Delete Service
-                            </Button>
-                        </div>
-                        ) : (null)
-                        }
-                    <h3>{store.BusinessName}</h3>
-                    <h3>$ {service.ServicePrice}</h3>
-                    <p>{service.ServiceDescription}</p>
-                    <button onClick={handlePayment}>Purchase</button>
-                    <div className="item-image">
-                        <img src="../src/assets/products.jpg" />
-                    </div>
-                    <div className="item-image">
-                        {service && service.ServiceImage && (
-                            <div className="item-main-image">
-                                <img src={`http://localhost:3001/uploads/${service.ServiceImage}`} alt="..." />
+                <div className="detail-body">
+                    <div className="detail-section">
+                        <div className="item-info">
+                            <div className="item-identity">
+                            <h1>{service.ServiceName}</h1>
+                            <p>{store.BusinessName}</p>
                             </div>
-                        )}
+                            <h3 className="detail-price">$ {service.ServicePrice}</h3>
+                            <Button onClick={handlePayment} sx={{color: "black", backgroundColor: "#C1D7AE", "&:hover": { backgroundColor: "#d2e7c0" }}} className="purchase-button">Purchase</Button>
+                            <div className="button-section">
+                                {user?.sub == service.UserId ? (
+                                    <div className="detail-button-section">
+                                        <GeneralButton 
+                                        icon={<FaEdit />}
+                                        text={"Update Service"} 
+                                        link={`/service/update/${service._id}`}
+                                        />
+                                        <Button 
+                                        className="detail-button" variant="filledTonal" onClick={handleDeleteService} sx={{ backgroundColor: "rgb(197, 77, 77)", "&:hover": { backgroundColor: "rgb(224, 102, 102)" }}}>
+                                        <FaTrash />
+                                        Delete Service
+                                        </Button>
+                                    </div>
+                                ) : (null)}
+                            </div>
+                        </div>
+                        <div className="item-image">
+                            {service && service.ServiceImage && (
+                                <div className="item-main-image">
+                                    <img src={`http://localhost:3001/uploads/${service.ServiceImage}`} alt="..." />
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                    <div className="detail-desc">
+                        <p>{service.ServiceDescription}</p>
                     </div>
                 </div>
             )}
@@ -116,5 +122,3 @@ const ServiceDetail = () => {
 }
 
 export default ServiceDetail;
-
-// reminder to add onClick=payment to purchase button
