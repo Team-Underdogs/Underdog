@@ -123,9 +123,9 @@ const BusinessDetail = () => {
                         <a href={business.LinkTwitter}>insta icon</a>
                         <a href={business.LinkInstagram}>twitter icon</a>
                     </div>
-                    <button onClick={handleToggle}>toggle</button>
+                    <button className="general-button" onClick={handleToggle}>Now viewing: {toggle ? "Products" : "Services"}</button>
                     <div className="browse-body">
-                    <div className="browse-bps-cards">
+                        <div className="browse-bps-cards">
                             {toggle ? (
                                 products.map((product, index) => (
                                 <Link to={`/product/${product._id}`} key={index}>
@@ -150,7 +150,7 @@ const BusinessDetail = () => {
                                     </Link>
                                 ))
                             )}
-                    </div>
+                        </div>
                     </div>
                 </div>
             )}
