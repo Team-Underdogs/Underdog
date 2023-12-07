@@ -1,4 +1,4 @@
-import { Link } from 'react-dom';
+import { Link } from 'react-router-dom';
 
 const BusinessExhibit = ({ image, name, tags, link }) => {
     return (

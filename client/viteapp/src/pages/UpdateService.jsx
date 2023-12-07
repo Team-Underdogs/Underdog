@@ -118,7 +118,7 @@ const UpdateService = () => {
                     </div>
                     <div className="info-grid-update">
                         {Object.entries(service).map(([field, value]) => {
-                            if (["_id", "UserId", "__v", "ServiceTags", "ServiceCategories", "Store", "ServiceImage", "ServiceDescription", "stripeService", "stripePrice"].includes(field)) {
+                            if (["_id", "UserId", "__v", "ServiceTags", "ServiceCategories", "Store", "ServiceImage", "ServiceDescription", "stripeProduct", "stripePrice"].includes(field)) {
                                 if (field === "ServiceDescription") {
                                     return (
                                         <div className="info-grid-item-update" key={field}>

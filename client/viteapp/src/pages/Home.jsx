@@ -25,7 +25,7 @@ const Home = () => {
             setProducts(sortedProducts);
             return axios.get("http://localhost:3001/services/getAllServices");
         }).then((res3) => {
-            const sortedServices = res3.data.data.slice(5);
+            const sortedServices = res3.data.data.slice(-5);
             setServices(sortedServices);
             setLoading(false);
         })
@@ -54,7 +54,7 @@ const Home = () => {
             <div className="purpose">
                 <h4>What sets you and your business apart? Is it your unique cultural identity, your LGBTQ+ pride, your gender, or your commitment to sustainability and charity? Join our marketplace of businesses, and let us help you connect with the audience you've been searching for.</h4>
             </div>
-            {/* <div className="exhibition">
+            <div className="exhibition">
                 <p className="exhib-statement">Take a look at some of our newest businesses that have joined our marketplace</p>
                 <div className="suggested-businesses">
                 {stores.map((store, index) => (
@@ -63,7 +63,7 @@ const Home = () => {
                         name={store.BusinessName}
                         tags={store.BusinessTags.slice(-2)}
                         key={index}
-                        link={}
+                        link={`/business/${store._id}`}
                     />
                 ))}
                 </div>
@@ -77,7 +77,7 @@ const Home = () => {
                         name={product.ProductName}
                         tags={product.ProductTags.slice(-2)}
                         key={index}
-                        link={`/business/${business._id}`}
+                        link={`/product/${product._id}`}
                     />
                 ))}
                 </div>
@@ -91,11 +91,11 @@ const Home = () => {
                         name={service.ServiceName}
                         tags={service.ServiceTags.slice(-2)}
                         key={index}
-                        link={}
+                        link={`/service/${service._id}`}
                     />
                 ))}
                 </div>
-            </div> */}
+            </div>
         </div>
     );
 }
