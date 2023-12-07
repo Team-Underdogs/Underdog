@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import Button from "@mui/material-next/Button";
 
 const UpdateProduct = () => {
     const [product, setProduct] = useState({
@@ -94,6 +95,7 @@ const UpdateProduct = () => {
                 setLoading(false);
                 console.log(res.data);
                 alert("Product updated successfully");
+                navigate(`/product/${id}`)
             })
             .catch(error => {
                 setLoading(false);
@@ -197,7 +199,7 @@ const UpdateProduct = () => {
                         </div>
                     ))}
                     </div>
-                    <button onClick={handleUpdateProduct}>Save</button>
+                    <Button variant="filledTonal" sx={{ backgroundColor: "#C1D7AE", "&:hover": { backgroundColor: "#d2e7c0" }}} onClick={handleUpdateProduct}>Save</Button>
                 </div>
             )}
         </div>   

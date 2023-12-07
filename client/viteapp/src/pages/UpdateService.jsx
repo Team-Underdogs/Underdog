@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import Button from "@mui/material-next/Button";
 
 const UpdateService = () => {
     const [service, setService] = useState({
@@ -94,6 +95,7 @@ const UpdateService = () => {
                 setLoading(false);
                 console.log(res.data);
                 alert("Service updated successfully");
+                navigate(`/service/${id}`)
             })
             .catch(error => {
                 setLoading(false);
@@ -197,7 +199,7 @@ const UpdateService = () => {
                         </div>
                     ))}
                     </div>
-                    <button onClick={handleUpdateService}>Save</button>
+                    <Button variant="filledTonal" sx={{ backgroundColor: "#C1D7AE", "&:hover": { backgroundColor: "#d2e7c0" }}} onClick={handleUpdateService}>Save</Button>
                 </div>
             )}
         </div>   

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import Button from "@mui/material-next/Button";
 
 const UpdateBusiness = () => {
     const [business, setBusiness] = useState({
@@ -207,7 +208,7 @@ const UpdateBusiness = () => {
                         </div>
                     ))}
                     </div>
-                    <button className="general-button" onClick={handleUpdateBusiness}>Save</button>
+                    <Button variant="filledTonal" sx={{ backgroundColor: "#C1D7AE", "&:hover": { backgroundColor: "#d2e7c0" }}} onClick={handleUpdateBusiness}>Save</Button>
                 </div>
             )}
         </div>

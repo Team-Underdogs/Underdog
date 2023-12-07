@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {useAuth0} from "@auth0/auth0-react";
+import Button from "@mui/material-next/Button";
 
 const CreateBusiness = () => {
 
@@ -304,7 +305,7 @@ const CreateBusiness = () => {
                     ))}
                 </div>
                 <div>
-                    <button className="general-button" type="submit">Create Store</button>
+                    <Button variant="filledTonal" sx={{ backgroundColor: "#C1D7AE", "&:hover": { backgroundColor: "#d2e7c0" }}} type="submit">Create Store</Button>
                 </div>
             </form>
         </div>

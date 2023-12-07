@@ -74,6 +74,7 @@ const BusinessDetail = () => {
 
             alert("Succesfully deleted business and products");
             navigate("/")
+            window.location.reload()
         } catch (error) {
             alert("Failed to delete. CHECK CONSOLE FOR DETAILS");
             console.error("Delete error:", error);

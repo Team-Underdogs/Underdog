@@ -13,6 +13,8 @@ root.render(
   <Auth0Provider
     domain='underdogs.au.auth0.com'
     clientId='AY57nakZIliDj4G0uq6ubNmdJj54kPTG'
+    cacheLocation='localstorage'
+    useRefreshTokens
     authorizationParams={{
       redirect_uri: 'http://localhost:3000'
     }}
