@@ -59,7 +59,7 @@ const SearchResults = () => {
               businessName={business.BusinessName}
               city={business.City}
               suburb={business.Suburb}
-              image='../src/assets/business.jpeg'
+              image={`http://localhost:3001/uploads/${business.BusinessImage}`}
               className='card'
             />
           </Link>
@@ -70,7 +70,7 @@ const SearchResults = () => {
               <ProductCard
                 productName={product.ProductName}
                 businessName={product.Store.BusinessName}
-                image='../src/assets/products.jpg'
+                image={`http://localhost:3001/uploads/${product.ProductImage}`}
                 price={`$ ${product.ProductPrice}`}
                 className='card'
               />
@@ -82,7 +82,7 @@ const SearchResults = () => {
               <ServiceCard
                 serviceName={service.ServiceName}
                 businessName={service.Store.BusinessName}
-                image='../src/assets/products.jpg'
+                image={`http://localhost:3001/uploads/${service.ServiceImage}`}
                 price={`$ ${service.ServicePrice}`}
                 className='card'
               />
@@ -109,7 +109,7 @@ const SearchResults = () => {
                 businessName={business.BusinessName}
                 city={business.City}
                 suburb={business.Suburb}
-                image='../src/assets/business.jpeg'
+                image={`http://localhost:3001/uploads/${business.BusinessImage}`}
                 className='card'
               />
             </Link>
@@ -119,7 +119,7 @@ const SearchResults = () => {
               <ProductCard
                 productName={product.ProductName}
                 businessName={product.Store.BusinessName}
-                image='../src/assets/products.jpg'
+                image={`http://localhost:3001/uploads/${product.ProductImage}`}
                 price={`$ ${product.ProductPrice}`}
                 className='card'
               />
@@ -130,7 +130,7 @@ const SearchResults = () => {
               <ServiceCard
                 serviceName={service.ServiceName}
                 businessName={service.Store.BusinessName}
-                image='../src/assets/products.jpg'
+                image={`http://localhost:3001/uploads/${service.ServiceImage}`}
                 price={`$ ${service.ServicePrice}`}
                 className='card'
               />
