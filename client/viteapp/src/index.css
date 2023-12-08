@@ -287,6 +287,17 @@
   margin: 2%;
 }
 
+.browse-bps-cards-sr{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14vw, 1fr));
+  grid-gap: 3vw;
+  width: 100%;
+  height: 35vh;
+  margin-top: 2%;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
 /* Tags Banner */
 
 .tags-container{

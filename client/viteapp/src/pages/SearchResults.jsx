@@ -155,7 +155,7 @@ const SearchResults = () => {
                   <h4>All {category} associated with '{keyword}'</h4>
                 )}
             </div>
-            <div className='browse-bps-cards'>
+            <div className='browse-bps-cards-sr'>
               {renderedItems}
             </div>
         </div>
