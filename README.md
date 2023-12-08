@@ -1,16 +1,21 @@
 # Underdog
+Underdog is a multi-vendor e-commerce website project that focuses on equity and sustainability. Locally and minority owned businesses can register their business onto the website in order to promote themselves, and can list their products and services for users to directly purchase. Users can search the website with their own customised tags and categories in order to find the businesses, products, or services that align with their own personal values.
 
 Client:  
 
+```
 cd Underdog\client\viteapp  
 npm i  
-npm run dev  
+npm run dev
+```
 
 Server:  
 
+```
 cd Underdog\server  
 npm i  
 npm start  
+```
 
 ## Stripe
 
