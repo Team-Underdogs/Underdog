@@ -55,45 +55,51 @@ const Home = () => {
                 <h4>What sets you and your business apart? Is it your unique cultural identity, your LGBTQ+ pride, your gender, or your commitment to sustainability and charity? Join our marketplace of businesses, and let us help you connect with the audience you've been searching for.</h4>
             </div>
             <div className="exhibition">
-                <p className="exhib-statement">Take a look at some of our newest businesses that have joined our marketplace</p>
-                <div className="suggested-businesses">
-                {stores.map((store, index) => (
-                    <BusinessExhibit
-                        image={`http://localhost:3001/uploads/${store.BusinessImage}`}
-                        name={store.BusinessName}
-                        tags={store.BusinessTags.slice(-2)}
-                        key={index}
-                        link={`/business/${store._id}`}
-                    />
-                ))}
+                <div className="bus-exhib">
+                    <p className="exhib-statement">Take a look at some of our newest businesses that have joined our marketplace!</p>
+                    <div className="suggested-items">
+                    {stores.map((store, index) => (
+                        <BusinessExhibit
+                            image={`http://localhost:3001/uploads/${store.BusinessImage}`}
+                            name={store.BusinessName}
+                            tags={store.BusinessTags.slice(-2)}
+                            key={index}
+                            link={`/business/${store._id}`}
+                        />
+                    ))}
+                    </div>
                 </div>
             </div>
             <div className="exhibition">
-                <p className="exhib-statement">Be the first to see our newest products!</p>
-                <div className="suggested-businesses">
-                {products.map((product, index) => (
-                    <BusinessExhibit
-                        image={`http://localhost:3001/uploads/${product.ProductImage}`}
-                        name={product.ProductName}
-                        tags={product.ProductTags.slice(-2)}
-                        key={index}
-                        link={`/product/${product._id}`}
-                    />
-                ))}
+                <div className="pro-exhib">
+                    <p className="exhib-statement">Be the first to see our newest products!</p>
+                    <div className="suggested-items">
+                    {products.map((product, index) => (
+                        <BusinessExhibit
+                            image={`http://localhost:3001/uploads/${product.ProductImage}`}
+                            name={product.ProductName}
+                            tags={product.ProductTags.slice(-2)}
+                            key={index}
+                            link={`/product/${product._id}`}
+                        />
+                    ))}
+                    </div>
                 </div>
             </div>
             <div className="exhibition">
-                <p className="exhib-statement">Or... be the first to see our newest services!</p>
-                <div className="suggested-businesses">
-                {services.map((service, index) => (
-                    <BusinessExhibit
-                        image={`http://localhost:3001/uploads/${service.ServiceImage}`}
-                        name={service.ServiceName}
-                        tags={service.ServiceTags.slice(-2)}
-                        key={index}
-                        link={`/service/${service._id}`}
-                    />
-                ))}
+                <div className="ser-exhib">
+                    <p className="exhib-statement">Or... be the first to see our newest services!</p>
+                    <div className="suggested-items">
+                    {services.map((service, index) => (
+                        <BusinessExhibit
+                            image={`http://localhost:3001/uploads/${service.ServiceImage}`}
+                            name={service.ServiceName}
+                            tags={service.ServiceTags.slice(-2)}
+                            key={index}
+                            link={`/service/${service._id}`}
+                        />
+                    ))}
+                    </div>
                 </div>
             </div>
         </div>

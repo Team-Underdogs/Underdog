@@ -16,7 +16,7 @@ const Header = () => {
     const handleSearch = (e) => {
         e.preventDefault();
         if(searchField.trim() === ''){
-            alert('Search field cannot be empty!');
+            alert('Search field cannot be  empty!');
             return
         }
         const queryParams = `?category=${selectedOption}&keyword=${encodeURIComponent(searchField)}`
